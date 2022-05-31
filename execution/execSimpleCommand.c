@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 14:23:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 15:14:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ char	*get_path(t_list *env_list, char *cmd)
 	return (NULL);
 }
 
-void	ft_execute(t_vars *vars)
+void	ft_execute(t_vars *vars, int fd)
 {
 	char	*command_path;
 	int status;
 	command_path = get_path(vars->env_list, vars->command->flags[0]);
 
 	if (vars->command->flags[0][0] == '/' || vars->command->flags[0][0] == '.')
-		check_cmd(vars);
+		check_cmd(vars, fd);
 	else
 	{
 		if (command_path == NULL)
@@ -53,8 +53,11 @@ void	ft_execute(t_vars *vars)
 		}
 		if (fork() == 0)
 		{
+            if (fd != -1)
+                dup2(fd, STDOUT_FILENO);
 			if (execve(command_path, vars->command->flags, vars->env) == -1)
 			{
+                perror("exeve");
 				// exit_code = 126;
 			}
 			exit(EXIT_SUCCESS);
@@ -63,7 +66,7 @@ void	ft_execute(t_vars *vars)
 		// set_exit_code(status);
 	}
 }
-int	check_cmd(t_vars *vars)
+int	check_cmd(t_vars *vars, int fd)
 {
 	int status;
 	if (vars->command->flags[0][0] == '/')
@@ -72,16 +75,18 @@ int	check_cmd(t_vars *vars)
 		{
 			if (access(vars->command->flags[0], F_OK) == 0)
 			{
+                if (fd != -1)
+                    dup2(fd, STDOUT_FILENO);
 				if (execve(vars->command->flags[0], vars->command->flags, vars->env) == -1)
-				{
 					perror("execve");
-					set_exit_code(126);
-				}
 			}
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);
-		// set_exit_code(status);
+        if (status == 0)
+            set_exit_code(0);
+        else
+            set_exit_code(126);
 		return (0);
 	}
 	else

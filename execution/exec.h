@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 14:37:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 15:07:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_env(t_vars vars);
 void	ft_export(t_vars vars, char *arg);
 void ft_redirect_output_append_mode(t_vars *vars);
 void ft_redirect_output_trunc_mode(t_vars *vars);
-int	check_cmd(t_vars *vars);
 void	redirect_input(t_vars *vars);
 int get_exit_code();
 void set_exit_code(int num);
@@ -79,7 +78,7 @@ char	*get_path(t_list *env_list, char *cmd);
 int		get_parts(char	*s, char c);
 int		ft_strcmp(char *s, char *str);
 char *ft_get_env_val(t_list *env_list, char *var_name);
-void	ft_execute(t_vars *vars);
+// void	ft_execute(t_vars *vars);
 int	is_variable(char *s);
 int	check_echo_flag(char *s);
 int	is_properly_named(char *s);
@@ -88,4 +87,7 @@ int open_output_files(t_commande *command);
 int open_input_files(t_commande *command);
 int get_len(t_commande *command);
 char	*join_for_echo(t_list *env_list, char **s, char flag);
+void exec_echo(t_vars vars);
+void	ft_execute(t_vars *vars, int fd);
+int	check_cmd(t_vars *vars, int fd);
 #endif
