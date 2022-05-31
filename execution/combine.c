@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:06:57 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 16:59:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:12:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int check_built_in_commands(t_vars vars, t_commande *command)
 		}
 		else if (ft_strcmp(command->flags[0], "env") == 0)
 		{
-			ft_env(vars);
+			ft_env(vars, command);
 			return (true);
 		}
 		else if (ft_strcmp(command->flags[0], "exit") == 0)

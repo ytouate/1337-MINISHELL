@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 14:36:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:09:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,11 @@ int open_output_files(t_commande *command)
 	while (command->output->first_token != NULL)
 	{
 		if (command->output->first_token->token == T_OUT)
+		{
+			printf("hna\n");
 			fd = open(command->output->first_token->value, O_CREAT | O_RDWR | O_TRUNC , 0644);
+			
+		}
 		command->output->first_token = command->output->first_token->next;
 	}
 	return (fd);

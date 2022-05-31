@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 17:00:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 17:11:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void ft_pipe(t_vars *vars);
 void replace_symbol_by_val(char **s, t_list *env_list);
 void ft_exit(int exit_code, char flag);
 int get_len(t_commande *command);
-void	ft_env(t_vars vars);
+void	ft_env(t_vars vars, t_commande *command);
 void	ft_export(t_vars vars, char *arg);
 void	ft_execute(t_commande *command, t_vars *vars,  int fd);
 int get_exit_code();
