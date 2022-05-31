@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/05/31 13:00:05 by ytouate          ###   ########.fr        #
+#    Updated: 2022/05/31 14:24:49 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,13 @@ FILES =	\
 	redirection.c		\
 	env.c				\
 	echo.c				\
+	randomUtils.c		\
+	Unset.c				\
+	combine.c			\
+	free.c				\
+	pipe.c				\
+	execSimpleCommand.c	\
+	export.c
 
 O_FILES = $(FILES:.c=.o)
 

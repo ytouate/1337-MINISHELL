@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 12:58:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 14:23:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ void	ft_execute(t_vars *vars)
 		{
 			ft_putstr_fd(vars->command->flags[0], STDERR_FILENO);
 			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			exit_code = 127;
+			// exit_code = 127;
 			return ;
 		}
 		if (fork() == 0)
 		{
 			if (execve(command_path, vars->command->flags, vars->env) == -1)
 			{
-				exit_code = 126;
+				// exit_code = 126;
 			}
 			exit(EXIT_SUCCESS);
 		}
@@ -92,7 +92,7 @@ int	check_cmd(t_vars *vars)
 			{
 				if (execve(vars->command->flags[0], vars->command->flags, vars->env) == -1)
 				{
-					exit_code = 126;
+					// exit_code = 126;
 					perror("execve");
 				}
 			}
@@ -103,3 +103,4 @@ int	check_cmd(t_vars *vars)
 	}
 	return (0);
 }
+

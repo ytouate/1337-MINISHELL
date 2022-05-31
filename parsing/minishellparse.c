@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:52:46 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 14:38:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,5 @@ t_head_c	*ft_get_for_exec(char *content, t_list *env_list)
 		if (s == 1)	
 			return (NULL);
 	}
-	system("leaks minishell");
 	return (head_of_commande);
 }
