@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 13:36:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/31 16:44:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ void ft_pipe(t_vars *vars)
 					if (vars->command->input->first_token != NULL)
 					{
 						if (vars->command->input->first_token->token == T_HERDOC)
-						{
 							exec_node(vars, fd[1]);
-						}
 					}
 					else
 					{
