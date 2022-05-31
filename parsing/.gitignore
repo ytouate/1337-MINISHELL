@@ -1,0 +1,6 @@
+*.o
+.vscode
+*.a
+exec
+*.swp
+minishell
