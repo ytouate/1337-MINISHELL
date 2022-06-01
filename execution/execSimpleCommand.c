@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 19:10:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:26:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*get_path(t_list *env_list, char *cmd)
 void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
-	int status;
-	command_path = get_path(vars->env_list, command->flags[0]);
+	int		status;
 
+	command_path = get_path(vars->env_list, command->flags[0]);
 	if (command->flags[0][0] == '/' || command->flags[0][0] == '.')
 		check_cmd(command, vars, contex);
 	else
@@ -51,16 +51,16 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 			dup2(contex.fd_out, STDOUT_FILENO);
 			dup2(contex.fd_in, STDIN_FILENO);
 			if (execve(command_path, command->flags, vars->env) == -1)
-                perror("exeve");
+				perror("exeve");
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);
 	}
 }
 
-void run_excutable(t_commande *command, t_vars *vars, t_contex contex)
+void	run_excutable(t_commande *command, t_vars *vars, t_contex contex)
 {
-	int status;
+	int	status;
 
 	if (fork() == 0)
 	{
@@ -80,7 +80,8 @@ void run_excutable(t_commande *command, t_vars *vars, t_contex contex)
 
 void	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
 {
-	int status;
+	int	status;
+
 	status = 1;
 	if (command->flags[0][0] == '/')
 	{
@@ -102,4 +103,3 @@ void	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
 	else
 		run_excutable(command, vars, contex);
 }
-

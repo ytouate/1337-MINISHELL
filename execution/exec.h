@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 21:46:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:48:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,41 +32,41 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "get_next_line/get_next_line.h"
 # include <string.h>
 # include <sys/stat.h>
 # include <limits.h>
 
 typedef struct s_vars
 {
-    t_list *env_list;
-    t_list *export_list;
-    char **env;
-    int num_of_commands;
-    t_commande *command;
+	t_list		*env_list;
+	t_list		*export_list;
+	char		**env;
+	int			num_of_commands;
+	t_commande	*command;
 }t_vars;
+
+typedef struct s_norm
+{
+	t_list	*first;
+	t_list	*second;
+	t_list	*temp;
+	char	**cmd;
+}t_norm;
 
 typedef struct s_contex
 {
-    int fd_in;
-    int fd_out;
+	int	fd_in;
+	int	fd_out;
 }t_contex;
+
 void	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
-void	ft_export(t_vars vars, t_commande *command,  char *arg);
+void	ft_export(t_vars vars, t_commande *command, char *arg);
 void	exec_node(t_vars *vars, t_commande *command, t_contex contex);
 void	ft_execute(t_commande *command, t_vars *vars, t_contex contex);
-int check_for_redirection(t_commande *command);
-int	ft_strcmp(char *s, char *str);
-void ft_pipe(t_vars *vars);
-void replace_symbol_by_val(char **s, t_list *env_list);
-void ft_exit(int exit_code, char flag);
-int get_len(t_commande *command);
+void	ft_pipe(t_vars *vars);
+void	replace_symbol_by_val(char **s, t_list *env_list);
+void	ft_exit(int exit_code, char flag);
 void	ft_env(t_vars vars, t_commande *command);
-int get_exit_code();
-void set_exit_code(int num);
-t_list	*ft_getenv(t_list *env_list, char *var_name);
-t_list	*ft_getenv(t_list *env_list, char *var_name);
-t_list	*get_env_list(char **env);
 void	free_2d_array(char **a);
 void	ft_echo(t_commande *command, char *s, char flag);
 void	sig_handler(int sig);
@@ -77,29 +77,49 @@ void	ft_cd(char *path, t_list *env_list);
 void	ft_setenv(t_list **env_list, char *var_name, char *var_val);
 void	ft_setenv(t_list **env_list, char *var_name, char *var_val);
 void	sort_list(t_list **env_list);
+void	set_exit_code(int num);
+void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
+void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
+void	redirect_input(t_vars *vars, t_commande *command);
+void	ft_exit(int exit_code, char flag);
+void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
+
+int		check_built_in_commands(t_vars vars, t_commande *command);
+int		check_for_redirection(t_commande *command);
+int		ft_strcmp(char *s, char *str);
+int		get_len(t_commande *command);
+int		get_exit_code(void);
+int		get_parts(char	*s, char c);
+int		ft_strcmp(char *s, char *str);
+int		is_variable(char *s);
+int		check_echo_flag(char *s);
+int		is_properly_named(char *s);
+int		open_output_files(t_commande *command);
+int		open_input_files(t_commande *command);
+int		get_len(t_commande *command);
+
+t_list	*ft_getenv(t_list *env_list, char *var_name);
+t_list	*ft_getenv(t_list *env_list, char *var_name);
+t_list	*get_env_list(char **env);
+
 char	*get_promt(void);
 char	*join_for_echo(t_list *env_list, char **s, char flag);
 char	*get_path(t_list *env_list, char *cmd);
 char	*get_path(t_list *env_list, char *cmd);
-int		get_parts(char	*s, char c);
-int		ft_strcmp(char *s, char *str);
-char *ft_get_env_val(t_list *env_list, char *var_name);
-int	is_variable(char *s);
-int	check_echo_flag(char *s);
-int	is_properly_named(char *s);
-void ft_exit(int exit_code, char flag);
-int open_output_files(t_commande *command);
-int open_input_files(t_commande *command);
-int get_len(t_commande *command);
+char	*ft_get_env_val(t_list *env_list, char *var_name);
 char	*join_for_echo(t_list *env_list, char **s, char flag);
-void ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
-void ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
-void redirect_input(t_vars *vars, t_commande *command);
-int check_built_in_commands(t_vars vars, t_commande *command);
-void ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
-bool add_existed_variable(t_vars vars, t_commande *command, char **var_data, int *i);
-bool	add_unexisted_variable(t_vars vars, t_commande *command, char **var_data, int *i);
-bool run_export(t_vars vars, t_commande *command);
-bool show_export_list(t_vars vars, t_commande *command);
-bool exec_echo(t_vars vars, t_commande *command);
+
+bool	run_exit(t_vars vars, t_commande *command);
+bool	run_unset(t_vars vars, t_commande *command);
+bool	run_cd(t_vars vars, t_commande *command);
+bool	run_env(t_vars vars, t_commande *command);
+bool	run_pwd(t_vars vars, t_commande *command);
+bool	add_existed_variable(t_vars vars, t_commande *command, \
+		char **var_data, int *i);
+bool	add_unexisted_variable(t_vars vars, t_commande *command, \
+		char **var_data, int *i);
+bool	run_export(t_vars vars, t_commande *command);
+bool	show_export_list(t_vars vars, t_commande *command);
+bool	exec_echo(t_vars vars, t_commande *command);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:29:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:18:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ void	cd_home(t_list *env_list)
 	}
 }
 
-// like the cd command (change directory)
 void	ft_cd(char *path, t_list *env_list)
 {
 	char	current_wd[PATH_MAX];
-	printf("hnaaa \n");
+
 	if (path == NULL)
 		path = ft_strdup("~");
 	if (ft_strcmp("-", path) == 0)
@@ -73,4 +72,14 @@ void	ft_cd(char *path, t_list *env_list)
 			perror(path);
 		ft_setenv(&env_list, "OLDPWD", current_wd);
 	}
+}
+
+bool	run_cd(t_vars vars, t_commande *command)
+{
+	if (!ft_strcmp(command->flags[0], "cd"))
+	{
+		ft_cd(command->flags[1], vars.env_list);
+		return (true);
+	}
+	return (false);
 }

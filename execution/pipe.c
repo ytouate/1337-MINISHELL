@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:23:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:28:34 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void ft_pipe(t_vars *vars)
 {
-    int fd[2];
+    int	fd[2];
 	t_contex contex;
     int temp_fd;
 	contex.fd_in = STDIN_FILENO;

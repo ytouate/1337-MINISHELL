@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:22:36 by ytouate          ###   ########.fr       */
+/*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
+/*   Updated: 2022/06/01 22:28:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_env(t_vars vars, t_commande *command)
+void	ft_pwd(t_vars vars, t_commande *command)
 {
-	int	fd;
+	int		fd;
+	char	working_directory[PATH_MAX];
 
-	fd = check_for_redirection(command);
-	while (vars.env_list)
-	{
-		ft_putendl_fd(vars.env_list->content, fd);
-		vars.env_list = vars.env_list->next;
-	}
+	fd = STDOUT_FILENO;
+	fd = open_output_files(command);
+	getcwd(working_directory, sizeof(working_directory));
+	ft_setenv(&vars.env_list, "PWD", working_directory);
+	ft_putendl_fd(working_directory, fd);
 }
 
-bool	run_env(t_vars vars, t_commande *command)
+bool	run_pwd(t_vars vars, t_commande *command)
 {
-	if (!ft_strcmp(command->flags[0], "env"))
+	if (!ft_strcmp(command->flags[0], "pwd"))
 	{
-		ft_env(vars, command);
+		ft_pwd(vars, command);
 		return (true);
 	}
 	return (false);

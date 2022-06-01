@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 16:49:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:38:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
 int	ft_strcmp(char *s, char *str)
 {
 	int	i;
@@ -35,9 +36,10 @@ char	*get_promt(void)
 	return (cmd);
 }
 
-void replace_symbol_by_val(char **s, t_list *env_list)
+void	replace_symbol_by_val(char **s, t_list *env_list)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	(void)env_list;
 	while (s[i])
@@ -51,8 +53,6 @@ void replace_symbol_by_val(char **s, t_list *env_list)
 		i++;
 	}
 }
-
-
 
 int	is_variable(char *s)
 {
@@ -84,24 +84,16 @@ int	check_echo_flag(char *s)
 	return (true);
 }
 
-void ft_exit(int exit_code, char flag)
-{
-	if (flag != 'p')
-	{
-		printf("exit\n");
-		set_exit_code(exit_code);
-		exit(exit_code);
-	}
-}
-
 int	is_properly_named(char *s)
 {
 	return (ft_isalpha(s[0]) || s[0] == '_');
 }
 
-int get_len(t_commande *command)
+int	get_len(t_commande *command)
 {
-	int count = 0;
+	int	count;
+
+	count = 0;
 	while (command)
 	{
 		count += 1;
@@ -110,15 +102,17 @@ int get_len(t_commande *command)
 	return (count);
 }
 
-int open_output_files(t_commande *command)
+int	open_output_files(t_commande *command)
 {
-	int fd;
+	int	fd;
+
 	fd = STDOUT_FILENO;
 	while (command->output->first_token != NULL)
 	{
 		if (command->output->first_token->token == T_OUT)
 		{
-			fd = open(command->output->first_token->value, O_CREAT | O_RDWR | O_TRUNC , 0644);
+			fd = open(command->output->first_token->value, \
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
 			if (fd == -1)
 			{
 				perror(command->output->first_token->value);
@@ -127,7 +121,8 @@ int open_output_files(t_commande *command)
 		}
 		else if (command->output->first_token->token == T_APPEND)
 		{
-			fd = open(command->output->first_token->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+			fd = open(command->output->first_token->value, \
+				O_CREAT | O_RDWR | O_APPEND, 0644);
 			if (fd == -1)
 			{
 				perror(command->output->first_token->value);
@@ -139,9 +134,10 @@ int open_output_files(t_commande *command)
 	return (fd);
 }
 
-int open_input_files(t_commande *command)
+int	open_input_files(t_commande *command)
 {
-	int fd;
+	int	fd;
+
 	fd = STDIN_FILENO;
 	while (command->input->first_token != NULL)
 	{
@@ -154,8 +150,25 @@ int open_input_files(t_commande *command)
 				return (-1);
 			}
 		}
-		if (command->output )
+		if (command->output)
 		command->input->first_token = command->input->first_token->next;
+	}
+	return (fd);
+}
+
+int	check_for_redirection(t_commande *command)
+{
+	int	fd;
+
+	fd = STDOUT_FILENO;
+	if (command->output->first_token != NULL)
+	{
+		if (command->output->first_token->token == T_OUT)
+			fd = open (command->output->first_token->value, O_RDWR | O_CREAT \
+				| O_TRUNC, 0644);
+		else
+			fd = open (command->output->first_token->value, O_RDWR | O_CREAT \
+				| O_APPEND, 0644);
 	}
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 15:41:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:22:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_echo(t_commande *command, char *s, char flag)
 {
-	int fd;
+	int		fd;
+
 	fd = STDOUT_FILENO;
 	fd = open_output_files(command);
 	if (s == NULL)
@@ -51,7 +52,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 				temp = ft_split(ft_getenv(env_list, "HOME")->content, '=');
 				if (temp[1] != NULL)
 					result = ft_strjoin(result, temp[1]);
-				free_2d_array(temp);	
+				free_2d_array(temp);
 			}
 		}
 		else
@@ -61,4 +62,22 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 	}
 	result = ft_strtrim(result, " ");
 	return (result);
+}
+
+bool	exec_echo(t_vars vars, t_commande *command)
+{
+	if (ft_strcmp(command->flags[0], "echo") == 0 || \
+		ft_strcmp(command->flags[0], "ECHO") == 0)
+	{
+		if (command->flags[1] == NULL)
+			ft_echo(command, NULL, '0');
+		else if ((check_echo_flag(command->flags[1])))
+			ft_echo(command, join_for_echo(vars.env_list, \
+				command->flags, 'n'), 'n');
+		else
+			ft_echo(command, join_for_echo(vars.env_list, \
+				command->flags, '\0'), '\0');
+		return (true);
+	}
+	return (false);
 }

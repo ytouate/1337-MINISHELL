@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:41:23 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 12:58:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:12:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	sort_list(t_list **env_list)
 	}
 }
 
-char *ft_get_env_val(t_list *env_list, char *var_name)
+char	*ft_get_env_val(t_list *env_list, char *var_name)
 {
 	char	*temp;
 

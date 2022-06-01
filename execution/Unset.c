@@ -6,54 +6,69 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 12:59:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 22:49:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-void	delete_head(t_list **env_list, char **cmd)
+
+bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 {
 	t_list	*temp;
 
-	temp = *env_list;
-	*env_list = (*env_list)->next;
-	free(temp);
-	free_2d_array(cmd);
+	if (ft_strcmp(cmd[0], to_delete) == 0)
+	{
+		temp = *env_list;
+		*env_list = (*env_list)->next;
+		free(temp);
+		free_2d_array(cmd);
+		return (true);
+	}
+	return (false);
 }
 
 void	ft_unset(t_list **env_list, char *to_delete)
 {
-	t_list	*first;
-	t_list	*second;
-	t_list	*temp;
-	char	**cmd;
+	t_norm	vars;
 
-	first = *env_list;
-	cmd = ft_split((*env_list)->content, '=');
-	if (cmd[0] == NULL)
+	vars.first = *env_list;
+	vars.cmd = ft_split((*env_list)->content, '=');
+	if (vars.cmd[0] == NULL)
 		return ;
-	else if (ft_strcmp(cmd[0], to_delete) == 0)
+	if (!delete_head(env_list, vars.cmd, to_delete))
 	{
-		delete_head(env_list, cmd);
-		return ;
-	}
-	else
-	{
-		second = first->next;
-		while (second)
+		vars.second = vars.first->next;
+		while (vars.second)
 		{
-			cmd = ft_split(second->content, '=');
-			if (ft_strcmp(cmd[0], to_delete) == 0)
+			vars.cmd = ft_split(vars.second->content, '=');
+			if (ft_strcmp(vars.cmd[0], to_delete) == 0)
 			{
-				temp = second;
-				first->next = second->next;
-				free(temp);
-				free_2d_array(cmd);
+				vars.temp = vars.second;
+				vars.first->next = vars.second->next;
+				free(vars.temp);
+				free_2d_array(vars.cmd);
 				return ;
 			}
-			free_2d_array(cmd);
-			first = second;
-			second = second->next;
+			free_2d_array(vars.cmd);
+			vars.first = vars.second;
+			vars.second = vars.second->next;
 		}
 	}
+}
+
+bool	run_unset(t_vars vars, t_commande *command)
+{
+	int	i;
+
+	if (!ft_strcmp(command->flags[0], "unset"))
+	{
+		i = 0;
+		while (command->flags[++i])
+		{
+			ft_unset(&vars.env_list, command->flags[i]);
+			ft_unset(&vars.export_list, command->flags[i]);
+		}
+		return (true);
+	}
+	return (false);
 }
