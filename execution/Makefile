@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/01 11:52:08 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/01 17:23:02 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ FILES =	\
 	free.c				\
 	pipe.c				\
 	execSimpleCommand.c	\
-	export.c
+	export.c			\
+	get_next_line/get_next_line.c	\
+	get_next_line/get_next_line_utils.c
 
 O_FILES = $(FILES:.c=.o)
 

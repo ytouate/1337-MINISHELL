@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:38:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:23:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	sig_handler(int sig)
 		set_exit_code(130);
 	}
 }
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -50,12 +51,15 @@ int	main(int ac, char **av, char **env)
 		if (*cmd)
 		{
 			command = ft_get_for_exec(cmd, vars.env_list);
-			vars.command = command->first_c;
-			vars.num_of_commands = get_len(command->first_c);
 			if (command != NULL)
 			{
-				replace_symbol_by_val(command->first_c->flags, vars.env_list);
-				ft_pipe(&vars);
+				vars.command = command->first_c;
+				vars.num_of_commands = get_len(command->first_c);
+				if (command != NULL)
+				{
+					replace_symbol_by_val(command->first_c->flags, vars.env_list);
+					ft_pipe(&vars);
+				}
 			}
 		}
 	}

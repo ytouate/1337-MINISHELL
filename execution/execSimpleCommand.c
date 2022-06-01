@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 15:09:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 19:10:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,8 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	else
 	{
 		if (command_path == NULL)
-		{
-			ft_putstr_fd(command->flags[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			return ;
-		}
-		if (fork() == 0)
+			printf("%s: command not found\n", command->flags[0]);
+		else if (fork() == 0)
 		{
 			dup2(contex.fd_out, STDOUT_FILENO);
 			dup2(contex.fd_in, STDIN_FILENO);
@@ -62,9 +58,30 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	}
 }
 
-int	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
+void run_excutable(t_commande *command, t_vars *vars, t_contex contex)
 {
 	int status;
+
+	if (fork() == 0)
+	{
+		if (access(command->flags[0], F_OK | X_OK) == 0)
+		{
+			dup2(contex.fd_out, STDOUT_FILENO);
+			dup2(contex.fd_in, STDIN_FILENO);
+			if (execve(command->flags[0], command->flags, vars->env) == -1)
+				perror("execve");
+		}
+		else
+			perror(command->flags[0]);
+		exit(EXIT_SUCCESS);
+	}		
+	wait(&status);
+}
+
+void	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
+{
+	int status;
+	status = 1;
 	if (command->flags[0][0] == '/')
 	{
 		if (fork() == 0)
@@ -77,32 +94,12 @@ int	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
 					perror("execve");
 			}
 			else
-			{
 				perror(command->flags[0]);
-				set_exit_code(126);
-			}
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);
-		return (0);
 	}
 	else
-	{
-		if (fork() == 0)
-		{
-			if (access(command->flags[0], F_OK | X_OK) == 0)
-			{
-				dup2(contex.fd_out, STDOUT_FILENO);
-				dup2(contex.fd_in, STDIN_FILENO);
-				if (execve(command->flags[0], command->flags, vars->env) == -1)
-					perror("execve");
-			}
-			else
-				perror(command->flags[0]);
-			exit(EXIT_SUCCESS);
-		}		
-		wait(&status);
-	}
-	return (0);
+		run_excutable(command, vars, contex);
 }
 

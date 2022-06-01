@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:50:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:49:48 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ int open_input_files(t_commande *command)
 				return (-1);
 			}
 		}
+		if (command->output )
 		command->input->first_token = command->input->first_token->next;
 	}
 	return (fd);

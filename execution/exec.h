@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:35:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 21:46:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "get_next_line/get_next_line.h"
 # include <string.h>
 # include <sys/stat.h>
 # include <limits.h>
@@ -50,7 +51,8 @@ typedef struct s_contex
     int fd_in;
     int fd_out;
 }t_contex;
-
+void	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
+void	ft_export(t_vars vars, t_commande *command,  char *arg);
 void	exec_node(t_vars *vars, t_commande *command, t_contex contex);
 void	ft_execute(t_commande *command, t_vars *vars, t_contex contex);
 int check_for_redirection(t_commande *command);
@@ -60,7 +62,6 @@ void replace_symbol_by_val(char **s, t_list *env_list);
 void ft_exit(int exit_code, char flag);
 int get_len(t_commande *command);
 void	ft_env(t_vars vars, t_commande *command);
-void	ft_export(t_vars vars, char *arg);
 int get_exit_code();
 void set_exit_code(int num);
 t_list	*ft_getenv(t_list *env_list, char *var_name);
@@ -95,6 +96,10 @@ void ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
 void ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
 void redirect_input(t_vars *vars, t_commande *command);
 int check_built_in_commands(t_vars vars, t_commande *command);
-void exec_echo(t_vars vars, t_commande *command);
-int	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
+void ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
+bool add_existed_variable(t_vars vars, t_commande *command, char **var_data, int *i);
+bool	add_unexisted_variable(t_vars vars, t_commande *command, char **var_data, int *i);
+bool run_export(t_vars vars, t_commande *command);
+bool show_export_list(t_vars vars, t_commande *command);
+bool exec_echo(t_vars vars, t_commande *command);
 #endif
