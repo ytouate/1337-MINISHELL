@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/05/31 14:41:37 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/01 12:26:25 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ all :
 	@cd execution && make && cd ..
 	@cd parsing && make && cd ..
 	@cd libft && make && make bonus && cd ..
-	@gcc -Wall -Wextra -Werror ./libft/libft.a ./execution/exec.a ./parsing/pars.a main.c -o minishell -lreadline \
+	@gcc -Wall -Wextra -Werror ./libft/libft.a ./execution/exec.a ./parsing/pars.a main.c -o minishell -lreadline 	\
 	-L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I \
 	/Users/ytouate/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g
 

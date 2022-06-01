@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 16:44:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:23:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void ft_pipe(t_vars *vars)
 {
     int fd[2];
+	t_contex contex;
     int temp_fd;
+	contex.fd_in = STDIN_FILENO;
+	contex.fd_out = STDOUT_FILENO;
 	int size;
 	size = get_len(vars->command);
     int i;
@@ -25,11 +28,15 @@ void ft_pipe(t_vars *vars)
 		return ;
     i = 0;
 	if (size == 1)
-		exec_node(vars, -1);
+	{
+		exec_node(vars, vars->command, contex);
+	}
 	else
 	{
 		while (vars->command)
 		{
+			contex.fd_in = STDIN_FILENO;
+			contex.fd_out = STDOUT_FILENO;
 			pipe(fd);
 			id = fork();
 			if (id == 0)
@@ -41,12 +48,21 @@ void ft_pipe(t_vars *vars)
 					if (vars->command->input->first_token != NULL)
 					{
 						if (vars->command->input->first_token->token == T_HERDOC)
-							exec_node(vars, fd[1]);
+						{
+							contex.fd_in = fd[1];
+							contex.fd_out = STDOUT_FILENO;
+							exec_node(vars, vars->command, contex);
+						}
+						else
+						{
+							dup2(fd[1], STDOUT_FILENO);
+							exec_node(vars, vars->command, contex);
+						}
 					}
 					else
 					{
 						dup2(fd[1], STDOUT_FILENO);
-						exec_node(vars, -1);
+						exec_node(vars, vars->command, contex);
 					}
 					
 				}
@@ -58,13 +74,15 @@ void ft_pipe(t_vars *vars)
 					{
 						if (vars->command->input->first_token->token == T_HERDOC)
 						{
-							exec_node(vars, fd[1]);
+							contex.fd_in = fd[1];
+							contex.fd_out = STDOUT_FILENO;
+							exec_node(vars, vars->command, contex);
 						}
 					}
 					else
 					{
 						dup2(temp_fd, STDIN_FILENO);
-						exec_node(vars, -1);
+						exec_node(vars, vars->command, contex);
 					}
 				}
 				else
@@ -74,14 +92,16 @@ void ft_pipe(t_vars *vars)
 					{
 						if (vars->command->input->first_token->token == T_HERDOC)
 						{
-							exec_node(vars, fd[1]);
+							contex.fd_in = fd[1];
+							contex.fd_out = STDOUT_FILENO;
+							exec_node(vars, vars->command, contex);
 						}
 					}
 					else
 					{
 						dup2(fd[1], STDOUT_FILENO);
 						dup2(temp_fd, STDIN_FILENO);
-						exec_node(vars, -1);
+						exec_node(vars, vars->command, contex);
 					}
 				}
 				exit(0);

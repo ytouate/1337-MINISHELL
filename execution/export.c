@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 12:58:56 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:54:00 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int check_for_redirection(t_commande *command)
 {
 	int	fd;
 
-	fd = 1;
+	fd = STDOUT_FILENO;
 	if (command->output->first_token != NULL)
 	{
 		if (command->output->first_token->token == T_OUT)
@@ -34,6 +34,7 @@ void	ft_export(t_vars vars, char *arg)
 	int	fd;
 
 	fd = check_for_redirection(vars.command);
+	fd = STDOUT_FILENO;
 	if (arg == NULL)
 	{
 		sort_list(&vars.env_list);

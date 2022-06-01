@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:06:57 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 17:12:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:36:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,34 @@ int get_exit_code()
 	return (exit_code);
 }
 
-void	exec_node(t_vars *vars, int fd)
+void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 {
 	int		i;
 
 	i = 0;
-    (void)fd;
-	if (check_built_in_commands(*vars, vars->command) == false)
+	if (check_built_in_commands(*vars, command) == false)
 	{
-		if (vars->command->input->first_token != NULL)
+		if (command->input->first_token != NULL)
 		{
-			if (vars->command->input->first_token->token == T_HERDOC)
+			if (command->input->first_token->token == T_HERDOC)
             {
                 ;
 				// ft_herdoc(vars, fd);
             }
 			else
-				redirect_input(vars, vars->command);
+			{
+				redirect_input(vars, command);
+			}
 		}
-		else if (vars->command->output->first_token != NULL)
+		else if(command->output->first_token != NULL)
 		{
-			if (vars->command->output->first_token->token == T_OUT)
-				ft_redirect_output_trunc_mode(vars, vars->command);
+			if (command->output->first_token->token == T_OUT)
+				ft_redirect_output_trunc_mode(vars, command);
 			else
-				ft_redirect_output_append_mode(vars->command,vars);
+				ft_redirect_output_append_mode(command,vars);
 		}
 		else
-			ft_execute(vars->command, vars, -1);
+			ft_execute(command, vars, contex);
 	}
 }
 
@@ -75,8 +76,14 @@ int check_built_in_commands(t_vars vars, t_commande *command)
 		}
 		else if (ft_strcmp(command->flags[0], "exit") == 0)
 		{
-			if (get_len(command) == 1)
+			if (vars.num_of_commands == 1)
+			{
 				ft_exit(EXIT_SUCCESS, '\0');
+			}
+			else
+			{
+				ft_exit(EXIT_SUCCESS, 'p');
+			}
 			return (true);
 		}
 		else if (ft_strcmp(command->flags[0], "cd") == 0)
@@ -99,9 +106,7 @@ int check_built_in_commands(t_vars vars, t_commande *command)
 		{
 			i = 0;
 			if (command->flags[1] == NULL)
-			{
 				ft_export(vars, NULL);
-			}
 			else
 			{
 				while (command->flags[++i])

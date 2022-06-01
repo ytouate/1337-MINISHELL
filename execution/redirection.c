@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 16:30:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:43:05 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,35 @@
 
 void ft_redirect_output_append_mode(t_commande *command, t_vars *vars)
 {
-	int fd;
-	fd = -1;
-	fd = open_output_files(command);
-	if (command->flags[0] == NULL)
-		return;
-	else
-	{
-        ft_execute(command, vars, fd);
-	}
+	t_contex contex;
+	contex.fd_in = open_input_files(command);
+	contex.fd_out = open_output_files(command);
+	if (contex.fd_in == -1 || contex.fd_out == -1)
+		return ;
+	if (command->flags[0] != NULL)
+        ft_execute(command, vars, contex);
 }
 
 void ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command)
 {
-	int fd;
-
-	fd = open_output_files(command);
-	if (fd == -1)
-		perror("Error: ");
-	else if (command->flags[0] == NULL)
-		return;
-	else
-	{
-        ft_execute(command, vars,  fd);
-        close(fd);
-	}
+	t_contex contex;
+	contex.fd_out = open_output_files(command);
+	contex.fd_in = open_input_files(command);
+	if (contex.fd_in == -1 || contex.fd_out == -1)
+		return ;
+	if (command->flags[0] != NULL)
+        ft_execute(command, vars, contex);
 }
+
 void redirect_input(t_vars *vars, t_commande *command)
 {
-	int fd;
-	char *path;
-    
-    fd = -1;
-	if (command->input->first_token->value == NULL)
-		return;
-	fd = open_input_files(command);
-	if (command->flags[0] != NULL)
-	{
-		path = get_path(vars->env_list, command->flags[0]);
-		if (path == NULL)
-			printf("Command Not Found\n");
-		else
-		{
-			if (fork() == 0)
-			{
-				ft_execute(command, vars, fd);
-				exit(EXIT_SUCCESS);
-			}
-			close(fd);
-			wait(NULL);
-		}
-	}
+	t_contex contex;
+	contex.fd_in = STDIN_FILENO;
+	contex.fd_out = STDOUT_FILENO;
+	contex.fd_in = open_input_files(command);
+	contex.fd_out = open_output_files(command);
+	if (contex.fd_in == -1 || contex.fd_out == -1)
+		return ;
+	else if (command->flags[0] != NULL)
+		ft_execute(command, vars, contex);
 }

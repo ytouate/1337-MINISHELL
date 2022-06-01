@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 12:58:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:29:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	cd_home(t_list *env_list)
 void	ft_cd(char *path, t_list *env_list)
 {
 	char	current_wd[PATH_MAX];
-
+	printf("hnaaa \n");
 	if (path == NULL)
 		path = ft_strdup("~");
 	if (ft_strcmp("-", path) == 0)

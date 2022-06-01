@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 17:01:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:53:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	ft_echo(t_commande *command, char *s, char flag)
 {
 	int fd;
-	fd = -1;
-	if (command->output != NULL)
-		fd = open_output_files(command);
-	if (fd == -1)
-		fd = STDOUT_FILENO;
+	fd = check_for_redirection(command);
 	if (s == NULL)
 	{
 		write(fd, "\n", 2);

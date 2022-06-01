@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 16:30:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:13:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ char	*get_path(t_list *env_list, char *cmd)
 	return (NULL);
 }
 
-void	ft_execute(t_commande *command, t_vars *vars,  int fd)
+void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
 	int status;
 	command_path = get_path(vars->env_list, command->flags[0]);
 
 	if (command->flags[0][0] == '/' || command->flags[0][0] == '.')
-		check_cmd(command, vars, fd);
+		check_cmd(command, vars, contex);
 	else
 	{
 		if (command_path == NULL)
@@ -52,17 +52,17 @@ void	ft_execute(t_commande *command, t_vars *vars,  int fd)
 		}
 		if (fork() == 0)
 		{
-            if (fd != -1)
-                dup2(fd, STDOUT_FILENO);
+			dup2(contex.fd_out, STDOUT_FILENO);
+			dup2(contex.fd_in, STDIN_FILENO);
 			if (execve(command_path, command->flags, vars->env) == -1)
                 perror("exeve");
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);
-		// set_exit_code(status);
 	}
 }
-int	check_cmd(t_commande *command, t_vars *vars, int fd)
+
+int	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
 {
 	int status;
 	if (command->flags[0][0] == '/')
@@ -71,18 +71,22 @@ int	check_cmd(t_commande *command, t_vars *vars, int fd)
 		{
 			if (access(command->flags[0], F_OK) == 0)
 			{
-                if (fd != -1)
-                    dup2(fd, STDOUT_FILENO);
+				dup2(contex.fd_out, STDOUT_FILENO);
+				dup2(contex.fd_in, STDIN_FILENO);
 				if (execve(command->flags[0], command->flags, vars->env) == -1)
+				{
+					printf("failit\n");
 					perror("execve");
+				}
+			}
+			else
+			{
+				perror(command->flags[0]);
+				set_exit_code(126);
 			}
 			exit(EXIT_SUCCESS);
 		}
 		wait(&status);
-        if (status == 0)
-            set_exit_code(0);
-        else
-            set_exit_code(126);
 		return (0);
 	}
 	else
@@ -91,16 +95,16 @@ int	check_cmd(t_commande *command, t_vars *vars, int fd)
 		{
 			if (access(command->flags[0], F_OK | X_OK) == 0)
 			{
+				dup2(contex.fd_out, STDOUT_FILENO);
+				dup2(contex.fd_in, STDIN_FILENO);
 				if (execve(command->flags[0], command->flags, vars->env) == -1)
-				{
-					// exit_code = 126;
 					perror("execve");
-				}
 			}
+			else
+				perror(command->flags[0]);
 			exit(EXIT_SUCCESS);
 		}		
 		wait(&status);
-		// set_exit_code(status);
 	}
 	return (0);
 }

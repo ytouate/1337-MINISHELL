@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 17:11:44 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:35:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,26 @@ typedef struct s_vars
     t_list *env_list;
     t_list *export_list;
     char **env;
+    int num_of_commands;
     t_commande *command;
 }t_vars;
 
+typedef struct s_contex
+{
+    int fd_in;
+    int fd_out;
+}t_contex;
+
+void	exec_node(t_vars *vars, t_commande *command, t_contex contex);
+void	ft_execute(t_commande *command, t_vars *vars, t_contex contex);
+int check_for_redirection(t_commande *command);
 int	ft_strcmp(char *s, char *str);
-void	exec_node(t_vars *vars, int fd);
 void ft_pipe(t_vars *vars);
 void replace_symbol_by_val(char **s, t_list *env_list);
 void ft_exit(int exit_code, char flag);
 int get_len(t_commande *command);
 void	ft_env(t_vars vars, t_commande *command);
 void	ft_export(t_vars vars, char *arg);
-void	ft_execute(t_commande *command, t_vars *vars,  int fd);
 int get_exit_code();
 void set_exit_code(int num);
 t_list	*ft_getenv(t_list *env_list, char *var_name);
@@ -86,7 +94,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag);
 void ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
 void ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
 void redirect_input(t_vars *vars, t_commande *command);
-int	check_cmd(t_commande *command, t_vars *vars, int fd);
 int check_built_in_commands(t_vars vars, t_commande *command);
 void exec_echo(t_vars vars, t_commande *command);
+int	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
 #endif

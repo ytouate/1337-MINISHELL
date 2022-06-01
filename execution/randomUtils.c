@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/05/31 17:09:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 14:50:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_strcmp(char *s, char *str)
 	}
 	return (0);
 }
+
 char	*get_promt(void)
 {
 	char	*cmd;
@@ -51,21 +52,7 @@ void replace_symbol_by_val(char **s, t_list *env_list)
 	}
 }
 
-void	sig_handler(int sig)
-{
-	if (sig == SIGQUIT)
-	{
-		set_exit_code(131);
-	}
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		rl_on_new_line();
-		// rl_replace_line("", 0);
-		rl_redisplay();
-		set_exit_code(130);
-	}
-}
+
 
 int	is_variable(char *s)
 {
@@ -96,6 +83,7 @@ int	check_echo_flag(char *s)
 	}
 	return (true);
 }
+
 void ft_exit(int exit_code, char flag)
 {
 	if (flag != 'p')
@@ -110,6 +98,7 @@ int	is_properly_named(char *s)
 {
 	return (ft_isalpha(s[0]) || s[0] == '_');
 }
+
 int get_len(t_commande *command)
 {
 	int count = 0;
@@ -124,13 +113,26 @@ int get_len(t_commande *command)
 int open_output_files(t_commande *command)
 {
 	int fd;
+	fd = STDOUT_FILENO;
 	while (command->output->first_token != NULL)
 	{
 		if (command->output->first_token->token == T_OUT)
 		{
-			printf("hna\n");
 			fd = open(command->output->first_token->value, O_CREAT | O_RDWR | O_TRUNC , 0644);
-			
+			if (fd == -1)
+			{
+				perror(command->output->first_token->value);
+				return (-1);
+			}
+		}
+		else if (command->output->first_token->token == T_APPEND)
+		{
+			fd = open(command->output->first_token->value, O_CREAT | O_RDWR | O_APPEND, 0644);
+			if (fd == -1)
+			{
+				perror(command->output->first_token->value);
+				return (-1);
+			}
 		}
 		command->output->first_token = command->output->first_token->next;
 	}
@@ -140,10 +142,18 @@ int open_output_files(t_commande *command)
 int open_input_files(t_commande *command)
 {
 	int fd;
+	fd = STDIN_FILENO;
 	while (command->input->first_token != NULL)
 	{
 		if (command->input->first_token->token == T_IN)
-			fd = open(command->input->first_token->value, O_RDONLY , 0644);
+		{
+			fd = open(command->input->first_token->value, O_RDONLY, 0644);
+			if (fd == -1)
+			{
+				perror(command->input->first_token->value);
+				return (-1);
+			}
+		}
 		command->input->first_token = command->input->first_token->next;
 	}
 	return (fd);
