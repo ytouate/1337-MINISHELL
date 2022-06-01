@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:13:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 15:09:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
 				dup2(contex.fd_out, STDOUT_FILENO);
 				dup2(contex.fd_in, STDIN_FILENO);
 				if (execve(command->flags[0], command->flags, vars->env) == -1)
-				{
-					printf("failit\n");
 					perror("execve");
-				}
 			}
 			else
 			{

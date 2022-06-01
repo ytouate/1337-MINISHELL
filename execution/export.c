@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 14:54:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/01 15:08:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_export(t_vars vars, char *arg)
 		sort_list(&vars.env_list);
 		while (vars.env_list)
 		{
-			ft_putstr_fd("declare -x\t", fd);
+			ft_putstr_fd("declare -x  ", fd);
 			ft_putendl_fd(vars.env_list->content, fd);
 			vars.env_list = vars.env_list->next;
 		}
