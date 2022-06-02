@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:22:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:13:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	ft_echo(t_commande *command, char *s, char flag)
 {
 	int		fd;
 
-	fd = STDOUT_FILENO;
-	fd = open_output_files(command);
+	fd = open_files(command).fd_out;
+	if (fd == -1)
+		return ;
 	if (s == NULL)
 	{
 		write(fd, "\n", 2);

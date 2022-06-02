@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:18:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 14:23:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	cd_home(t_list *env_list)
 	else
 	{
 		write(2, "HOME not set\n", 14);
+		set_exit_code(1);
 		return ;
 	}
 	if (home_path != NULL)

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:28:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:14:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_pwd(t_vars vars, t_commande *command)
 	int		fd;
 	char	working_directory[PATH_MAX];
 
-	fd = STDOUT_FILENO;
-	fd = open_output_files(command);
+	fd = open_files(command).fd_in;
+	if (fd == -1)
+		return ;
 	getcwd(working_directory, sizeof(working_directory));
 	ft_setenv(&vars.env_list, "PWD", working_directory);
 	ft_putendl_fd(working_directory, fd);

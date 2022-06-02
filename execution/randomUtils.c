@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:38:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:12:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,73 +102,35 @@ int	get_len(t_commande *command)
 	return (count);
 }
 
-int	open_output_files(t_commande *command)
-{
-	int	fd;
 
-	fd = STDOUT_FILENO;
-	while (command->output->first_token != NULL)
+t_contex	open_files(t_commande *command)
+{
+	t_contex	contex;
+	contex.fd_in = STDIN_FILENO;
+	contex.fd_out = STDOUT_FILENO;
+
+	while (command->redi->first_token)
 	{
-		if (command->output->first_token->token == T_OUT)
+		if (command->redi->first_token->token == T_IN)
 		{
-			fd = open(command->output->first_token->value, \
-				O_CREAT | O_RDWR | O_TRUNC, 0644);
-			if (fd == -1)
+			contex.fd_in = open(command->redi->first_token->value, O_RDONLY);
+			if (contex.fd_in == -1)
 			{
-				perror(command->output->first_token->value);
-				return (-1);
+				perror(command->redi->first_token->value);
+				return (contex);
 			}
 		}
-		else if (command->output->first_token->token == T_APPEND)
+		else if (command->redi->first_token->token == T_OUT)
 		{
-			fd = open(command->output->first_token->value, \
-				O_CREAT | O_RDWR | O_APPEND, 0644);
-			if (fd == -1)
+			contex.fd_out = open(command->redi->first_token->value, \
+				O_CREAT | O_TRUNC | O_RDWR, 0644);
+			if (contex.fd_out == -1)
 			{
-				perror(command->output->first_token->value);
-				return (-1);
+				perror(command->redi->first_token->value);
+				return (contex);
 			}
 		}
-		command->output->first_token = command->output->first_token->next;
+		command->redi->first_token = command->redi->first_token->next;
 	}
-	return (fd);
-}
-
-int	open_input_files(t_commande *command)
-{
-	int	fd;
-
-	fd = STDIN_FILENO;
-	while (command->input->first_token != NULL)
-	{
-		if (command->input->first_token->token == T_IN)
-		{
-			fd = open(command->input->first_token->value, O_RDONLY, 0644);
-			if (fd == -1)
-			{
-				perror(command->input->first_token->value);
-				return (-1);
-			}
-		}
-		if (command->output)
-		command->input->first_token = command->input->first_token->next;
-	}
-	return (fd);
-}
-
-int	check_for_redirection(t_commande *command)
-{
-	int	fd;
-
-	fd = STDOUT_FILENO;
-	if (command->output->first_token != NULL)
-	{
-		if (command->output->first_token->token == T_OUT)
-			fd = open (command->output->first_token->value, O_RDWR | O_CREAT \
-				| O_TRUNC, 0644);
-		else
-			fd = open (command->output->first_token->value, O_RDWR | O_CREAT \
-				| O_APPEND, 0644);
-	}
-	return (fd);
+	return (contex);
 }

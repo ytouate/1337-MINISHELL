@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:06:57 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:52:13 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 16:05:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,22 @@ void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 	i = 0;
 	if (check_built_in_commands(*vars, command) == false)
 	{
-		if (command->input->first_token != NULL)
+		if (command->redi->first_token != NULL)
 		{
-			if (command->input->first_token->token == T_HERDOC)
+			if (command->redi->first_token->token == T_HERDOC)
 				ft_heredoc(vars, command, contex);
+			else if (command->redi->first_token->token == T_OUT)
+				ft_redirect_output_trunc_mode(vars, command);
+			else if (command->redi->first_token->token == T_APPEND)
+				ft_redirect_output_append_mode(command, vars);
 			else
 				redirect_input(vars, command);
-		}
-		else if (command->output->first_token != NULL)
-		{
-			if (command->output->first_token->token == T_OUT)
-				ft_redirect_output_trunc_mode(vars, command);
-			else
-				ft_redirect_output_append_mode(command, vars);
 		}
 		else
 			ft_execute(command, vars, contex);
 	}
+	else
+		set_exit_code(0);
 }
 
 int	check_built_in_commands(t_vars vars, t_commande *command)
@@ -68,7 +67,7 @@ int	check_built_in_commands(t_vars vars, t_commande *command)
 			return (true);
 		else if (run_unset(vars, command))
 			return (true);
-		else if (run_export(vars, command))
+		else if (run_export(command, vars.export_list, vars.export_list))
 			return (true);
 		else if (exec_echo(vars, command))
 			return (true);

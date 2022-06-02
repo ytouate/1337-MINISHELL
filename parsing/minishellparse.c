@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:52:46 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/05/31 14:38:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/05/29 16:08:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,117 +50,114 @@ void	ft_add_node(t_head_c *head, t_commande *commande)
 	commande->next_comande = NULL;
 }
 
-void ft_free(t_head_c *head)
-{
-	t_commande	*temp;
-	t_token		*t;
-	int			i;
 
-	while (head->first_c != NULL)
+char	**ft_replace(char **av, int i, char *value)
+{
+	int		e;
+	char	**temp;
+
+	temp = malloc(sizeof(char *) * (i + 1));
+	e = 0;
+	while (e < i - 1)
 	{
-		temp = head->first_c;
-		while (temp->input->first_token)
-		{
-			t = temp->input->first_token;
-			temp->input->first_token = temp->input->first_token->next;
-			free(t);
-		}
-		free(temp->input->first_token);
-		i = 0;
-		while (temp->flags[i])
-		{
-			free(temp->flags[i]);
-			i++;
-		}
-		free(temp->flags[i]);
-		while (temp->output->first_token)
-		{
-			t = temp->output->first_token;
-			temp->output->first_token = temp->output->first_token->next;
-			free(t);
-		}
-		head->first_c = head->first_c->next_comande;
-		free(temp);
-	}
+		temp[e] = av[e];
+		e++;
+	}	
+	temp[e] = value;
+	temp[e + 1] = NULL;
+	free(av);
+	return (temp);
 }
 
-int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
+int	ft_syntax(char *value, t_token *t)
 {
-	t_token		*token;
-	int			j;
-	t_commande	*re;
-	char **temp;
-	int i;
-	int e;
-	int k = 0;
+	if (value == NULL)
+	{
+		free(t);
+		printf("minishell:syntax error\n");
+		return (1);
+	}
+	return (0);
+}
 
-	e = 0;
-	j = 0;
-	i = 1;
-	re = malloc(sizeof(t_commande));
-	re->input = malloc(sizeof(t_token_head));
-	re->input->first_token = NULL;
-	re->output = malloc(sizeof(t_token_head));
-	re->output->first_token = NULL;
-	re->flags = malloc(sizeof(char *));
-	re->flags[0] = NULL;
+int		ft_rederictions(t_commande *re, t_token *token)
+{
+	if (ft_syntax(token->value, token) == 1)
+		return (1);
+	else
+		ft_add_red(re->redi, token);
+	return (0);
+}
+
+int		ft_check_pipe(t_lexer *lexer, t_token *token, int k)
+{
+	free(token);
+	ft_skip_spaces(lexer);
+	if (lexer->content[lexer->i] == '\0' || k == 0)
+	{
+		printf("minishell:syntax error\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_check_token(t_token *token, t_commande *re, int *i)
+{
+	if (token->token == 0)
+	{
+		if (ft_syntax(token->value, token) == 1)
+			return (1);
+		re->flags = ft_replace(re->flags, *i, token->value);
+		*i += 1;
+		free(token);
+	}
+	else if (token->token >= 1 && token->token <= 4)
+	{
+		if (ft_rederictions(re, token) == 1)
+			return (1);
+	}
+	return (0);
+}
+
+int		ft_fill_node(t_commande *re, t_lexer *lexer, t_list *env_list)
+{
+	int			k;
+	int			i;
+	t_token		*token;
+
 	token = ft_get_next_token(lexer, env_list);
+	k = 0;
+	i = 1;
 	while (token)
 	{
-		if (token->token == 0)
+		if (token->token < 5)
 		{
-			if (token->value == NULL)
-			{
-				printf("minishell:syntax error\n");
+			if (ft_check_token(token, re, &i) == 1)
 				return (1);
-			}
-			temp = malloc(sizeof(char *) * (i + 1));
-			e = 0;
-			while (e < i - 1)
-			{
-				temp[e] = re->flags[e];
-				e++;
-			}	
-			i++;
-			temp[e] = token->value;
-			temp[e + 1] = NULL;
-			free(re->flags);
-			re->flags = temp;
-			free(token);
-		}
-		else if (token->token == 2 || token->token == 4)
-		{
-			if (token->value == NULL)
-			{
-				printf("minishell:syntax error\n");
-				return (1);
-			}
-			ft_add_red(re->output, token);
-		}
-		else if (token->token == 3 || token->token == 1)
-		{
-			if (token->value == NULL)
-			{
-				free(token);
-				printf("minishell:syntax error\n");
-				return (1);
-			}
-			ft_add_red(re->input, token);
 		}
 		else if (token->token == 5)
 		{
-			free(token);
-			ft_skip_spaces(lexer);
-			if (lexer->content[lexer->i] == '\0' || k == 0)
-			{
-				printf("minishell:syntax error\n");
+			if (ft_check_pipe(lexer, token, k) == 1)
 				return (1);
-			}
 			break ;
 		}
 		k++;
 		token = ft_get_next_token(lexer, env_list);
 	}
+	return (0);
+}
+
+int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
+{
+	t_commande	*re;
+
+	re = malloc(sizeof(t_commande));
+	re->redi = malloc(sizeof(t_token_head));
+	re->redi->first_token = NULL;
+	re->flags = malloc(sizeof(char *));
+	re->flags[0] = NULL;
+	if (ft_fill_node(re, lexer, env_list) == 1)
+		return (1);
 	ft_add_node(head, re);
 	return (0);
 }
@@ -177,7 +174,7 @@ t_head_c	*ft_get_for_exec(char *content, t_list *env_list)
 	while (lexer->content[lexer->i])
 	{
 		s = ft_add_commande(head_of_commande, lexer, env_list);
-		if (s == 1)	
+		if (s == 1)
 			return (NULL);
 	}
 	return (head_of_commande);
