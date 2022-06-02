@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:41:23 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:12:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 17:07:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_list	*get_env_list(char **env)
 	int		i;
 
 	i = 0;
-	env_list = ft_lstnew(env[i++]);
+	env_list = ft_lstnew(ft_strdup(env[i++]));
 	while (env[i])
 		ft_lstadd_back(&env_list, ft_lstnew(ft_strdup(env[i++])));
 	return (env_list);

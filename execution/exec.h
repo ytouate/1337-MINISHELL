@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:03:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 21:01:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct s_norm
 }t_norm;
 
 void	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
-// void	ft_export(t_vars vars, t_commande *command, char *arg);
 void	exec_node(t_vars *vars, t_commande *command, t_contex contex);
 void	ft_execute(t_commande *command, t_vars *vars, t_contex contex);
 void	ft_pipe(t_vars *vars);
@@ -92,7 +91,7 @@ void	redirect_input(t_vars *vars, t_commande *command);
 void	ft_exit(int exit_code, char flag);
 void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
 
-int		check_built_in_commands(t_vars vars, t_commande *command);
+
 int		check_for_redirection(t_commande *command);
 int		ft_strcmp(char *s, char *str);
 int		get_len(t_commande *command);
@@ -109,7 +108,6 @@ void	ft_export(t_commande *command, t_list *env, char *arg);
 t_list	*ft_getenv(t_list *env_list, char *var_name);
 t_list	*ft_getenv(t_list *env_list, char *var_name);
 t_list	*get_env_list(char **env);
-bool run_export(t_commande *command, t_list *env_list, t_list *export_list);
 char	*get_promt(void);
 char	*join_for_echo(t_list *env_list, char **s, char flag);
 char	*get_path(t_list *env_list, char *cmd);
@@ -121,13 +119,14 @@ bool	run_exit(t_vars vars, t_commande *command);
 bool	run_unset(t_vars vars, t_commande *command);
 bool	run_cd(t_vars vars, t_commande *command);
 bool	run_env(t_vars vars, t_commande *command);
+bool run_export(t_commande *command, t_vars *vars);
 bool	run_pwd(t_vars vars, t_commande *command);
 // bool	run_export(t_vars *vars, t_commande *command);
-bool	show_export_list(t_vars vars, t_commande *command);
 bool	exec_echo(t_vars vars, t_commande *command);
 bool	add_existed_variable(t_vars *vars, t_commande *command, \
 		char **var_data, int *i);
 bool	add_unexisted_variable(t_vars *vars, t_commande *command, \
 		char **var_data, int *i);
+int	check_built_in_commands(t_vars *vars, t_commande *command);
 
 #endif
