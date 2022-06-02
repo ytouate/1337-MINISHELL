@@ -1,3 +1,5 @@
-exit status khassha t3awd
-< Makefile command;
-.dYS
+stop the process of openening files when a file does not exist
+herdoc
+include the herdoc inside the pipe
+handle signals
+handle the exit status

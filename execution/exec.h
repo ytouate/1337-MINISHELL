@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:48:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:03:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,27 @@ typedef struct s_vars
 	t_commande	*command;
 }t_vars;
 
-typedef struct s_norm
-{
-	t_list	*first;
-	t_list	*second;
-	t_list	*temp;
-	char	**cmd;
-}t_norm;
 
 typedef struct s_contex
 {
 	int	fd_in;
 	int	fd_out;
 }t_contex;
+
+typedef struct s_norm
+{
+	t_list	*first;
+	t_list	*second;
+	t_list	*temp;
+	char	**cmd;
+	int		*ids;
+	int		i;
+	int		id;
+	int		size;
+	int		temp_fd;
+	t_contex	contex;
+	int		fd[2];
+}t_norm;
 
 void	check_cmd(t_commande *command, t_vars *vars, t_contex contex);
 void	ft_export(t_vars vars, t_commande *command, char *arg);
@@ -114,12 +122,12 @@ bool	run_unset(t_vars vars, t_commande *command);
 bool	run_cd(t_vars vars, t_commande *command);
 bool	run_env(t_vars vars, t_commande *command);
 bool	run_pwd(t_vars vars, t_commande *command);
+bool	run_export(t_vars vars, t_commande *command);
+bool	show_export_list(t_vars vars, t_commande *command);
+bool	exec_echo(t_vars vars, t_commande *command);
 bool	add_existed_variable(t_vars vars, t_commande *command, \
 		char **var_data, int *i);
 bool	add_unexisted_variable(t_vars vars, t_commande *command, \
 		char **var_data, int *i);
-bool	run_export(t_vars vars, t_commande *command);
-bool	show_export_list(t_vars vars, t_commande *command);
-bool	exec_echo(t_vars vars, t_commande *command);
 
 #endif

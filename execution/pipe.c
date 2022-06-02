@@ -6,115 +6,84 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:28:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/02 12:10:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+
+void exec_first_node(t_vars *vars, int *fd, t_contex contex)
+{
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	exec_node(vars, vars->command, contex);
+}
+
+void	exec_last_node(t_vars *vars, int *fd, t_contex contex, int temp_fd)
+{
+	close (fd[0]);
+	close(fd[1]);
+	dup2(temp_fd, STDIN_FILENO);
+	exec_node(vars, vars->command, contex);
+}
+
+void	exec_other_node(t_vars *vars, int *fd, t_contex contex, int temp_fd)
+{
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	dup2(temp_fd, STDIN_FILENO);
+	exec_node(vars, vars->command, contex);
+}
+
+void	wait_for_child(int *ids, int i, int temp_fd)
+{
+	close(temp_fd);
+	while (ids[--i])
+		waitpid(ids[i], 0, 0);
+	
+}
+
+void	loop_through_nodes(t_vars *vars, t_norm data)
+{
+	while (vars->command)
+	{
+		data.contex.fd_in = STDIN_FILENO;
+		data.contex.fd_out = STDOUT_FILENO;
+		pipe(data.fd);
+		data.id = fork();
+		if (data.id == 0)
+		{
+			replace_symbol_by_val(vars->command->flags, vars->env_list);
+			if (data.i == 0)
+				exec_first_node(vars, data.fd, data.contex);
+			else if (data.i == data.size - 1)
+				exec_last_node(vars, data.fd, data.contex, data.temp_fd);
+			else
+				exec_other_node(vars, data.fd, data.contex, data.temp_fd);
+			exit(0);
+		}
+		data.ids[data.i] = data.id;
+		data.temp_fd = dup(data.fd[0]);
+		close(data.fd[0]);
+		close(data.fd[1]);
+		vars->command = vars->command->next_comande;
+		data.i += 1;
+	}
+	wait_for_child(data.ids, data.i, data.temp_fd);
+}
+
 void ft_pipe(t_vars *vars)
 {
-    int	fd[2];
-	t_contex contex;
-    int temp_fd;
-	contex.fd_in = STDIN_FILENO;
-	contex.fd_out = STDOUT_FILENO;
-	int size;
-	size = get_len(vars->command);
-    int i;
-    int id;
-    int *ids = malloc(sizeof(int) * size);
-	if (ids == NULL)
-		return ;
-    i = 0;
-	if (size == 1)
-	{
-		exec_node(vars, vars->command, contex);
-	}
+	t_norm	data;
+	data.contex.fd_in = STDIN_FILENO;
+	data.contex.fd_out = STDOUT_FILENO;
+	data.size = get_len(vars->command);
+
+    data.ids = malloc(sizeof(int) * data.size);
+    data.i = 0;
+	if (data.size != 1)
+		loop_through_nodes(vars, data);
 	else
-	{
-		while (vars->command)
-		{
-			contex.fd_in = STDIN_FILENO;
-			contex.fd_out = STDOUT_FILENO;
-			pipe(fd);
-			id = fork();
-			if (id == 0)
-			{
-				replace_symbol_by_val(vars->command->flags, vars->env_list);
-				if (i == 0)
-				{
-					close(fd[0]);
-					if (vars->command->input->first_token != NULL)
-					{
-						if (vars->command->input->first_token->token == T_HERDOC)
-						{
-							contex.fd_in = fd[1];
-							contex.fd_out = STDOUT_FILENO;
-							exec_node(vars, vars->command, contex);
-						}
-						else
-						{
-							dup2(fd[1], STDOUT_FILENO);
-							exec_node(vars, vars->command, contex);
-						}
-					}
-					else
-					{
-						dup2(fd[1], STDOUT_FILENO);
-						exec_node(vars, vars->command, contex);
-					}
-					
-				}
-				else if (i == size - 1)
-				{
-					close (fd[0]);
-					close(fd[1]);
-					if (vars->command->input->first_token != NULL)
-					{
-						if (vars->command->input->first_token->token == T_HERDOC)
-						{
-							contex.fd_in = fd[1];
-							contex.fd_out = STDOUT_FILENO;
-							exec_node(vars, vars->command, contex);
-						}
-					}
-					else
-					{
-						dup2(temp_fd, STDIN_FILENO);
-						exec_node(vars, vars->command, contex);
-					}
-				}
-				else
-				{
-					close(fd[0]);
-					if (vars->command->input->first_token != NULL)
-					{
-						if (vars->command->input->first_token->token == T_HERDOC)
-						{
-							contex.fd_in = fd[1];
-							contex.fd_out = STDOUT_FILENO;
-							exec_node(vars, vars->command, contex);
-						}
-					}
-					else
-					{
-						dup2(fd[1], STDOUT_FILENO);
-						dup2(temp_fd, STDIN_FILENO);
-						exec_node(vars, vars->command, contex);
-					}
-				}
-				exit(0);
-			}
-			ids[i] = id;
-			temp_fd = dup(fd[0]);
-			close(fd[0]);
-			close(fd[1]);
-			vars->command = vars->command->next_comande;
-			i++;
-        }
-		close(temp_fd);
-		while (--i >= 0)
-			waitpid(ids[i], 0, 0);
-	}
+		exec_node(vars, vars->command, data.contex);
 }
