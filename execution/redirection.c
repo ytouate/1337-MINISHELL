@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:10:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:20:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,24 @@ void	redirect_input(t_vars *vars, t_commande *command)
 }
 
 // TODO
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
+int	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
 {
+	(void)vars;
 	(void)command;
 	(void)contex;
-	(void)vars;
-	return ;
+	char *line;
+	int temp_filedes = open("/tmp/temp", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (temp_filedes == -1)
+		perror(NULL);
+	else
+	{
+		while (true)
+		{
+			line = readline(">");
+			if (line == NULL)
+				break ;
+			ft_putendl_fd(line, temp_filedes);
+		}
+	}
+	return (temp_filedes);
 }

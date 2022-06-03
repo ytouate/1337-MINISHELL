@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:14:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:38:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_pwd(t_vars vars, t_commande *command)
 	int		fd;
 	char	working_directory[PATH_MAX];
 
-	fd = open_files(command).fd_in;
+	fd = open_files(command).fd_out;
 	if (fd == -1)
 		return ;
 	getcwd(working_directory, sizeof(working_directory));

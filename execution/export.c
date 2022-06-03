@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/03 09:44:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:08:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ bool add_variable(t_commande *command, t_vars *vars, char **temp, int i)
 			{
 				ft_unset(&vars->export_list, temp[0]);
 				add_unexisted_variable(command, vars, temp, i);
-				
 			}
 			else
 				add_unexisted_variable(command, vars, temp, i);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 14:15:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:19:54 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	{
 		if (fork() == 0)
 		{
+			printf("%d %d\n", contex.fd_in, contex.fd_out);
 			dup2(contex.fd_out, STDOUT_FILENO);
 			dup2(contex.fd_in, STDIN_FILENO);
 			execve(command_path, command->flags, vars->env);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/03 09:34:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:21:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_contex
 {
 	int	fd_in;
 	int	fd_out;
+	int herdoc_fildes;
 }t_contex;
 
 typedef struct s_norm
@@ -89,9 +90,8 @@ void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
 void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
 void	redirect_input(t_vars *vars, t_commande *command);
 void	ft_exit(int exit_code, char flag);
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
 
-
+int	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
 int		check_for_redirection(t_commande *command);
 int		ft_strcmp(char *s, char *str);
 int		get_len(t_commande *command);

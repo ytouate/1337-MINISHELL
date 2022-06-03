@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 15:56:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 10:33:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	{
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
+		data.contex.herdoc_fildes = -1;
+		// if (vars->command->redi->first_token->token == T_HERDOC)
+			// data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
 		pipe(data.fd);
 		data.id = fork();
 		if (data.id == 0)
@@ -71,6 +74,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		data.i += 1;
 	}
 	wait_for_child(data.ids, data.i, data.temp_fd);
+	
 }
 
 void ft_pipe(t_vars *vars)
