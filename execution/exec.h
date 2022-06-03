@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 21:01:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 09:34:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,5 @@ bool run_export(t_commande *command, t_vars *vars);
 bool	run_pwd(t_vars vars, t_commande *command);
 // bool	run_export(t_vars *vars, t_commande *command);
 bool	exec_echo(t_vars vars, t_commande *command);
-bool	add_existed_variable(t_vars *vars, t_commande *command, \
-		char **var_data, int *i);
-bool	add_unexisted_variable(t_vars *vars, t_commande *command, \
-		char **var_data, int *i);
 int	check_built_in_commands(t_vars *vars, t_commande *command);
-
 #endif
