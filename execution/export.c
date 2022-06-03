@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 21:02:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 09:17:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void show_export_list(t_commande *command, t_vars vars)
 bool run_export(t_commande *command, t_vars *vars)
 {
 	char **temp;
-	// int i = 0;
+	int i = 0;
 	if (!ft_strcmp(command->flags[0], "export") || \
 		!ft_strcmp(command->flags[0], "EXPORT"))
 	{
@@ -58,11 +58,34 @@ bool run_export(t_commande *command, t_vars *vars)
 			show_export_list(command, *vars);
 		else
 		{
-			temp = ft_split(command->flags[1], '=');
-			if (is_variable(command->flags[1]))
-			{
-				ft_lstadd_front(&(vars)->env_list, ft_lstnew(ft_strdup(command->flags[1])));
-				ft_lstadd_front(&(vars)->export_list, ft_lstnew(ft_strdup(command->flags[1])));
+			while (command->flags[++i])
+			{	
+				temp = ft_split(command->flags[i], '=');
+				if (is_variable(command->flags[i]))
+				{
+					if (ft_getenv(vars->env_list, temp[0]) != NULL)
+					{
+						ft_unset(&vars->env_list, temp[0]);
+						ft_unset(&vars->export_list, temp[0]);
+						ft_lstadd_front(&(vars)->env_list, ft_lstnew(ft_strdup(command->flags[i])));
+						ft_lstadd_front(&(vars)->export_list, ft_lstnew(ft_strdup(command->flags[i])));
+						sort_list(&vars->export_list);
+					}
+					else
+					{
+						ft_lstadd_front(&(vars)->env_list, ft_lstnew(ft_strdup(command->flags[i])));
+						ft_lstadd_front(&(vars)->export_list, ft_lstnew(ft_strdup(command->flags[i])));
+						sort_list(&vars->export_list);
+					}
+				}
+				else
+				{
+					if (ft_getenv(vars->export_list, temp[0]) == NULL)
+					{
+						ft_lstadd_front(&(vars)->export_list, ft_lstnew(ft_strdup(command->flags[i])));
+						sort_list(&vars->export_list);
+					}
+				}
 			}
 		}
 		return (true);

@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/10 15:12:28 by ytouate           #+#    #+#              #
-#    Updated: 2021/11/23 13:43:51 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/03 09:13:28 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,19 +69,19 @@ OBJS = $(PARTS:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	ar -rc $(NAME) $(OBJS)
+	@ar -rc $(NAME) $(OBJS)
 
 clean :
-	rm -f $(OBJS) $(OBBS)
+	@rm -f $(OBJS) $(OBBS)
 
 fclean : clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re : fclean all
 
 OBBS = $(BONUS:.c=.o)
 
 bonus : $(OBBS)
-	ar -rc $(NAME) $(OBBS)
+	@ar -rc $(NAME) $(OBBS)
 
 .PHONY : all clean fclean re bonus
