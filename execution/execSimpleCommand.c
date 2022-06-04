@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/03 10:19:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 11:25:12 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	char	*command_path;
 	int		status;
 	
+	if (command->flags[0] == NULL)
+		return ;
 	command_path = get_path(vars->env_list, command->flags[0]);
 	if (command->flags[0][0] == '/' || command->flags[0][0] == '.')
 		check_cmd(command, vars, contex);
@@ -49,20 +51,25 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	}
 	else
 	{
-		if (fork() == 0)
+		if (command->flags[0][0])
 		{
-			printf("%d %d\n", contex.fd_in, contex.fd_out);
-			dup2(contex.fd_out, STDOUT_FILENO);
-			dup2(contex.fd_in, STDIN_FILENO);
-			execve(command_path, command->flags, vars->env);
-			exit(EXIT_SUCCESS);
+			
+			if (fork() == 0)
+			{
+				dup2(contex.fd_out, STDOUT_FILENO);
+				dup2(contex.fd_in, STDIN_FILENO);
+				execve(command_path, command->flags, vars->env);
+				exit(EXIT_SUCCESS);
+			}
+			wait(&status);
+			if (WIFEXITED(status))
+			{
+				get_exit_code();
+				set_exit_code(WEXITSTATUS(status));
+			}
 		}
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-			get_exit_code();
-			set_exit_code(WEXITSTATUS(status));
-		}
+		else
+			printf("%s: command not found\n", command->flags[0]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:06:57 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 21:02:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:00:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 		if (command->redi->first_token != NULL)
 		{
 			if (command->redi->first_token->token == T_HERDOC)
-				ft_heredoc(vars, command, contex);
+			{
+				// TODO;
+				;
+			}
 			else if (command->redi->first_token->token == T_OUT)
 				ft_redirect_output_trunc_mode(vars, command);
 			else if (command->redi->first_token->token == T_APPEND)
@@ -49,8 +52,6 @@ void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 		else
 			ft_execute(command, vars, contex);
 	}
-	else
-		set_exit_code(0);
 }
 
 int	check_built_in_commands(t_vars *vars, t_commande *command)
