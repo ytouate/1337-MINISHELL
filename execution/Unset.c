@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:49:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 11:50:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 		*env_list = (*env_list)->next;
 		free(temp);
 		free_2d_array(cmd);
+		set_exit_code(0);
 		return (true);
 	}
 	return (false);
@@ -53,6 +54,7 @@ void	ft_unset(t_list **env_list, char *to_delete)
 			vars.first = vars.second;
 			vars.second = vars.second->next;
 		}
+		set_exit_code(0);
 	}
 }
 

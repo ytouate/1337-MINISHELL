@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:13:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 11:18:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_echo(t_commande *command, char *s, char flag)
 		write(fd, s, ft_strlen(s));
 		write(fd, "\n", 1);
 	}
+	set_exit_code(0);
 }
 
 char	*join_for_echo(t_list *env_list, char **s, char flag)

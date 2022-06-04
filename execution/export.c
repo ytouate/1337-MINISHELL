@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/03 10:08:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 11:21:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_export(t_commande *command, t_list *env, char *arg)
 		return ;
 	if (arg == NULL)
 	{
-		// sort_list(&env);
+		sort_list(&env);
 		while (env)
 		{
 			ft_putstr_fd("declare -x\t", fd);
@@ -31,7 +31,7 @@ void	ft_export(t_commande *command, t_list *env, char *arg)
 	else
 	{
 		ft_lstadd_front(&env, ft_lstnew(arg));
-		// sort_list(&env);
+		sort_list(&env);
 	}
 }
 
@@ -98,7 +98,7 @@ bool run_export(t_commande *command, t_vars *vars)
 {
 	char	**temp;
 	int		i;
-
+	int flag = 0;
 	i = 0;
 	if (!ft_strcmp(command->flags[0], "export") || \
 		!ft_strcmp(command->flags[0], "EXPORT"))
@@ -116,7 +116,14 @@ bool run_export(t_commande *command, t_vars *vars)
 						add_non_variable(command, vars, temp, i);
 				}
 				else
-					printf("export: not an identifier: %s", command->flags[i]);
+				{
+					if (flag == 0)
+					{
+						printf("export: not an identifier: %s\n", command->flags[i]);
+						flag = 1;
+					}
+					set_exit_code(1);
+				}
 			}
 		}
 		return (true);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 20:50:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 14:44:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	// sort_list(&vars->export_list);
 	signal(SIGQUIT, sig_handler);
 	signal(SIGINT, sig_handler);
 	while (true)

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:33:56 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/02 15:50:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/03 11:40:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct lexer
 	char	c;
 	size_t	i;
 }t_lexer;
-	
+
 typedef struct head
 {
-	int		taille;
+	int			taille;
 	t_commande	*first_c;
 }t_head_c;
 

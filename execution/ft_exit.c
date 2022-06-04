@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/01 22:38:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 11:52:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	run_exit(t_vars vars, t_commande *command)
 	return (false);
 }
 
-void	ft_exit(int exit_code, char flag)
+void	ft_exit(int exit_code, char *arg, char flag)
 {
 	if (flag != 'p')
 	{
