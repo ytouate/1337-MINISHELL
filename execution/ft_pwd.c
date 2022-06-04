@@ -6,29 +6,17 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/04 11:59:28 by ytouate          ###   ########.fr       */
-=======
-/*   Updated: 2022/06/04 11:48:34 by ytouate          ###   ########.fr       */
->>>>>>> 8b27d8dabf75cb9137ec24baecf3e6913bb5a7f9
+/*   Updated: 2022/06/04 12:13:23 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
 void	ft_pwd(t_vars vars, t_commande *command)
 {
-<<<<<<< HEAD
 	t_contex		contex;
 	char	working_directory[PATH_MAX];
 
 	contex = open_files(command);
-=======
-	int		contex;
-	char	working_directory[PATH_MAX];
-
-	contex = open_files(command).fd_out;
->>>>>>> 8b27d8dabf75cb9137ec24baecf3e6913bb5a7f9
 	if (contex.fd_out == -1 || contex.fd_in == -1)
 	{
 		set_exit_code(1);
@@ -36,11 +24,7 @@ void	ft_pwd(t_vars vars, t_commande *command)
 	}
 	getcwd(working_directory, sizeof(working_directory));
 	ft_setenv(&vars.env_list, "PWD", working_directory);
-<<<<<<< HEAD
 	ft_putendl_fd(working_directory, contex.fd_out);
-=======
-	ft_putendl_fd(working_directory, fd);
->>>>>>> 8b27d8dabf75cb9137ec24baecf3e6913bb5a7f9
 	set_exit_code(0);
 }
 

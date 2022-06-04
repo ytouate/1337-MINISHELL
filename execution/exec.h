@@ -6,11 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/04 12:00:44 by ytouate          ###   ########.fr       */
-=======
-/*   Updated: 2022/06/04 11:53:18 by ytouate          ###   ########.fr       */
->>>>>>> 8b27d8dabf75cb9137ec24baecf3e6913bb5a7f9
+/*   Updated: 2022/06/04 12:11:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +94,6 @@ void	set_exit_code(int num);
 void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
 void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
 void	redirect_input(t_vars *vars, t_commande *command);
-<<<<<<< HEAD
-=======
-void	ft_exit(int exit_code, char flag);
->>>>>>> 8b27d8dabf75cb9137ec24baecf3e6913bb5a7f9
 void	ft_exit(int exit_code, char *arg, char flag);
 void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
 void	ft_export(t_commande *command, t_list *env, char *arg);
