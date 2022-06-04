@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 12:11:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 20:35:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,9 @@ void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars);
 void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command);
 void	redirect_input(t_vars *vars, t_commande *command);
 void	ft_exit(int exit_code, char *arg, char flag);
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex);
+void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex, char flag);
 void	ft_export(t_commande *command, t_list *env, char *arg);
+void ft_exec(t_vars *vars, t_commande *command, t_contex contex);
 
 int		check_for_redirection(t_commande *command);
 int		ft_strcmp(char *s, char *str);

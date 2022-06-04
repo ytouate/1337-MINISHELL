@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 15:12:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 20:59:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ void	exec_herdoc_command(t_commande *command, t_vars *vars, t_contex contex)
 		}
 	}
 }
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
+
+void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex, char flag)
 {
-	int heredoc[2];
 	char *line;
+	int heredoc[2];
+	(void)flag;
 	pipe(heredoc);
-	(void)vars;
 	while (true)
 	{
 		line = readline(">");
@@ -83,4 +84,7 @@ void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
 		ft_putendl_fd(line, heredoc[1]);
 	}
 	contex.fd_in = dup(heredoc[0]);
+	close(heredoc[0]);
+	close(heredoc[1]);
+	ft_execute(command, vars, contex);
 }
