@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 12:09:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:12:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,16 @@ int	get_exit_code(void)
 void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 {
 	int		i;
-
 	i = 0;
 	if (check_built_in_commands(vars, command) == false)
 	{
 		if (command->redi->first_token != NULL)
 		{
-			if (command->redi->first_token->token == T_HERDOC)
-			{
-				// TODO;
-				;
-			}
-			else if (command->redi->first_token->token == T_OUT)
+			if (command->redi->first_token->token == T_OUT)
 				ft_redirect_output_trunc_mode(vars, command);
 			else if (command->redi->first_token->token == T_APPEND)
 				ft_redirect_output_append_mode(command, vars);
-			else
+			else if (command->redi->first_token->token == T_IN)
 				redirect_input(vars, command);
 		}
 		else

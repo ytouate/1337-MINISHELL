@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/03 19:08:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 15:16:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ void	ft_pipe(t_vars *vars)
 	if (data.size != 1)
 		loop_through_nodes(vars, data);
 	else
+	{
 		exec_node(vars, vars->command, data.contex);
+	}
 }

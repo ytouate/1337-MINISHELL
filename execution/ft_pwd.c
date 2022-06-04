@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 12:13:23 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/04 12:14:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
 void	ft_pwd(t_vars vars, t_commande *command)
 {
 	t_contex		contex;

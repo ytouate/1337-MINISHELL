@@ -1,0 +1,11 @@
+Makefile
+MiniShell.h
+TODO
+execution
+file
+l
+libft
+main.c
+minishell
+minishell.dSYM
+parsing
