@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 16:57:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/05 20:48:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 		{
 			if (command->redi->first_token->token == T_HERDOC)
 				ft_heredoc(vars, command, contex);
-			if (command->redi->first_token->token == T_OUT)
+			else if (command->redi->first_token->token == T_OUT)
 				ft_redirect_output_trunc_mode(vars, command);
 			else if (command->redi->first_token->token == T_APPEND)
 				ft_redirect_output_append_mode(command, vars);

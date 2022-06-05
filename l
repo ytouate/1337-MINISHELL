@@ -9,3 +9,4 @@ main.c
 minishell
 minishell.dSYM
 parsing
+temp

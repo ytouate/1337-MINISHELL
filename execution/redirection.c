@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 20:59:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/05 20:40:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,10 @@ void	exec_herdoc_command(t_commande *command, t_vars *vars, t_contex contex)
 	}
 }
 
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex, char flag)
+void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
 {
 	char *line;
 	int heredoc[2];
-	(void)flag;
 	pipe(heredoc);
 	while (true)
 	{

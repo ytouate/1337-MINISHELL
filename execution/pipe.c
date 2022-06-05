@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 21:27:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/05 20:54:23 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ void	exec_first_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token == T_HERDOC)
 		{
+			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
+			data.contex.fd_in = dup(STDIN_FILENO);
 			data.contex.fd_out = dup(data.fd[1]);
-			ft_heredoc(vars, vars->command, data.contex, 'p');
+			ft_heredoc(vars, vars->command, data.contex);
 		}
 	}
 	else
@@ -38,10 +40,12 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token == T_HERDOC)
 		{
+			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
 			close(data.fd[1]);
 			data.contex.fd_in = dup(data.temp_fd);
-			ft_heredoc(vars, vars->command, data.contex, 'p');
+			data.contex.fd_out = dup(STDOUT_FILENO);
+			ft_heredoc(vars, vars->command, data.contex);
 		}
 	}
 	else
@@ -59,10 +63,11 @@ void	exec_other_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token != T_HERDOC)
 		{
+			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
 			data.contex.fd_in = dup(data.temp_fd);
 			data.contex.fd_out = dup(data.fd[1]);
-			ft_heredoc(vars, vars->command, data.contex, 'p');
+			ft_heredoc(vars, vars->command, data.contex);
 		}
 	}
 	else
@@ -81,11 +86,18 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 		waitpid(ids[i], 0, 0);
 }
 
+int flag = 0;
+void handler(int sig)
+{
+	if (sig == SIGUSR1)
+		flag = 1;
+}
+
 void	loop_through_nodes(t_vars *vars, t_norm data)
 {
 	while (vars->command)
 	{
-		
+		signal(SIGUSR1, handler);
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
 		pipe(data.fd);
@@ -101,7 +113,13 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 				exec_other_node(vars, data);
 			exit(0);
 		}
-		data.ids[data.i] = data.id;
+		// if (flag == 1)
+		// {
+			waitpid(data.id, 0, 0);
+			flag = 0;
+		// }
+		// else
+			data.ids[data.i] = data.id;
 		data.temp_fd = dup(data.fd[0]);
 		close(data.fd[0]);
 		close(data.fd[1]);
