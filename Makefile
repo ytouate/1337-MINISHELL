@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/03 10:11:56 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/06 15:40:40 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ clean :
 	@cd parsing && make clean && cd ..
 
 fclean :
+	@rm -rf minishell
 	@cd execution && make fclean && cd ..
 	@cd libft && make fclean && cd ..
 	@cd parsing && make fclean && cd ..

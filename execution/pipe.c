@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:34:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 15:45:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,7 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 {
 	close(temp_fd);
 	while (--i >= 0)
-	{
 		waitpid(ids[i], 0, 0);
-	}
-}
-
-int flag = 0;
-void handler(int sig)
-{
-	if (sig == SIGUSR1)
-		flag = 1;
 }
 
 void	loop_through_nodes(t_vars *vars, t_norm data)
@@ -71,20 +62,13 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 				exec_other_node(vars, data);
 			exit(0);
 		}
-		if (flag == 1)
-		{
-			waitpid(data.id, 0, 0);
-			flag = 0;
-		}
-		else
-			data.ids[data.i] = data.id;
+		data.ids[data.i] = data.id;
 		data.temp_fd = dup(data.fd[0]);
 		close(data.fd[0]);
 		close(data.fd[1]);
 		vars->command = vars->command->next_command;
 		data.i += 1;
 	}
-	
 	wait_for_child(data.ids, data.i, data.temp_fd);
 }
 
@@ -100,7 +84,5 @@ void	ft_pipe(t_vars *vars)
 	if (data.size != 1)
 		loop_through_nodes(vars, data);
 	else
-	{
 		exec_node(vars, vars->command, data.contex);
-	}
 }
