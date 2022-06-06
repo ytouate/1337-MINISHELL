@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 11:18:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:33:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_echo(t_commande *command, char *s, char flag)
+void	ft_echo(t_command *command, char *s, char flag)
 {
 	int		fd;
 
@@ -66,7 +66,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 	return (result);
 }
 
-bool	exec_echo(t_vars vars, t_commande *command)
+bool	exec_echo(t_vars vars, t_command *command)
 {
 	if (ft_strcmp(command->flags[0], "echo") == 0 || \
 		ft_strcmp(command->flags[0], "ECHO") == 0)

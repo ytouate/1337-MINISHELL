@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:13:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:33:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_env(t_vars vars, t_commande *command)
+void	ft_env(t_vars vars, t_command *command)
 {
 	int	fd;
 
@@ -26,7 +26,7 @@ void	ft_env(t_vars vars, t_commande *command)
 	}
 }
 
-bool	run_env(t_vars vars, t_commande *command)
+bool	run_env(t_vars vars, t_command *command)
 {
 	if (!ft_strcmp(command->flags[0], "env"))
 	{

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 11:16:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:32:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	ft_cd(char *path, t_list *env_list)
 	}
 }
 
-bool	run_cd(t_vars vars, t_commande *command)
+bool	run_cd(t_vars vars, t_command *command)
 {
 	if (!ft_strcmp(command->flags[0], "cd"))
 	{

@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 12:15:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:34:54 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_export(t_commande *command, t_list *env, char *arg)
+void	ft_export(t_command *command, t_list *env, char *arg)
 {
 	int fd;
 	fd = open_files(command).fd_out;
@@ -35,7 +35,7 @@ void	ft_export(t_commande *command, t_list *env, char *arg)
 	}
 }
 
-void show_export_list(t_commande *command, t_vars vars)
+void show_export_list(t_command *command, t_vars vars)
 {
 	int fd;
 	fd = open_files(command).fd_out;
@@ -48,7 +48,7 @@ void show_export_list(t_commande *command, t_vars vars)
 	}
 }
 
-void	add_unexisted_variable(t_commande *command, t_vars *vars, char **temp, int i)
+void	add_unexisted_variable(t_command *command, t_vars *vars, char **temp, int i)
 {
 	ft_unset(&vars->env_list, temp[0]);
 	ft_unset(&vars->export_list, temp[0]);
@@ -57,14 +57,14 @@ void	add_unexisted_variable(t_commande *command, t_vars *vars, char **temp, int 
 	sort_list(&vars->export_list);
 }
 
-void	add_existed_variable(t_commande *command, t_vars *vars, int i)
+void	add_existed_variable(t_command *command, t_vars *vars, int i)
 {
 	ft_lstadd_front(&(vars)->env_list, ft_lstnew(ft_strdup(command->flags[i])));
 	ft_lstadd_front(&(vars)->export_list, ft_lstnew(ft_strdup(command->flags[i])));
 	sort_list(&vars->export_list);
 }
 
-bool add_variable(t_commande *command, t_vars *vars, char **temp, int i)
+bool add_variable(t_command *command, t_vars *vars, char **temp, int i)
 {
 	if (is_variable(command->flags[i]))
 	{
@@ -85,7 +85,7 @@ bool add_variable(t_commande *command, t_vars *vars, char **temp, int i)
 	return (false);
 }
 
-void	add_non_variable(t_commande *command, t_vars *vars, char **temp, int i)
+void	add_non_variable(t_command *command, t_vars *vars, char **temp, int i)
 {
 	if (ft_getenv(vars->export_list, temp[0]) == NULL)
 	{
@@ -94,7 +94,7 @@ void	add_non_variable(t_commande *command, t_vars *vars, char **temp, int i)
 	}
 }
 
-bool run_export(t_commande *command, t_vars *vars)
+bool run_export(t_command *command, t_vars *vars)
 {
 	char	**temp;
 	int		i;

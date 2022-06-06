@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 11:50:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:32:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_unset(t_list **env_list, char *to_delete)
 	}
 }
 
-bool	run_unset(t_vars vars, t_commande *command)
+bool	run_unset(t_vars vars, t_command *command)
 {
 	int	i;
 

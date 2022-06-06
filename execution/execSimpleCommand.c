@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/05 21:46:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:34:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void func(int sig)
 		set_exit_code(130);
 	}
 }
-void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
+void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
 	int		status;
@@ -83,7 +83,7 @@ void	ft_execute(t_commande *command, t_vars *vars, t_contex contex)
 	}
 }
 
-void	run_excutable(t_commande *command, t_vars *vars, t_contex contex)
+void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
 {
 	int	status;
 
@@ -110,7 +110,7 @@ void	run_excutable(t_commande *command, t_vars *vars, t_contex contex)
 	}
 }
 
-void	check_cmd(t_commande *command, t_vars *vars, t_contex contex)
+void	check_cmd(t_command *command, t_vars *vars, t_contex contex)
 {
 	int fd[2];
 	int temp = 0;

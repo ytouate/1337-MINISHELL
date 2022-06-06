@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 16:12:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:33:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	is_properly_named(char *s)
 	return (ft_isalpha(s[0]) || s[0] == '_');
 }
 
-int	get_len(t_commande *command)
+int	get_len(t_command *command)
 {
 	int	count;
 
@@ -97,13 +97,13 @@ int	get_len(t_commande *command)
 	while (command)
 	{
 		count += 1;
-		command = command->next_comande;
+		command = command->next_command;
 	}
 	return (count);
 }
 
 
-t_contex	open_files(t_commande *command)
+t_contex	open_files(t_command *command)
 {
 	t_contex	contex;
 	contex.fd_in = STDIN_FILENO;

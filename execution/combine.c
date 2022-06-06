@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:06:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:34:02 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	get_exit_code(void)
 	return (exit_code);
 }
 
-void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
+void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 {
 	int		i;
 	i = 0;
@@ -53,7 +53,7 @@ void	exec_node(t_vars *vars, t_commande *command, t_contex contex)
 	}
 }
 
-int	check_built_in_commands(t_vars *vars, t_commande *command)
+int	check_built_in_commands(t_vars *vars, t_command *command)
 {
 	if (command->flags[0] != NULL)
 	{

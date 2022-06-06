@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/04 12:11:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:32:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool is_number(char *s)
 	return (true);
 }
 
-bool	run_exit(t_vars vars, t_commande *command)
+bool	run_exit(t_vars vars, t_command *command)
 {
 	if (!ft_strcmp(command->flags[0], "exit"))
 	{
