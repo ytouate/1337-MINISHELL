@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:19:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 15:24:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	char *line;
 	(void)contex;
 	(void)vars;
-	temp_file = open("out", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR, 0644);
+	temp_file = open("out", O_RDWR | O_TRUNC | O_CREAT, 0777);
+	printf("%d\n", temp_file);
 	if (temp_file == -1)
 		return ;
 	else
@@ -89,16 +90,14 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 			ft_putendl_fd(line, temp_file);
 		}
 	}
+	close(temp_file);
+	temp_file = open("out", O_RDWR);
 	if (fork() == 0)
 	{
-		dup2(temp_file, STDIN_FILENO);
-		close(temp_file);
+		dup2(temp_file, 0);
 		execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
 		exit(0);
 	}
-	else
-	{
-		wait(NULL);
-		close(temp_file);
-	}
+	close(temp_file);
+	wait(NULL);
 }
