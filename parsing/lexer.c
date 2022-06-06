@@ -156,7 +156,7 @@ char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 		str = ft_itoa(get_exit_code());
 		ft_advance(lexer);
 	}
-	else if (ft_isdigit(lexer->c) != 0)
+	else if (ft_isdigit(lexer->c) != 0 || lexer->c == '@' || lexer->c == '*')
 	{
 		ft_advance(lexer);
 		return (ft_strdup(""));
@@ -185,7 +185,7 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 	char	*str;
 
 	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-		 (ft_isalnum(lexer->content[lexer->i + 1]) != 0|| ft_isalpha(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?'))
+		 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*'))
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)
 	{
@@ -242,7 +242,7 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 	{
 		s = ft_strdup("");
 		if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-				 (ft_isalnum(lexer->content[lexer->i + 1]) != 0|| ft_isalpha(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?'))
+				 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*'))
 		{
 			temp = str;
 			str = ft_strjoin(str, ft_after_dollar(lexer, env_list));

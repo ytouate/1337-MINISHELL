@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 15:24:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 15:27:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	char *line;
 	(void)contex;
 	(void)vars;
-	temp_file = open("out", O_RDWR | O_TRUNC | O_CREAT, 0777);
+	temp_file = open("tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	printf("%d\n", temp_file);
 	if (temp_file == -1)
 		return ;
@@ -91,13 +91,13 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 		}
 	}
 	close(temp_file);
-	temp_file = open("out", O_RDWR);
+	temp_file = open("tmp/temp", O_RDWR);
 	if (fork() == 0)
 	{
 		dup2(temp_file, 0);
 		execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
 		exit(0);
 	}
-	close(temp_file);
+	unlink("tmp/temp");
 	wait(NULL);
 }
