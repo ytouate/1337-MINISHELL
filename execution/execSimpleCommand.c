@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:34:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 16:53:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_path(t_list *env_list, char *cmd)
 	int		i;
 
 	path = ft_get_env_val(env_list, "PATH");
-	if (path == NULL)
+	if (path == NULL || cmd == NULL)
 		return (NULL);
 	i = 0;
 	command_path = ft_split(path, ':');
@@ -68,6 +68,10 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 			id = fork();
 			if (id == 0)
 			{
+				if (contex.fd_in != STDIN_FILENO)
+					close(contex.fd_in);
+				if (contex.fd_out != STDOUT_FILENO)
+					close(contex.fd_out);
 				dup2(contex.fd_out, STDOUT_FILENO);
 				dup2(contex.fd_in, STDIN_FILENO);
 				execve(command_path, command->flags, vars->env);

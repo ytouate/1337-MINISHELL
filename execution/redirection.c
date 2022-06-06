@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 15:57:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 16:53:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,25 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 	}
 }
 
+void exec_heredoc(t_vars *vars, t_command *command, t_contex contex)
+{
+	while (command)
+	{
+		contex.fd_in = STDIN_FILENO;
+		contex.fd_out = STDOUT_FILENO;
+		if (command->herdoc->first_token != NULL)
+			ft_heredoc(vars, command, contex);
+		command = command->next_command;
+	}
+}
 void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 {
 	int temp_file;
 	char *line;
 	(void)vars;
+	
+	
 	temp_file = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
-	printf("%d\n", temp_file);
 	if (temp_file == -1)
 		return ;
 	else
@@ -98,7 +110,9 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	{
 		dup2(temp_file, 0);
 		dup2(contex.fd_out, STDOUT_FILENO);
-		execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
+		char *path = get_path(vars->env_list, command->flags[0]);
+		if (path != NULL)
+			execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
 		exit(0);
 	}
 	unlink("tmp/temp");
