@@ -42,7 +42,7 @@ void func(int sig)
 		kill(id, SIGKILL);
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_repacle_line("", 0);
 		set_exit_code(130);
 	}
 }

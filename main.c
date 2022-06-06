@@ -21,7 +21,7 @@ void	sig_handler(int sig)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_redisplay();
 		set_exit_code(130);
 	}

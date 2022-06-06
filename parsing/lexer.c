@@ -190,7 +190,7 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)
 	{
 		ft_advance(lexer);
-		str = &lexer->c;
+		str = ft_strdup(&lexer->c);
 		ft_advance(lexer);
 	}
 	else if (lexer->c == '\\' && lexer->i == ft_strlen(lexer->content) - 1)
@@ -248,7 +248,7 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 			str = ft_strjoin(str, ft_after_dollar(lexer, env_list));
 			free(temp);
 		}
-		else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1 && (lexer->content[lexer->i + 1] == '\\' || lexer->content[lexer->i + 1] == c))
+		else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1 && (lexer->content[lexer->i + 1] == '\\' || lexer->content[lexer->i + 1] == c || lexer->content[lexer->i + 1] == '$'))
 		{
 			ft_advance(lexer);
 			temp = str;
