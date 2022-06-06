@@ -33,21 +33,21 @@ void	ft_add_red(t_token_head *head, t_token *t)
 	temp->next = t;
 }
 
-void	ft_add_node(t_head_c *head, t_commande *commande)
+void	ft_add_node(t_head_c *head, t_command *command)
 {
-	t_commande	*temp;
+	t_command	*temp;
 
 	temp = head->first_c;
 	if (temp == NULL)
 	{
-		head->first_c = commande;
-		commande->next_comande = NULL;
+		head->first_c = command;
+		command->next_command = NULL;
 		return;
 	}
-	while (temp->next_comande)
-		temp = temp->next_comande;
-	temp->next_comande = commande;
-	commande->next_comande = NULL;
+	while (temp->next_command)
+		temp = temp->next_command;
+	temp->next_command = command;
+	command->next_command = NULL;
 }
 
 
@@ -80,10 +80,12 @@ int	ft_syntax(char *value, t_token *t)
 	return (0);
 }
 
-int		ft_rederictions(t_commande *re, t_token *token)
+int		ft_rederictions(t_command *re, t_token *token)
 {
 	if (ft_syntax(token->value, token) == 1)
 		return (1);
+	else if (token->token == T_HERDOC)
+		ft_add_red(re->herdoc, token);
 	else
 		ft_add_red(re->redi, token);
 	return (0);
@@ -101,7 +103,7 @@ int		ft_check_pipe(t_lexer *lexer, t_token *token, int k)
 	return (0);
 }
 
-int	ft_check_token(t_token *token, t_commande *re, int *i)
+int	ft_check_token(t_token *token, t_command *re, int *i)
 {
 	if (token->token == 0)
 	{
@@ -119,7 +121,7 @@ int	ft_check_token(t_token *token, t_commande *re, int *i)
 	return (0);
 }
 
-int		ft_fill_node(t_commande *re, t_lexer *lexer, t_list *env_list)
+int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list)
 {
 	int			k;
 	int			i;
@@ -149,10 +151,12 @@ int		ft_fill_node(t_commande *re, t_lexer *lexer, t_list *env_list)
 
 int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
 {
-	t_commande	*re;
+	t_command	*re;
 
-	re = malloc(sizeof(t_commande));
+	re = malloc(sizeof(t_command));
 	re->redi = malloc(sizeof(t_token_head));
+	re->herdoc = malloc(sizeof(t_token_head));
+	re->herdoc->first_token = NULL;
 	re->redi->first_token = NULL;
 	re->flags = malloc(sizeof(char *));
 	re->flags[0] = NULL;

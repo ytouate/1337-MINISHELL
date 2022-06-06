@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:33:56 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/03 11:40:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:15:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ typedef struct t_token_head{
 
 typedef struct minishellpars{
 	char					**flags;
-	struct minishellpars	*next_comande;
+	struct minishellpars	*next_command;
 	t_token_head			*redi;
-}t_commande;
+	t_token_head			*herdoc;
+}t_command;
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -53,11 +54,11 @@ typedef struct lexer
 	char	c;
 	size_t	i;
 }t_lexer;
-
+	
 typedef struct head
 {
-	int			taille;
-	t_commande	*first_c;
+	int		taille;
+	t_command	*first_c;
 }t_head_c;
 
 t_token	*ft_init_token(int type, char *value);
@@ -69,7 +70,7 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list);
 char	*ft_get_value(t_lexer *lexer, t_list *env_list);
 t_head_c	*ft_get_for_exec(char *content, t_list *env_list);
 void	ft_init_head(t_head_c *head);
-void	ft_add_node(t_head_c *head, t_commande *commande);
+void	ft_add_node(t_head_c *head, t_command *commande);
 int		ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list);
 char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list);
 

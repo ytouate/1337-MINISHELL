@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/05 20:40:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:19:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars)
+void	ft_redirect_output_append_mode(t_command *command, t_vars *vars)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
@@ -23,7 +23,7 @@ void	ft_redirect_output_append_mode(t_commande *command, t_vars *vars)
 		ft_execute(command, vars, contex);
 }
 
-void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command)
+void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
@@ -34,7 +34,7 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_commande *command)
 		ft_execute(command, vars, contex);
 }
 
-void	redirect_input(t_vars *vars, t_commande *command)
+void	redirect_input(t_vars *vars, t_command *command)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
@@ -45,7 +45,7 @@ void	redirect_input(t_vars *vars, t_commande *command)
 		ft_execute(command, vars, contex);
 }
 
-void	exec_herdoc_command(t_commande *command, t_vars *vars, t_contex contex)
+void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 {
 	char *path;
 	if (command->flags[0] != NULL)
@@ -70,20 +70,35 @@ void	exec_herdoc_command(t_commande *command, t_vars *vars, t_contex contex)
 	}
 }
 
-void	ft_heredoc(t_vars *vars, t_commande *command, t_contex contex)
+void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 {
+	int temp_file;
 	char *line;
-	int heredoc[2];
-	pipe(heredoc);
-	while (true)
+	(void)contex;
+	(void)vars;
+	temp_file = open("out", O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR, 0644);
+	if (temp_file == -1)
+		return ;
+	else
 	{
-		line = readline(">");
-		if (line == NULL || !ft_strcmp(line, command->redi->first_token->value))
-			break;
-		ft_putendl_fd(line, heredoc[1]);
+		while (true)
+		{
+			line = readline(">");
+			if (line == NULL || ft_strcmp(line, command->herdoc->first_token->value) == 0)
+				break;
+			ft_putendl_fd(line, temp_file);
+		}
 	}
-	contex.fd_in = dup(heredoc[0]);
-	close(heredoc[0]);
-	close(heredoc[1]);
-	ft_execute(command, vars, contex);
+	if (fork() == 0)
+	{
+		dup2(temp_file, STDIN_FILENO);
+		close(temp_file);
+		execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
+		exit(0);
+	}
+	else
+	{
+		wait(NULL);
+		close(temp_file);
+	}
 }

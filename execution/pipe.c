@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 12:04:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 14:04:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,34 @@
 
 void	exec_first_node(t_vars *vars, t_norm data)
 {
-	if (vars->command->redi->first_token != NULL)
-	{
-		if (vars->command->redi->first_token->token == T_HERDOC)
-		{
-			close(data.fd[0]);
-			data.contex.fd_in = dup(STDIN_FILENO);
-			data.contex.fd_out = dup(data.fd[1]);
-			ft_heredoc(vars, vars->command, data.contex);
-		}
-	}
-	else
-	{
-		close(data.fd[0]);
-		dup2(data.fd[1], STDOUT_FILENO);
-		exec_node(vars, vars->command, data.contex);
-	}
+	close(data.fd[0]);
+	dup2(data.fd[1], STDOUT_FILENO);
+	exec_node(vars, vars->command, data.contex);
 }
 
 void	exec_last_node(t_vars *vars, t_norm data)
 {
-	if (vars->command->redi->first_token != NULL)
-	{
-		if (vars->command->redi->first_token->token == T_HERDOC)
-		{
-			close(data.fd[0]);
-			close(data.fd[1]);
-			data.contex.fd_in = dup(data.temp_fd);
-			data.contex.fd_out = dup(STDOUT_FILENO);
-			ft_heredoc(vars, vars->command, data.contex);
-		}
-	}
-	else
-	{
-		close(data.fd[0]);
-		close(data.fd[1]);
-		dup2(data.temp_fd, STDIN_FILENO);
-		exec_node(vars, vars->command, data.contex);
-	}
+	close(data.fd[0]);
+	close(data.fd[1]);
+	dup2(data.temp_fd, STDIN_FILENO);
+	exec_node(vars, vars->command, data.contex);
 }
 
 void	exec_other_node(t_vars *vars, t_norm data)
 {
-	if (vars->command->redi->first_token != NULL)
-	{
-		if (vars->command->redi->first_token->token != T_HERDOC)
-		{
-			close(data.fd[0]);
-			data.contex.fd_in = dup(data.temp_fd);
-			data.contex.fd_out = dup(data.fd[1]);
-			ft_heredoc(vars, vars->command, data.contex);
-		}
-	}
-	else
-	{
-		close(data.fd[0]);
-		dup2(data.fd[1], STDOUT_FILENO);
-		dup2(data.temp_fd, STDIN_FILENO);
-		exec_node(vars, vars->command, data.contex);
-	}
+	close(data.fd[0]);
+	dup2(data.fd[1], STDOUT_FILENO);
+	dup2(data.temp_fd, STDIN_FILENO);
+	exec_node(vars, vars->command, data.contex);
 }
 
 void	wait_for_child(int *ids, int i, int temp_fd)
 {
 	close(temp_fd);
-	while (ids[--i])
+	while (--i >= 0)
+	{
 		waitpid(ids[i], 0, 0);
+	}
 }
 
 int flag = 0;
