@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 16:53:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 19:51:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,37 @@ void exec_heredoc(t_vars *vars, t_command *command, t_contex contex)
 		command = command->next_command;
 	}
 }
-void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
+int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 {
-	int temp_file;
-	char *line;
-	(void)vars;
-	
+	int		temp_file;
+	char	*line;
+	int		out_file;
 	
 	temp_file = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (temp_file == -1)
-		return ;
+		return (INT_MIN);
 	else
 	{
 		while (true)
 		{
 			line = readline(">");
 			if (line == NULL || ft_strcmp(line, command->herdoc->first_token->value) == 0)
-				break;
+				break ;
 			ft_putendl_fd(line, temp_file);
 		}
 		contex = open_files(command);
 		if (contex.fd_in == -1 || contex.fd_out == -1)
-			return ;
+			return (INT_MIN);
+	}
+	if (contex.fd_out != STDOUT_FILENO)
+	{
+		out_file = -1;
+	}
+	else
+	{
+		contex.fd_out = open("/tmp/temp_out_file", O_RDWR | O_TRUNC | O_CREAT, 0777);
+		if (contex.fd_out == -1)
+			perror(NULL);
 	}
 	close(temp_file);
 	temp_file = open("/tmp/temp", O_RDWR);
@@ -113,8 +122,16 @@ void	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 		char *path = get_path(vars->env_list, command->flags[0]);
 		if (path != NULL)
 			execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
+		else
+			printf("%s: Command Not Found\n", command->flags[0]);
 		exit(0);
 	}
+	if (contex.fd_out != STDOUT_FILENO)
+		close(contex.fd_out);
 	unlink("tmp/temp");
 	wait(NULL);
+	if (out_file != -1 && contex.fd_out != STDOUT_FILENO)
+		return (contex.fd_out);
+	else
+		return (-1);
 }
