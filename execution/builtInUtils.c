@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:41:23 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/02 17:07:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 12:40:17 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,21 @@ void	sort_list(t_list **env_list)
 	}
 }
 
+char *join_var(char **temp)
+{
+	int i;
+	char *result;
+	i = 0;
+	result = "";
+	while (temp[++i])
+	{
+		result = ft_strjoin(result, temp[i]);
+		if (temp[i + 1])
+			result = ft_strjoin(result, "=");
+	}
+	return (result);
+}
+
 char	*ft_get_env_val(t_list *env_list, char *var_name)
 {
 	char	*temp;
@@ -58,7 +73,7 @@ char	*ft_get_env_val(t_list *env_list, char *var_name)
 		if (!temp || !*temp)
 			return (NULL);
 		if (ft_strcmp(temp, var_name) == 0)
-			return (ft_split(env_list->content, '=')[1]);
+			return (join_var(ft_split(env_list->content, '=')));
 		env_list = env_list ->next;
 	}
 	return (NULL);

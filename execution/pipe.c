@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/05 21:35:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/06 12:04:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	exec_first_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token == T_HERDOC)
 		{
-			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
 			data.contex.fd_in = dup(STDIN_FILENO);
 			data.contex.fd_out = dup(data.fd[1]);
@@ -40,7 +39,6 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token == T_HERDOC)
 		{
-			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
 			close(data.fd[1]);
 			data.contex.fd_in = dup(data.temp_fd);
@@ -63,7 +61,6 @@ void	exec_other_node(t_vars *vars, t_norm data)
 	{
 		if (vars->command->redi->first_token->token != T_HERDOC)
 		{
-			kill(getppid(), SIGUSR1);
 			close(data.fd[0]);
 			data.contex.fd_in = dup(data.temp_fd);
 			data.contex.fd_out = dup(data.fd[1]);
