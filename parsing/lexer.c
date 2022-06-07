@@ -175,7 +175,7 @@ char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 		if (ft_get_env_val(env_list, s))
 			str = ft_get_env_val(env_list, s);
 		else
-			str = "";
+			str = ft_strdup("");
 	}
 	return (str);
 }
