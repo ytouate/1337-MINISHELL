@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 12:04:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:59:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void exec_heredoc(t_vars *vars, t_command *command, t_contex contex)
 		command = command->next_command;
 	}
 }
-int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
+
+int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex, char flag)
 {
 	int		temp_file;
 	char	*line;
@@ -116,7 +117,7 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 			perror(NULL);
 	}
 	close(temp_file);
-	temp_file = open("/tmp/temp", O_RDWR);
+	temp_file = open("/tmp/temp", O_RDONLY);
 	if (fork() == 0)
 	{
 		dup2(temp_file, 0);
