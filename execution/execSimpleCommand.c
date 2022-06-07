@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 12:04:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:41:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,11 @@ char	*get_path(t_list *env_list, char *cmd)
 	return (NULL);
 }
 
-int id = 0;
-void func(int sig)
-{
-	if (sig == SIGINT)
-	{
-		kill(id, SIGKILL);
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		rl_on_new_line();
-		// rl_repacle_line("", 0);
-		set_exit_code(130);
-	}
-}
 void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
 	int		status;
-	signal(SIGINT, func);
+
 	if (command->flags[0] == NULL)
 		return ;
 	command_path = get_path(vars->env_list, command->flags[0]);
@@ -65,14 +53,13 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 	{
 		if (command->flags[0][0])
 		{
-			id = fork();
-			if (id == 0)
+			if (fork() == 0)
 			{
-				dup2(contex.fd_out, STDOUT_FILENO);
 				dup2(contex.fd_in, STDIN_FILENO);
+				dup2(contex.fd_out, STDOUT_FILENO);
 				execve(command_path, command->flags, vars->env);
-				perror(NULL);
-				exit(EXIT_SUCCESS);
+				perror(command->flags[0]);
+				exit(0);
 			}
 			wait(&status);
 			if (WIFEXITED(status))

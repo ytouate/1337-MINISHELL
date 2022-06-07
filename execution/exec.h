@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 11:53:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 20:53:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void		ft_export(t_command *command, t_list *env, char *arg);
 void		ft_exec(t_vars *vars, t_command *command, t_contex contex);
 void		exec_heredoc(t_vars *vars, t_command *command, t_contex contex);
 
-int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
+// int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
 int			check_for_redirection(t_command *command);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
@@ -109,12 +109,14 @@ int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
 int			check_built_in_commands(t_vars *vars, t_command *command);
 
+int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
 char		*get_promt(void);
 char		*join_for_echo(t_list *env_list, char **s, char flag);
 char		*get_path(t_list *env_list, char *cmd);
 char		*get_path(t_list *env_list, char *cmd);
 char		*ft_get_env_val(t_list *env_list, char *var_name);
 
+bool		heredoc_outside_pipe(t_vars *vars, t_command *command);
 bool		run_exit(t_vars vars, t_command *command);
 bool		run_unset(t_vars vars, t_command *command);
 bool		run_cd(t_vars vars, t_command *command);
