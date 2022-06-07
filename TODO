@@ -2,5 +2,4 @@ herdoc
 include the herdoc inside the pipe
 handle signals
 handle the exit status
-i have two problems with the heredoc first problem is when the heredoc is the first command the next command does not get excuted
 the second problem is when there are multiple chained commands before the heredoc they output the result before the heredoc finishes its excution

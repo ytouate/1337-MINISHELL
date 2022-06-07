@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 19:51:36 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 12:04:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
 	if (command->flags[0] != NULL)
+	{
 		ft_execute(command, vars, contex);
+	}
 }
 
 void	redirect_input(t_vars *vars, t_command *command)

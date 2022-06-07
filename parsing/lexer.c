@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 10:57:34 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/05/29 16:39:44 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 11:38:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 	{
 		s = ft_strdup("");
 		while (lexer->content[lexer->i] && lexer->c != ' ' && lexer->c != '$' && lexer->c != '\'' && lexer->c != '"' && lexer->c != '?' && 
-				lexer->c != '!' && (ft_isalnum(lexer->c) != 0 || ft_isalpha(lexer->c) != 0))
+				lexer->c != '!' && (ft_isalnum(lexer->c) != 0 || ft_isalpha(lexer->c) != 0 || lexer->c == '_'))
 		{
 			str = s;
 			s = ft_strjoin(s, &lexer->c);
@@ -185,7 +185,7 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 	char	*str;
 
 	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-		 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*'))
+		 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*' || lexer->content[lexer->i + 1] == '_'))
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)
 	{
@@ -242,7 +242,7 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 	{
 		s = ft_strdup("");
 		if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-				 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*'))
+				 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*' || lexer->content[lexer->i + 1] == '_'))
 		{
 			temp = str;
 			str = ft_strjoin(str, ft_after_dollar(lexer, env_list));

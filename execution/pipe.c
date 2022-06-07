@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 11:12:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/07 13:52:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void	exec_first_node(t_vars *vars, t_norm data)
 		close(data.fd[1]);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		dup2(data.fd[1], STDOUT_FILENO);
 	}
 	else
 	{
 		close(data.fd[0]);
 		dup2(data.fd[1], STDOUT_FILENO);
-		
 	}
 	exec_node(vars, vars->command, data.contex);
 }
@@ -39,18 +39,13 @@ void	exec_last_node(t_vars *vars, t_norm data)
 		close(data.fd[1]);
 		close(data.temp_fd);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
-		if (data.contex.herdoc_fildes != -1)
-			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
-		else
-			ft_putendl_fd("error occured while creating /tmp/temp_out_file\n", STDERR_FILENO);
+		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 	}
 	else
 	{
-		printf("am here\n");
 		close(data.fd[0]);
 		close(data.fd[1]);
 		dup2(data.temp_fd, STDIN_FILENO);
-		
 	}
 	exec_node(vars, vars->command, data.contex);
 }
@@ -62,13 +57,13 @@ void	exec_other_node(t_vars *vars, t_norm data)
 	{
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		dup2(data.fd[1], STDOUT_FILENO);
 	}
 	else
 	{
 		dup2(data.fd[1], STDOUT_FILENO);
 		dup2(data.temp_fd, STDIN_FILENO);
 	}
-	
 	exec_node(vars, vars->command, data.contex);
 }
 
@@ -84,6 +79,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	int	flag;
 
 	flag = 0;
+	data.contex.herdoc_fildes = -1;
 	while (vars->command)
 	{
 		flag = 0;
@@ -118,6 +114,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			close(data.fd[1]);
 			data.i += 1;
 		}
+		
 		vars->command = vars->command->next_command;
 	}
 	wait_for_child(data.ids, data.i, data.temp_fd);
