@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 10:20:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 11:02:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ void	check_cmd(t_command *command, t_vars *vars, t_contex contex)
 				perror("execve");
 				exit(EXIT_SUCCESS);
 			}
-			read(fd[0], &temp, sizeof(int));
-			set_exit_code(temp);
 		}
 		else
 		{

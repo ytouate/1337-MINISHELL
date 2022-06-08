@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 10:19:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 11:12:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_redirect_output_append_mode(t_command *command, t_vars *vars)
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
 	if (command->flags[0] != NULL)
-		ft_execute(command, vars, contex);
+		if (!check_built_in_commands(vars, command))
+			ft_execute(command, vars, contex);
 }
 
 void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
@@ -32,7 +33,8 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 		return ;
 	if (command->flags[0] != NULL)
 	{
-		ft_execute(command, vars, contex);
+		if (!check_built_in_commands(vars, command))
+			ft_execute(command, vars, contex);
 	}
 }
 
@@ -44,7 +46,8 @@ void	redirect_input(t_vars *vars, t_command *command)
 	if (contex.fd_out == -1 || contex.fd_in == -1)
 		return ;
 	else if (command->flags[0] != NULL)
-		ft_execute(command, vars, contex);
+		if (!check_built_in_commands(vars, command))
+			ft_execute(command, vars, contex);
 }
 
 void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
@@ -135,6 +138,8 @@ bool heredoc_outside_pipe(t_vars *vars, t_command *command)
 	contex.fd_in = dup(contex.fd_in);
 	contex.fd_out = STDOUT_FILENO;
 	ft_execute(command, vars, contex);
+	//if (!check_redirection(vars, command))
+	//	if (!check_built_in_commands(vars, command))
 	unlink("/tmp/temp");
 	return (true);
 }

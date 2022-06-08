@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 17:23:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 11:05:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,29 @@ int	get_exit_code(void)
 	return (exit_code);
 }
 
+bool check_redirection(t_vars *vars, t_command *command)
+{
+	if (command->redi->first_token != NULL)
+	{
+		if (command->redi->first_token->token == T_OUT)
+			ft_redirect_output_trunc_mode(vars, command);
+		else if (command->redi->first_token->token == T_APPEND)
+			ft_redirect_output_append_mode(command, vars);
+		else if (command->redi->first_token->token == T_IN)
+			redirect_input(vars, command);
+		return (true);
+	}
+	else
+		return (false);
+}
 void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 {
 	int		i;
+
 	i = 0;
 	if (check_built_in_commands(vars, command) == false)
 	{
-		if (command->redi->first_token != NULL)
-		{
-			if (command->redi->first_token->token == T_OUT)
-				ft_redirect_output_trunc_mode(vars, command);
-			else if (command->redi->first_token->token == T_APPEND)
-				ft_redirect_output_append_mode(command, vars);
-			else if (command->redi->first_token->token == T_IN)
-				redirect_input(vars, command);
-		}
-		else
+		if (!check_redirection(vars, command))
 		{
 			if (command->herdoc->first_token == NULL)
 				ft_execute(command, vars, contex);
