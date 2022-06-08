@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:05:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:40:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			}
 			else
 			{
-				printf("am here\n");
+				close(data.fd[0]);
+				close(data.fd[1]);
+				close(data.temp_fd);
 				heredoc_outside_pipe(vars, vars->command);
+				wait(NULL);
 			}
 		}
 		else

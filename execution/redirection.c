@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:14:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:39:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,12 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	contex.fd_in = dup(temp_stdin);
 	contex.fd_out = dup(contex.fd_out);
 	if (!check_built_in_commands(vars, command))
+	{
 		if (!check_redirection(vars, command))
+		{
 			ft_execute(command, vars, contex);
+		}
+	}
 	unlink("tmp/temp");
 	if (out_file != -1 && contex.fd_out != STDOUT_FILENO)
 		return (contex.fd_out);
