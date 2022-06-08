@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 20:56:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 10:19:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,9 @@ bool heredoc_outside_pipe(t_vars *vars, t_command *command)
 	}
 	close(contex.fd_in);
 	contex.fd_in = open("/tmp/temp", O_RDONLY);
-	if (fork() == 0)
-	{
-		dup2(contex.fd_in, STDIN_FILENO);
-		char *path = get_path(vars->env_list, command->flags[0]);
-		if (path != NULL)
-			execve(get_path(vars->env_list, command->flags[0]), command->flags, vars->env);
-		exit(0);
-	}
-	wait(NULL);
+	contex.fd_in = dup(contex.fd_in);
+	contex.fd_out = STDOUT_FILENO;
+	ft_execute(command, vars, contex);
+	unlink("/tmp/temp");
 	return (true);
 }

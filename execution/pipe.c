@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 20:57:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 10:11:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ void	exec_other_node(t_vars *vars, t_norm data)
 	close(data.fd[0]);
 	if (data.contex.herdoc_fildes != -1)
 	{
+		close(data.temp_fd);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 		dup2(data.fd[1], STDOUT_FILENO);
+		wait(NULL);
 	}
 	else
 	{
@@ -53,7 +55,7 @@ void	exec_other_node(t_vars *vars, t_norm data)
 
 void	wait_for_child(int *ids, int i, int temp_fd)
 {
-	close(temp_fd);
+	(void)temp_fd;
 	while (--i >= 0)
 		waitpid(ids[i], 0, 0);
 }
@@ -74,6 +76,9 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 				data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
 			else
 			{
+				close(data.fd[0]);
+				close(data.fd[1]);
+				data.temp_fd = dup(data.fd[0]);
 				heredoc_flag = 1;
 				break ;
 			}
@@ -101,6 +106,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}
+	close(data.temp_fd);
 	wait_for_child(data.ids, j, data.temp_fd);
 	if (heredoc_flag == 1)
 		heredoc_outside_pipe(vars, vars->command);
