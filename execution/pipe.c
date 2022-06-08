@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:40:56 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:42:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,6 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	}
 	close(data.temp_fd);
 	wait_for_child(data.ids, j, data.temp_fd);
-	//if (heredoc_flag > 0)
-	//{
-	//	// printf("heredoc todo %d\n", heredoc_flag);
-	//	heredoc_outside_pipe(vars, vars->command);
-	//}
 }
 
 void	ft_pipe(t_vars *vars)
@@ -136,5 +131,4 @@ void	ft_pipe(t_vars *vars)
 		if (!heredoc_outside_pipe(vars, vars->command))
 			exec_node(vars, vars->command, data.contex);
 	}
-	
 }
