@@ -84,7 +84,7 @@ void exec_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	}
 }
 
-int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex, char flag)
+int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 {
 	int		temp_file;
 	char	*line;
