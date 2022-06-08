@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:42:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 19:13:09 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	close(data.fd[1]);
 	if (data.contex.herdoc_fildes != -1)
 	{
+		wait(NULL);
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
