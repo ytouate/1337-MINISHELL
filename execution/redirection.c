@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:08:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:14:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 		}
 	}
 }
-
 
 
 int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
