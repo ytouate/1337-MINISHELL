@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 10:11:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 13:05:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	close(data.fd[1]);
 	if (data.contex.herdoc_fildes != -1)
 	{
+		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 	}
@@ -40,10 +41,10 @@ void	exec_other_node(t_vars *vars, t_norm data)
 	if (data.contex.herdoc_fildes != -1)
 	{
 		close(data.temp_fd);
+		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 		dup2(data.fd[1], STDOUT_FILENO);
-		wait(NULL);
 	}
 	else
 	{
@@ -73,14 +74,14 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		if (vars->command->herdoc->first_token != NULL)
 		{
 			if (vars->command->next_command)
+			{
+				heredoc_flag += 1;
 				data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
+			}
 			else
 			{
-				close(data.fd[0]);
-				close(data.fd[1]);
-				data.temp_fd = dup(data.fd[0]);
-				heredoc_flag = 1;
-				break ;
+				printf("am here\n");
+				heredoc_outside_pipe(vars, vars->command);
 			}
 		}
 		else
@@ -99,6 +100,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 				exit(0);
 			}
 			data.ids[j++] = data.id;
+			heredoc_flag = 0;
 			data.temp_fd = dup(data.fd[0]);
 			close(data.fd[0]);
 			close(data.fd[1]);
@@ -108,8 +110,11 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	}
 	close(data.temp_fd);
 	wait_for_child(data.ids, j, data.temp_fd);
-	if (heredoc_flag == 1)
-		heredoc_outside_pipe(vars, vars->command);
+	//if (heredoc_flag > 0)
+	//{
+	//	// printf("heredoc todo %d\n", heredoc_flag);
+	//	heredoc_outside_pipe(vars, vars->command);
+	//}
 }
 
 void	ft_pipe(t_vars *vars)
@@ -128,4 +133,5 @@ void	ft_pipe(t_vars *vars)
 		if (!heredoc_outside_pipe(vars, vars->command))
 			exec_node(vars, vars->command, data.contex);
 	}
+	
 }
