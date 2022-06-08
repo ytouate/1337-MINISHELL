@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 11:08:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 20:35:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 
-t_contex	open_files(t_command *command);
+t_contex	open_files(t_command command);
 bool check_redirection(t_vars *vars, t_command *command);
 void		exec_pipe(t_vars *vars);
 void		check_cmd(t_command *command, t_vars *vars, t_contex contex);

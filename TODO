@@ -1,5 +1,3 @@
-herdoc
-include the herdoc inside the pipe
-handle signals
+handle the excution of the built in commands and the redirection in heredoc and in a simple command
 handle the exit status
-the second problem is when there are multiple chained commands before the heredoc they output the result before the heredoc finishes its excution
+handle signals

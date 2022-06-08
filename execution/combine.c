@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 11:05:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 21:11:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 		if (!check_redirection(vars, command))
 		{
 			if (command->herdoc->first_token == NULL)
-				ft_execute(command, vars, contex);
+			{
+			  	ft_execute(command, vars, contex);
+				wait(NULL);
+			}
 		}
 	}
 }

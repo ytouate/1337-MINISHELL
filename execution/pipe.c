@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 19:13:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 21:15:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,33 +62,46 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 		waitpid(ids[i], 0, 0);
 }
 
+int check_heredoc(t_vars *vars, t_norm data)
+{
+	data.contex.herdoc_fildes = -1;
+	if (vars->command->herdoc->first_token != NULL)
+	{
+		if (vars->command->next_command)
+			data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
+		else
+		{
+			close(data.fd[0]);
+			close(data.fd[1]);
+			close(data.temp_fd);
+			heredoc_outside_pipe(vars, vars->command);
+			wait(NULL);
+			return (-1);
+		}
+		return (data.contex.herdoc_fildes);
+	}
+	else
+		return (INT_MIN);
+}
 void	loop_through_nodes(t_vars *vars, t_norm data)
 {
 	data.contex.herdoc_fildes = -1;
 	int	j;
 	j = 0;
 	int heredoc_flag = 0;
+
 	while (vars->command)
 	{
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
-		if (vars->command->herdoc->first_token != NULL)
+		
+		data.contex.herdoc_fildes = check_heredoc(vars, data);
+		if (data.contex.herdoc_fildes == -1)
 		{
-			if (vars->command->next_command)
-			{
-				heredoc_flag += 1;
-				data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
-			}
-			else
-			{
-				close(data.fd[0]);
-				close(data.fd[1]);
-				close(data.temp_fd);
-				heredoc_outside_pipe(vars, vars->command);
-				wait(NULL);
-			}
+
+			break ;
 		}
-		else
+		else if (data.contex.herdoc_fildes == INT_MIN)
 		{
 			pipe(data.fd);
 			data.id = fork();

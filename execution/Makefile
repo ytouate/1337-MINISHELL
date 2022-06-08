@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/05 21:41:01 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/08 20:34:24 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,12 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g
 NAME = exec
 FILES =	\
+	./randomUtils.c			\
 	./cd.c					\
 	./builtInUtils.c		\
 	./redirection.c			\
 	./env.c					\
 	./echo.c				\
-	./randomUtils.c			\
 	./Unset.c				\
 	./combine.c				\
 	./free.c				\

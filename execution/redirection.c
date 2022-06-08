@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 13:39:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 21:16:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_redirect_output_append_mode(t_command *command, t_vars *vars)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
-	contex = open_files(command);
+	contex = open_files(*command);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
 	if (command->flags[0] != NULL)
@@ -28,7 +28,7 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
-	contex = open_files(command);
+	contex = open_files(*command);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
 	if (command->flags[0] != NULL)
@@ -42,7 +42,7 @@ void	redirect_input(t_vars *vars, t_command *command)
 {
 	t_contex	contex;
 	contex.herdoc_fildes = -1;
-	contex = open_files(command);
+	contex = open_files(*command);
 	if (contex.fd_out == -1 || contex.fd_in == -1)
 		return ;
 	else if (command->flags[0] != NULL)
@@ -91,7 +91,7 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 			break ;
 		ft_putendl_fd(line, temp_stdin);
 	}
-	contex = open_files(command);
+	contex = open_files(*command);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return (INT_MIN);
 	else if (contex.fd_out != STDOUT_FILENO)
@@ -131,12 +131,13 @@ bool heredoc_outside_pipe(t_vars *vars, t_command *command)
 	}
 	close(contex.fd_in);
 	contex.fd_in = open("/tmp/temp", O_RDONLY);
-	contex.fd_in = dup(contex.fd_in);
 	contex.fd_out = STDOUT_FILENO;
-	ft_execute(command, vars, contex);
-	wait(NULL);
-	//if (!check_redirection(vars, command))
-	//	if (!check_built_in_commands(vars, command))
+	contex.fd_in = dup(contex.fd_in);
+	if (!check_built_in_commands(vars, command))
+	{
+		ft_execute(command, vars, contex);
+		wait(NULL);
+	}
 	unlink("/tmp/temp");
 	return (true);
 }

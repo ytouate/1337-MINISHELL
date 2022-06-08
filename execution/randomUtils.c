@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:33:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 20:50:17 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,34 +103,34 @@ int	get_len(t_command *command)
 }
 
 
-t_contex	open_files(t_command *command)
+t_contex	open_files(t_command command)
 {
 	t_contex	contex;
 	contex.fd_in = STDIN_FILENO;
 	contex.fd_out = STDOUT_FILENO;
 
-	while (command->redi->first_token)
+	while (command.redi->first_token)
 	{
-		if (command->redi->first_token->token == T_IN)
+		if (command.redi->first_token->token == T_IN)
 		{
-			contex.fd_in = open(command->redi->first_token->value, O_RDONLY);
+			contex.fd_in = open(command.redi->first_token->value, O_RDONLY);
 			if (contex.fd_in == -1)
 			{
-				perror(command->redi->first_token->value);
+				perror(command.redi->first_token->value);
 				return (contex);
 			}
 		}
-		else if (command->redi->first_token->token == T_OUT)
+		else if (command.redi->first_token->token == T_OUT)
 		{
-			contex.fd_out = open(command->redi->first_token->value, \
+			contex.fd_out = open(command.redi->first_token->value, \
 				O_CREAT | O_TRUNC | O_RDWR, 0644);
 			if (contex.fd_out == -1)
 			{
-				perror(command->redi->first_token->value);
+				perror(command.redi->first_token->value);
 				return (contex);
 			}
 		}
-		command->redi->first_token = command->redi->first_token->next;
+		command.redi->first_token = command.redi->first_token->next;
 	}
 	return (contex);
 }

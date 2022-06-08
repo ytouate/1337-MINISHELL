@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 11:35:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/08 21:11:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,6 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				perror(command->flags[0]);
 				exit(0);
 			}
-			if (contex.fd_in != 0)
-				close(contex.fd_in);
-			if (contex.fd_out != 1)
-				close(contex.fd_out);
 			wait(NULL);
 		}
 		else
