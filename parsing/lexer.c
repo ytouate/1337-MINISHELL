@@ -180,12 +180,22 @@ char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 	return (str);
 }
 
+int	ft_check_after_dollar(t_lexer *lexer)
+{
+	if (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' )
+		return (1);
+	else if (lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*')
+		return (1);
+	else if (lexer->content[lexer->i + 1] == '_')
+		return (1);
+	return (0);
+}
+
 char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
 
-	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-		 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*' || lexer->content[lexer->i + 1] == '_'))
+	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 && ft_check_after_dollar(lexer) == 1)
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)
 	{
@@ -210,7 +220,8 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 	char	*s;
 
 	str = ft_strdup("");
-	while (lexer->content[lexer->i] && lexer->c != ' ' && lexer->c != '\'' && lexer->c != '"' && lexer->c != '>' && lexer->c != '<' && lexer->c != '|')
+	while (lexer->content[lexer->i] && lexer->c != ' ' &&
+			 lexer->c != '\'' && lexer->c != '"' && lexer->c != '>' && lexer->c != '<' && lexer->c != '|')
 	{
 		s = ft_strdup("");
 		if (lexer->c == '&')
@@ -230,39 +241,39 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 	return(str);
 }
 
+char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
+{
+	char	*s;
+
+	if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 && ft_check_after_dollar(lexer) == 1)
+		return (ft_after_dollar(lexer, env_list));
+	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1 
+			&& (lexer->content[lexer->i + 1] == '\\' || lexer->content[lexer->i + 1] == c || lexer->content[lexer->i + 1] == '$'))
+	{
+		ft_advance(lexer);
+		s = ft_strdup(&lexer->c);
+		ft_advance(lexer);
+		return (s);
+	}
+	else
+	{
+		s = ft_strdup(&lexer->c);
+		ft_advance(lexer);
+		return (s);
+	}
+}
 char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 {
 	char	*str;
 	char	*temp;
-	char	*s;
 
 	str = ft_strdup("");
 	ft_advance(lexer);
 	while(lexer->content[lexer->i] && lexer->c != c)
 	{
-		s = ft_strdup("");
-		if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 &&
-				 (ft_isalnum(lexer->content[lexer->i + 1]) != 0 || lexer->content[lexer->i + 1] == '?' || lexer->content[lexer->i + 1] == '@' || lexer->content[lexer->i + 1] == '*' || lexer->content[lexer->i + 1] == '_'))
-		{
-			temp = str;
-			str = ft_strjoin(str, ft_after_dollar(lexer, env_list));
-			free(temp);
-		}
-		else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1 && (lexer->content[lexer->i + 1] == '\\' || lexer->content[lexer->i + 1] == c || lexer->content[lexer->i + 1] == '$'))
-		{
-			ft_advance(lexer);
-			temp = str;
-			str = ft_strjoin(str, &lexer->c);
-			ft_advance(lexer);
-		}
-		else
-		{
-			temp = str;
-			str = ft_strjoin(str, &lexer->c);
-			free(temp);
-			ft_advance(lexer);
-			free(s);
-		}
+		temp = str;
+		str = ft_strjoin(str, ft_help_collect_str(lexer, env_list, c));
+		free(temp);
 	}
 	if (lexer->c != c)
 		return (NULL);
