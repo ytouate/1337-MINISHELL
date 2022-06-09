@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 21:11:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 10:57:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				perror(command->flags[0]);
 				exit(0);
 			}
+			
 			wait(NULL);
 		}
 		else
 			printf("%s: command not found\n", command->flags[0]);
 	}
+	
 }
 
 void	run_excutable(t_command *command, t_vars *vars, t_contex contex)

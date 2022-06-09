@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/07 15:27:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 10:49:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int	main(int ac, char **av, char **env)
 	{
 		cmd = get_promt();
 		if (cmd == NULL)
+		{
 			exit(130);
+		}
 		cmd = ft_strtrim(cmd, " ");
 		if (*cmd)
 		{
@@ -58,7 +60,6 @@ int	main(int ac, char **av, char **env)
 				if (command != NULL)
 				{
 					replace_symbol_by_val(command->first_c->flags, vars->env_list);
-					// exec_pipe(vars);
 					ft_pipe(vars);
 				}
 			}

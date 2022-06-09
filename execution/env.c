@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 20:37:58 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:31:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_env(t_vars vars, t_command *command)
 {
 	int	fd;
 
-	fd = open_files(*command).fd_out;
+	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
 		return ;
 	while (vars.env_list)

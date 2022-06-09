@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 20:38:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:32:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_echo(t_command *command, char *s, char flag)
 {
 	int		fd;
 
-	fd = open_files(*command).fd_out;
+	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
 		return ;
 	if (s == NULL)

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 20:36:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:56:00 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_export(t_command *command, t_list *env, char *arg)
 {
 	int fd;
-	fd = open_files(*command).fd_out;
+	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
 		return ;
 	if (arg == NULL)
@@ -38,11 +38,9 @@ void	ft_export(t_command *command, t_list *env, char *arg)
 void show_export_list(t_command *command, t_vars vars)
 {
 	t_contex contex;
-	contex = open_files(*command);
+	contex = open_files(*command->redi);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
-
-	printf("am here %d %d \n", contex.fd_in, contex.fd_out);
 	while (vars.export_list)
 	{
 		ft_putstr_fd("declare -x  ", contex.fd_out);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/08 20:36:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 12:32:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_pwd(t_vars vars, t_command *command)
 	t_contex		contex;
 	char	working_directory[PATH_MAX];
 
-	contex = open_files(*command);
+	contex = open_files(*command->redi);
 	if (contex.fd_out == -1 || contex.fd_in == -1)
 	{
 		set_exit_code(1);
