@@ -1,3 +1,1 @@
-handle the excution of the built in commands and the redirection in heredoc and in a simple command
-handle the exit status
-handle signals
+cat | << her cat | cat 
