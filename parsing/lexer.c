@@ -233,7 +233,10 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 		temp = s;
 		s = ft_get_str(lexer, env_list);
 		if (s == NULL)
+		{
+			free(temp);
 			return (NULL);
+		}
 		temp = str;
 		str = ft_strjoin(str, s);
 		free(temp);
@@ -245,7 +248,8 @@ char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
 {
 	char	*s;
 
-	if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 && ft_check_after_dollar(lexer) == 1)
+	if (c == '"' && lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 && 
+			ft_check_after_dollar(lexer) == 1)
 		return (ft_after_dollar(lexer, env_list));
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1 
 			&& (lexer->content[lexer->i + 1] == '\\' || lexer->content[lexer->i + 1] == c || lexer->content[lexer->i + 1] == '$'))
