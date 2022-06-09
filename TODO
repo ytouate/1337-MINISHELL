@@ -1,1 +1,2 @@
 cat | << her cat | cat 
+unset a variable; export | grep variable;

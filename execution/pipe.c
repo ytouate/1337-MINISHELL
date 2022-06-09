@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 14:33:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 16:33:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@ void	exec_last_node(t_vars *vars, t_norm data)
 		wait(NULL);
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
-		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		if (data.contex.herdoc_fildes == 0)
+		{
+			unlink("/tmp/trash");
+			data.contex.herdoc_fildes = open("/tmp/trash", O_RDONLY | O_CREAT);
+			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		}
+		else
+			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 	}
 	else
 	{
@@ -47,7 +54,13 @@ void	exec_other_node(t_vars *vars, t_norm data)
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
-		if (data.contex.herdoc_fildes == -1)
+		if (data.contex.herdoc_fildes == 0)
+		{
+			unlink("/tmp/trash");
+			data.contex.herdoc_fildes = open("/tmp/trash", O_RDONLY | O_CREAT);
+			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		}
+		else if (data.contex.herdoc_fildes == -1)
 			goto here;
 		dup2(data.fd[1], STDOUT_FILENO);
 	}

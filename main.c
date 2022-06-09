@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 10:49:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 16:26:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **env)
 		cmd = ft_strtrim(cmd, " ");
 		if (*cmd)
 		{
-			command = ft_get_for_exec(cmd, vars->env_list);
+			command = ft_get_for_exec(cmd, vars->env_list); 
 			if (command != NULL)
 			{
 				vars->command = command->first_c;

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:32:36 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 16:41:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	ft_unset(t_list **env_list, char *to_delete)
 			{
 				vars.temp = vars.second;
 				vars.first->next = vars.second->next;
+				free(vars.temp->content);
+				vars.temp->content = NULL;
 				free(vars.temp);
+				vars.temp = NULL;
 				free_2d_array(vars.cmd);
 				return ;
 			}
