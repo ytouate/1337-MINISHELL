@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 15:50:39 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:30:40 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	sig_handler(int sig)
 		rl_on_new_line();
 		//rl_replace_line("", 0);
 		rl_redisplay();
-		set_exit_code(130);
 	}
 }
 

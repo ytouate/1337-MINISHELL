@@ -6,13 +6,19 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 15:44:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:24:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
+typedef struct s_files
+{
+	int	in;
+	int	trunc;
+	int	append;
+}t_files;
 
 # define PERMISSION_DENIED 126
 # define COMMAND_NOT_FOUND 127

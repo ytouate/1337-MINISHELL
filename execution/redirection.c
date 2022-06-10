@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 16:07:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:32:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,16 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 				dup2(contex.fd_out, STDOUT_FILENO);
 				execve(path, command->flags, vars->env);
 				perror("execve");
-				exit(127);
+				exit(COMMAND_NOT_FOUND);
 			}
 		}
 		else
 		{
-			set_exit_code(127);
+			set_exit_code(COMMAND_NOT_FOUND);
 			printf("%s: command, not found", command->flags[0]);
 		}
 	}
 }
-
 
 int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 {

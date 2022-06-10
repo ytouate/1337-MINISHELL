@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 15:41:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 19:36:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ void	check_cmd(t_command *command, t_vars *vars, t_contex contex)
 		set_exit_code(WEXITSTATUS(stats));
 		return ;
 	}
-	set_exit_code(127);
-	perror(command->flags[0]);
+	else
+	{
+		set_exit_code(COMMAND_NOT_FOUND);
+		perror(command->flags[0]);
+	}
 }

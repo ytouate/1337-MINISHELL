@@ -1,2 +1,4 @@
-cat | << her cat | cat 
 unset a variable; export | grep variable;
+exit argument inside a child minishelle
+signals
+heap use after free when trying to grep a unseted variable;
