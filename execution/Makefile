@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/10 21:03:57 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/10 21:18:05 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,12 @@ FILES =	\
 	./redirection_utils.c	\
 	./cd.c					\
 	./builtInUtils.c		\
+	./heredoc.c				\
 	./before_heredoc.c		\
 	./export_utils.c		\
 	./heredoc_utils.c		\
 	./redirection.c			\
+	./pipe_utils.c			\
 	./exec_utils.c			\
 	./env.c					\
 	./echo.c				\
