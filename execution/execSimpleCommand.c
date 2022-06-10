@@ -47,7 +47,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 	{
 		set_exit_code(127);
 		ft_putstr_fd(command->flags[0], STDERR_FILENO);
-		ft_putendl_fd("command not found", STDERR_FILENO);
+		ft_putendl_fd(":command not found", STDERR_FILENO);
 	}
 	else
 	{
@@ -67,7 +67,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 		else
 		{
 			ft_putstr_fd(command->flags[0], STDERR_FILENO);
-			ft_putendl_fd("command not found", STDERR_FILENO);
+			ft_putendl_fd(":command not found", STDERR_FILENO);
 		}
 	}
 	
