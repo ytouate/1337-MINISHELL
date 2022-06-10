@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:33:56 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/06 14:15:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 12:34:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ typedef struct minishellpars{
 	t_token_head			*herdoc;
 }t_command;
 
+typedef struct head
+{
+	int		taille;
+	t_command	*first_c;
+}t_head_c;
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -55,11 +60,7 @@ typedef struct lexer
 	size_t	i;
 }t_lexer;
 	
-typedef struct head
-{
-	int		taille;
-	t_command	*first_c;
-}t_head_c;
+
 
 t_token		*ft_init_token(int type, char *value);
 void		ft_advance(t_lexer	*lexer);
