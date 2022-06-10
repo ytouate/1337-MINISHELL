@@ -6,12 +6,22 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:37:27 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 12:31:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 14:54:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+bool heredoc_exist(t_vars *vars)
+{
+    while (vars->command)
+    {
+        if (vars->command->herdoc->first_token != NULL)
+            return (true);
+        vars ->command = vars->command->next_command;
+    }
+    return (false);
+}
 void exec_first_command_before_heredoc(t_vars *vars, t_norm data)
 {
     close(data.fd[0]);
@@ -20,8 +30,10 @@ void exec_first_command_before_heredoc(t_vars *vars, t_norm data)
 }
 void exec_last_command_before_heredoc(t_vars *vars, t_norm data)
 {
-    if (vars->command->redi->first_token == NULL)
-        dup2(data.fd[1], STDOUT_FILENO);
+    if (vars->command->redi->first_token == NULL && vars->command->next_command)
+    {
+       dup2(data.fd[1], STDOUT_FILENO);
+    }
     else
         close(data.fd[1]);
     close(data.fd[0]);
