@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 18:34:48 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 11:56:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char *cmd;
 
-	t_head_c	*command;
 	t_vars		*vars;
 
 	vars = malloc(sizeof(t_vars));
@@ -42,20 +41,19 @@ int	main(int ac, char **av, char **env)
 	{
 		cmd = get_promt();
 		if (cmd == NULL)
-		{
 			exit(130);
-		}
 		cmd = ft_strtrim(cmd, " ");
 		if (*cmd)
 		{
-			command = ft_get_for_exec(cmd, vars->env_list); 
-			if (command != NULL)
+			vars->head = ft_get_for_exec(cmd, vars->env_list); 
+			if (vars->head != NULL)
 			{
-				vars->command = command->first_c;
-				vars->num_of_commands = get_len(command->first_c);
-				if (command != NULL)
+				vars->command = vars->head->first_c;
+				vars->num_of_commands = get_len(vars->command);
+	
+				if (vars->command != NULL)
 				{
-					replace_symbol_by_val(command->first_c->flags, vars->env_list);
+					replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
 					ft_pipe(vars);
 				}
 			}

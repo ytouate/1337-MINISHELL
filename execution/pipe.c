@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 16:33:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 12:21:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	int	j;
 	j = 0;
 	data.contex.herdoc_fildes = 1337;
+	while (  vars->command &&vars->command->herdoc->first_token == NULL )
+		vars->command = vars->command->next_command;
 	while (vars->command)
 	{
 		data.contex.fd_in = STDIN_FILENO;
@@ -138,7 +140,10 @@ void	ft_pipe(t_vars *vars)
 	data.ids = malloc(sizeof(int) * data.size);
 	data.i = 0;
 	if (data.size != 1)
+	{
 		loop_through_nodes(vars, data);
+		exec_commands_before_heredoc(vars);
+	}
 	else
 	{
 		if (!heredoc_outside_pipe(vars, vars->command))

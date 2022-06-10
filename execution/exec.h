@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 12:30:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 11:35:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_vars
 	t_list		*env_list;
 	t_list		*export_list;
 	char		**env;
+	t_head_c	*head;
 	int			num_of_commands;
 	t_command	*command;
 }t_vars;
@@ -67,14 +68,11 @@ typedef struct s_norm
 	t_contex	contex;
 	int		fd[2];
 }t_norm;
-
-t_list		*ft_getenv(t_list *env_list, char *var_name);
+void	wait_for_child(int *ids, int i, int temp_fd);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
-
 t_contex	open_files(t_token_head redi);
-bool check_redirection(t_vars *vars, t_command *command);
-void		exec_pipe(t_vars *vars);
+void exec_commands_before_heredoc(t_vars *vars);
 void		check_cmd(t_command *command, t_vars *vars, t_contex contex);
 void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 void		ft_execute(t_command *command, t_vars *vars, t_contex contex);
@@ -95,11 +93,7 @@ void		ft_redirect_output_trunc_mode(t_vars *vars, t_command *command);
 void		redirect_input(t_vars *vars, t_command *command);
 void		ft_exit(int exit_code, char *arg, char flag);
 void		ft_export(t_command *command, t_list *env, char *arg);
-void		ft_exec(t_vars *vars, t_command *command, t_contex contex);
-void		exec_heredoc(t_vars *vars, t_command *command, t_contex contex);
 
-// int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
-int			check_for_redirection(t_command *command);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
 int			get_exit_code(void);
@@ -112,7 +106,6 @@ int			check_built_in_commands(t_vars *vars, t_command *command);
 int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
 char		*get_promt(void);
 char		*join_for_echo(t_list *env_list, char **s, char flag);
-char		*get_path(t_list *env_list, char *cmd);
 char		*get_path(t_list *env_list, char *cmd);
 char		*ft_get_env_val(t_list *env_list, char *var_name);
 
