@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 16:09:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:50:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,55 +68,6 @@ void	add_existed_variable(t_command *command, t_vars *vars, int i)
 	ft_lstadd_front(&(vars)->export_list,
 		ft_lstnew(ft_strdup(command->flags[i])));
 	sort_list(&vars->export_list);
-}
-
-bool	add_variable(t_command *command, t_vars *vars, char **temp, int i)
-{
-	if (is_variable(command->flags[i]))
-	{
-		if (ft_getenv(vars->env_list, temp[0]) == NULL)
-		{
-			if (ft_getenv(vars->export_list, temp[0]) != NULL)
-			{
-				ft_unset(&vars->export_list, temp[0]);
-				add_unexisted_variable(command, vars, temp, i);
-			}
-			else
-				add_unexisted_variable(command, vars, temp, i);
-		}
-		else
-			add_existed_variable(command, vars, i);
-		return (true);
-	}
-	return (false);
-}
-
-void	add_non_variable(t_command *command, t_vars *vars, char **temp, int i)
-{
-	if (ft_getenv(vars->export_list, temp[0]) == NULL)
-	{
-		ft_lstadd_front(&(vars)->export_list,
-			ft_lstnew(ft_strdup(command->flags[i])));
-		sort_list(&vars->export_list);
-	}
-}
-
-void show_export_error(int *flag, int i, t_command *command)
-{
-	if (*flag == 0)
-	{
-		ft_error(command->flags[i], " :export: not an identifier", 1);
-		*flag = 1;
-	}
-}
-
-void add_properly_named_word(t_command *command, t_vars *vars, int i)
-{
-	char	**temp;
-
-	temp = ft_split(command->flags[i], '=');
-	if (!add_variable(command, vars, temp, i))
-		add_non_variable(command, vars, temp, i);
 }
 
 bool	run_export(t_command *command, t_vars *vars)

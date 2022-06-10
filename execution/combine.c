@@ -6,29 +6,29 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 19:33:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:45:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	exit_code = 0;
+int	g_exit_code;
 
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)
-		exit_code = num;
+		g_exit_code = num;
 	else
 	{
 		while (num > 255)
 			num -= 256;
-		exit_code = num;
+		g_exit_code = num;
 	}
 }
 
 int	get_exit_code(void)
 {
-	return (exit_code);
+	return (g_exit_code);
 }
 
 bool	check_redirection(t_vars *vars, t_command *command)

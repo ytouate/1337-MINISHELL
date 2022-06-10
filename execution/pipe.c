@@ -6,12 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 16:04:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:33:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
 
 void	exec_first_node(t_vars *vars, t_norm data)
 {

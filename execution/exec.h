@@ -6,25 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:24:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 21:03:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
-typedef struct s_files
-{
-	int	in;
-	int	trunc;
-	int	append;
-}t_files;
-
-# define PERMISSION_DENIED 126
-# define COMMAND_NOT_FOUND 127
-# define SUCCESS 0
-# define CNTRL_C 130
-# define CNTRL_BACKSLASH 131
 
 # include "../parsing/parsing.h"
 # include <stdio.h>
@@ -48,6 +35,19 @@ typedef struct s_files
 # include <string.h>
 # include <sys/stat.h>
 # include <limits.h>
+
+typedef struct s_files
+{
+	int	in;
+	int	trunc;
+	int	append;
+}t_files;
+
+# define PERMISSION_DENIED 126
+# define COMMAND_NOT_FOUND 127
+# define SUCCESS 0
+# define CNTRL_C 130
+# define CNTRL_BACKSLASH 131
 
 typedef struct s_vars
 {
@@ -85,7 +85,6 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
-
 void		ft_error(char *arg, char *msg, int exit_code);
 void		wait_for_child(int *ids, int i, int temp_fd);
 void		exec_commands_before_heredoc(t_vars *vars);
@@ -109,8 +108,19 @@ void		ft_redirect_output_trunc_mode(t_vars *vars, t_command *command);
 void		redirect_input(t_vars *vars, t_command *command);
 void		ft_exit(int exit_code, char *arg, char flag);
 void		ft_export(t_command *command, t_list *env, char *arg);
-
+void		exec_first_command_before_heredoc(t_vars *vars, t_norm data);
+void		exec_last_command_before_heredoc(t_vars *vars, t_norm data);
+void		exec_other_command_before_heredoc(t_vars *vars, t_norm data);
+void		add_properly_named_word(t_command *command, t_vars *vars, int i);
+void		show_export_error(int *flag, int i, t_command *command);
 int			count_commands_before_heredoc(t_command *command);
+void		add_non_variable(t_command *command,
+				t_vars *vars, char **temp, int i);
+void		add_existed_variable(t_command *command, t_vars *vars, int i);
+void		add_unexisted_variable(t_command *command, t_vars *vars,
+				char **temp, int i);
+void	init_contex(t_contex *contex);
+bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
 int			get_exit_code(void);

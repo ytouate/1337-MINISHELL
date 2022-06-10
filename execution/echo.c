@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 19:33:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 20:59:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@ void	ft_echo(t_command *command, char *s, char flag)
 		write(fd, "\n", 1);
 	}
 	set_exit_code(EXIT_SUCCESS);
+}
+
+int	check_echo_flag(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[i++] != '-')
+		return (false);
+	while (s[i])
+	{
+		if (s[i] != 'n')
+			return (false);
+		i += 1;
+	}
+	return (true);
 }
 
 char	*join_for_echo(t_list *env_list, char **s, char flag)
