@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 10:57:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 10:01:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 	else if (command_path == NULL)
 	{
 		set_exit_code(127);
-		printf("%s: command not found\n", command->flags[0]);
+		ft_putstr_fd(command->flags[0], STDERR_FILENO);
+		ft_putendl_fd("command not found", STDERR_FILENO);
 	}
 	else
 	{
@@ -64,7 +65,10 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 			wait(NULL);
 		}
 		else
-			printf("%s: command not found\n", command->flags[0]);
+		{
+			ft_putstr_fd(command->flags[0], STDERR_FILENO);
+			ft_putendl_fd("command not found", STDERR_FILENO);
+		}
 	}
 	
 }

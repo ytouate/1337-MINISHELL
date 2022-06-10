@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 12:56:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 10:02:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void show_export_list(t_command *command, t_vars vars)
 	contex = open_files(*command->redi);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
 		return ;
-	while (vars.export_list)
+	while (vars.export_list && vars.export_list->content != NULL)
 	{
 		ft_putstr_fd("declare -x  ", contex.fd_out);
 		ft_putendl_fd(vars.export_list->content, contex.fd_out);
@@ -120,7 +120,8 @@ bool run_export(t_command *command, t_vars *vars)
 				{
 					if (flag == 0)
 					{
-						printf("export: not an identifier: %s\n", command->flags[i]);
+						ft_putstr_fd(command->flags[i], STDERR_FILENO);
+						ft_putendl_fd("export: not an identifier:", STDERR_FILENO);
 						flag = 1;
 					}
 					set_exit_code(1);

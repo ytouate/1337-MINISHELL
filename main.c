@@ -6,17 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 16:26:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/09 18:34:48 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiniShell.h"
 void	sig_handler(int sig)
 {
-	if (sig == SIGQUIT)
-	{
-		set_exit_code(131);
-	}
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
@@ -40,7 +36,7 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	signal(SIGQUIT, sig_handler);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, sig_handler);
 	while (true)
 	{
