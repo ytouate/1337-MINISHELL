@@ -6,12 +6,19 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 13:43:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:44:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
+
+
+# define PERMISSION_DENIED 126
+# define COMMAND_NOT_FOUND 127
+# define SUCCESS 0
+# define CNTRL_C 130
+# define CNTRL_BACKSLASH 131
 
 # include "../parsing/parsing.h"
 # include <stdio.h>
@@ -46,35 +53,36 @@ typedef struct s_vars
 	t_command	*command;
 }t_vars;
 
-
 typedef struct s_contex
 {
-	int	fd_in;
-	int	fd_out;
-	int herdoc_fildes;
+	int		fd_in;
+	int		fd_out;
+	int		herdoc_fildes;
 }t_contex;
 
 typedef struct s_norm
 {
-	t_list	*first;
-	t_list	*second;
-	t_list	*temp;
-	char	**cmd;
-	int		*ids;
-	int		i;
-	int		id;
-	int		size;
-	int		temp_fd;
+	t_list		*first;
+	t_list		*second;
+	t_list		*temp;
+	char		**cmd;
+	int			*ids;
+	int			i;
+	int			id;
+	int			size;
+	int			temp_fd;
 	t_contex	contex;
-	int		fd[2];
+	int			fd[2];
 }t_norm;
 
-int count_commands_before_heredoc(t_command *command);
-void	wait_for_child(int *ids, int i, int temp_fd);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-void exec_commands_before_heredoc(t_vars *vars);
+
+
+void		ft_error(char *arg, char *msg, int exit_code);
+void		wait_for_child(int *ids, int i, int temp_fd);
+void		exec_commands_before_heredoc(t_vars *vars);
 void		check_cmd(t_command *command, t_vars *vars, t_contex contex);
 void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 void		ft_execute(t_command *command, t_vars *vars, t_contex contex);
@@ -96,6 +104,7 @@ void		redirect_input(t_vars *vars, t_command *command);
 void		ft_exit(int exit_code, char *arg, char flag);
 void		ft_export(t_command *command, t_list *env, char *arg);
 
+int			count_commands_before_heredoc(t_command *command);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
 int			get_exit_code(void);
@@ -104,8 +113,8 @@ int			is_variable(char *s);
 int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
 int			check_built_in_commands(t_vars *vars, t_command *command);
-
 int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
+
 char		*get_promt(void);
 char		*join_for_echo(t_list *env_list, char **s, char flag);
 char		*get_path(t_list *env_list, char *cmd);

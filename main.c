@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 14:48:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:50:39 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	char *cmd;
 
-	t_vars		*vars;
+	t_vars	*vars;
 
 	vars = malloc(sizeof(t_vars));
 	vars->env = env;
@@ -46,12 +46,11 @@ int	main(int ac, char **av, char **env)
 		cmd = ft_strtrim(cmd, " ");
 		if (*cmd)
 		{
-			vars->head = ft_get_for_exec(cmd, vars->env_list); 
+			vars->head = ft_get_for_exec(cmd, vars->env_list);
 			if (vars->head != NULL)
 			{
 				vars->command = vars->head->first_c;
 				vars->num_of_commands = get_len(vars->command);
-	
 				if (vars->command != NULL)
 				{
 					replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);

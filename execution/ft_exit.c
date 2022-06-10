@@ -6,15 +6,16 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 12:51:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:03:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-bool is_number(char *s)
+bool	is_number(char *s)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (s[i])
 	{
@@ -40,7 +41,8 @@ bool	run_exit(t_vars vars, t_command *command)
 
 void	ft_exit(int exit_code, char *arg, char flag)
 {
-	int n;
+	int	n;
+
 	if (arg != NULL)
 	{
 		if (!is_number(arg))

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 14:09:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:04:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	close(data.fd[1]);
 	if (data.contex.herdoc_fildes != 1337)
 	{
-		// wait(NULL);
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		if (data.contex.herdoc_fildes == 0)
@@ -39,9 +38,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 	}
 	else
-	{
 		dup2(data.temp_fd, STDIN_FILENO);
-	}
 	exec_node(vars, vars->command, data.contex);
 }
 
@@ -74,10 +71,11 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 void	loop_through_nodes(t_vars *vars, t_norm data)
 {
 	int	j;
+
 	j = 0;
 	data.size -= count_commands_before_heredoc(vars->command);
 	data.contex.herdoc_fildes = 1337;
-	while (  vars->command &&vars->command->herdoc->first_token == NULL )
+	while (vars->command && vars->command->herdoc->first_token == NULL )
 		vars->command = vars->command->next_command;
 	while (vars->command)
 	{
@@ -86,7 +84,8 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		if (vars->command->herdoc->first_token != NULL)
 		{
 			if (vars->command->next_command)
-				data.contex.herdoc_fildes = ft_heredoc(vars, vars->command, data.contex);
+				data.contex.herdoc_fildes = ft_heredoc(vars,
+						vars->command, data.contex);
 			else
 			{
 				heredoc_outside_pipe(vars, vars->command);
@@ -118,7 +117,6 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}
-	// close(data.temp_fd);
 	wait_for_child(data.ids, j, data.temp_fd);
 }
 

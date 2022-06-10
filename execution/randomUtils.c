@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/09 12:30:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:05:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	get_len(t_command *command)
 t_contex	open_files(t_token_head redi)
 {
 	t_contex	contex;
+
 	contex.fd_in = STDIN_FILENO;
 	contex.fd_out = STDOUT_FILENO;
 

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 10:01:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:41:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ char	*get_path(t_list *env_list, char *cmd)
 	return (NULL);
 }
 
+void	ft_error(char *arg, char *msg, int exit_code)
+{
+	ft_putstr_fd(arg, STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+	set_exit_code(exit_code);
+}
+
 void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
@@ -44,11 +51,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 	if (command->flags[0][0] == '/' || command->flags[0][0] == '.')
 		check_cmd(command, vars, contex);
 	else if (command_path == NULL)
-	{
-		set_exit_code(127);
-		ft_putstr_fd(command->flags[0], STDERR_FILENO);
-		ft_putendl_fd(":command not found", STDERR_FILENO);
-	}
+		ft_error(command->flags[0], " :command not found", COMMAND_NOT_FOUND);
 	else
 	{
 		if (command->flags[0][0])
@@ -61,22 +64,16 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				perror(command->flags[0]);
 				exit(0);
 			}
-			
 			wait(NULL);
 		}
 		else
-		{
-			ft_putstr_fd(command->flags[0], STDERR_FILENO);
-			ft_putendl_fd(":command not found", STDERR_FILENO);
-		}
+			ft_error(command->flags[0], " :command not found",
+				COMMAND_NOT_FOUND);
 	}
-	
 }
 
 void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
 {
-	int	status;
-
 	if (access(command->flags[0], F_OK | X_OK) == 0)
 	{
 		if (fork() == 0)
@@ -89,41 +86,37 @@ void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
 			}
 			exit(EXIT_SUCCESS);
 		}
-		wait(&status);
-		if (WIFEXITED(status))
-			set_exit_code(WEXITSTATUS(status));
+		wait(NULL);
 	}
 	else
 	{
-		set_exit_code(126);
+		set_exit_code(PERMISSION_DENIED);
 		perror(command->flags[0]);
 	}
 }
 
 void	check_cmd(t_command *command, t_vars *vars, t_contex contex)
 {
-	int fd[2];
+	int	fd[2];
+	int	stats;
 
-	if (command->flags[0][0] == '/')
-	{
-		if (access(command->flags[0], F_OK) == 0)
-		{
-			pipe(fd);
-			if (fork() == 0)
-			{
-				dup2(contex.fd_out, STDOUT_FILENO);
-				dup2(contex.fd_in, STDIN_FILENO);
-				execve(command->flags[0], command->flags, vars->env);
-				perror("execve");
-				exit(EXIT_SUCCESS);
-			}
-		}
-		else
-		{
-			set_exit_code(127);
-			perror(command->flags[0]);
-		}
-	}
-	else
+	if (command->flags[0][0] != '/')
 		run_excutable(command, vars, contex);
+	else if (access(command->flags[0], F_OK) == 0)
+	{
+		pipe(fd);
+		if (fork() == 0)
+		{
+			dup2(contex.fd_out, STDOUT_FILENO);
+			dup2(contex.fd_in, STDIN_FILENO);
+			execve(command->flags[0], command->flags, vars->env);
+			perror("execve");
+			exit(PERMISSION_DENIED);
+		}
+		wait(&stats);
+		set_exit_code(WEXITSTATUS(stats));
+		return ;
+	}
+	set_exit_code(127);
+	perror(command->flags[0]);
 }

@@ -6,14 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 11:58:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 15:53:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "exec.h"
-
-extern int	exit_code;
 
 int	exit_code = 0;
 
@@ -29,7 +26,7 @@ int	get_exit_code(void)
 	return (exit_code);
 }
 
-bool check_redirection(t_vars *vars, t_command *command)
+bool	check_redirection(t_vars *vars, t_command *command)
 {
 	if (command->redi->first_token != NULL)
 	{
@@ -56,7 +53,7 @@ void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 		{
 			if (command->herdoc->first_token == NULL)
 			{
-			  	ft_execute(command, vars, contex);
+				ft_execute(command, vars, contex);
 				wait(NULL);
 			}
 		}
