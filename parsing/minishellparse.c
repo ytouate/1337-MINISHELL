@@ -77,6 +77,7 @@ int	ft_syntax(char *value, t_token *t)
 	{
 		free(t);
 		printf("minishell:syntax error\n");
+		set_exit_code(SYNTAX_ERROR_EXIT);
 		return (1);
 	}
 	return (0);

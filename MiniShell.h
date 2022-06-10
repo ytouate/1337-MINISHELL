@@ -12,6 +12,7 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define SYNTAX_ERROR_EXIT 258
 
 # include "./parsing/parsing.h"
 # include "./execution/exec.h"
