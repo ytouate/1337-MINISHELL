@@ -41,12 +41,14 @@ void	ft_add_node(t_head_c *head, t_command *command)
 	if (temp == NULL)
 	{
 		head->first_c = command;
+		head->taille += 1;
 		command->next_command = NULL;
 		return;
 	}
 	while (temp->next_command)
 		temp = temp->next_command;
 	temp->next_command = command;
+	head->taille += 1;
 	command->next_command = NULL;
 }
 
@@ -168,18 +170,18 @@ int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
 
 t_head_c	*ft_get_for_exec(char *content, t_list *env_list)
 {
-	t_head_c	*head_of_commande;
+	t_head_c	*head_of_command;
 	t_lexer		*lexer;
 	int			s;
 
-	head_of_commande = malloc(sizeof(t_head_c));
-    ft_init_head(head_of_commande);
+	head_of_command = malloc(sizeof(t_head_c));
+    ft_init_head(head_of_command);
 	lexer = ft_init_lexer(content);
 	while (lexer->content[lexer->i])
 	{
-		s = ft_add_commande(head_of_commande, lexer, env_list);
+		s = ft_add_commande(head_of_command, lexer, env_list);
 		if (s == 1)
 			return (NULL);
 	}
-	return (head_of_commande);
+	return (head_of_command);
 }

@@ -266,6 +266,7 @@ char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
 		return (s);
 	}
 }
+
 char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 {
 	char	*str;
