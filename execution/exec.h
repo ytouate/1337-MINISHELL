@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 12:33:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 13:43:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_norm
 	t_contex	contex;
 	int		fd[2];
 }t_norm;
+
+int count_commands_before_heredoc(t_command *command);
 void	wait_for_child(int *ids, int i, int temp_fd);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);

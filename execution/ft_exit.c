@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 11:59:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 12:51:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
 bool is_number(char *s)
 {
 	int i;
@@ -51,9 +52,7 @@ void	ft_exit(int exit_code, char *arg, char flag)
 		{
 			n = ft_atoi(arg);
 			while (n > 256)
-			{
 				n -= 256;
-			}
 			exit_code = n;
 		}
 	}

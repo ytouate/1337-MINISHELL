@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 12:21:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 14:09:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	close(data.fd[1]);
 	if (data.contex.herdoc_fildes != 1337)
 	{
-		wait(NULL);
+		// wait(NULL);
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		if (data.contex.herdoc_fildes == 0)
@@ -54,19 +54,10 @@ void	exec_other_node(t_vars *vars, t_norm data)
 		close(data.contex.herdoc_fildes);
 		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
 		dup2(data.contex.herdoc_fildes, STDIN_FILENO);
-		if (data.contex.herdoc_fildes == 0)
-		{
-			unlink("/tmp/trash");
-			data.contex.herdoc_fildes = open("/tmp/trash", O_RDONLY | O_CREAT);
-			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
-		}
-		else if (data.contex.herdoc_fildes == -1)
-			goto here;
 		dup2(data.fd[1], STDOUT_FILENO);
 	}
 	else
 	{
-		here:
 		dup2(data.fd[1], STDOUT_FILENO);
 		dup2(data.temp_fd, STDIN_FILENO);
 	}
@@ -84,6 +75,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 {
 	int	j;
 	j = 0;
+	data.size -= count_commands_before_heredoc(vars->command);
 	data.contex.herdoc_fildes = 1337;
 	while (  vars->command &&vars->command->herdoc->first_token == NULL )
 		vars->command = vars->command->next_command;

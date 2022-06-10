@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:33:56 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/10 12:34:55 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/10 12:44:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct lexer
 	char	c;
 	size_t	i;
 }t_lexer;
-	
-
 
 t_token		*ft_init_token(int type, char *value);
 void		ft_advance(t_lexer	*lexer);
