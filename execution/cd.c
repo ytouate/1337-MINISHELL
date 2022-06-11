@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/06 14:32:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 09:58:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,16 @@ void	cd_home(t_list *env_list)
 	char	*home_path;
 	char	current_wd[PATH_MAX];
 
-	if (ft_getenv(env_list, "HOME") != NULL)
-		home_path = ft_split(ft_getenv(env_list, "HOME")->content, '=')[1];
+	home_path = ft_get_env_val(env_list, "HOME");
+	if (home_path == NULL)
+		ft_error("cd", " :HOME not set", 1);
 	else
-	{
-		write(2, "HOME not set\n", 14);
-		set_exit_code(1);
-		return ;
-	}
-	if (home_path != NULL)
 	{
 		getcwd(current_wd, sizeof(current_wd));
 		if (chdir(home_path) == -1)
 		{
 			perror(home_path);
-			set_exit_code(1);
+			set_exit_code(0);
 		}
 		else
 		{

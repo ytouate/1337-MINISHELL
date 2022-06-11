@@ -6,12 +6,22 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 19:36:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 10:44:04 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+void	child_sig_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		//rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 char	*get_path(t_list *env_list, char *cmd)
 {
 	char	*path;
@@ -58,6 +68,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 		{
 			if (fork() == 0)
 			{
+				set_signal_flag(1);
 				dup2(contex.fd_in, STDIN_FILENO);
 				dup2(contex.fd_out, STDOUT_FILENO);
 				execve(command_path, command->flags, vars->env);

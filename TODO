@@ -1,4 +1,10 @@
+///tomorrow's todod \\\\
+
+finish the exit_status code;
+start handling signals;
+
+========================================
+// cases to handle //
 unset a variable; export | grep variable;
-exit argument inside a child minishelle
-signals
-heap use after free when trying to grep a unseted variable;
+cat bla >> exit status 1
+adding an existed variable does not remove the previous one;

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:59:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 10:03:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 	result = "";
 	while (s[i])
 	{
-		if (ft_strcmp(s[i], "~") == 0)
+		if (check_echo_flag(s[i]))
+			;
+		else if (ft_strcmp(s[i], "~") == 0)
 		{
 			if (ft_getenv(env_list, "HOME") != NULL)
 			{
