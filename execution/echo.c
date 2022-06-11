@@ -64,7 +64,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 	{
 		if (!check_echo_flag(s[i]))
 			result = ft_strjoin(result, s[i]);
-		if (s[i + 1])
+		if (s[i + 1] && s[i][0] != '\0')
 			result = ft_strjoin(result, " ");
 		i++;
 	}

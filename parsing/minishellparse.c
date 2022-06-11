@@ -184,11 +184,5 @@ t_head_c	*ft_get_for_exec(char *content, t_list *env_list)
 		if (s == 1)
 			return (NULL);
 	}
-	int i = 0;
-	while (head_of_command->first_c->flags[i])
-	{
-		printf("%s\n",head_of_command->first_c->flags[i]);
-		i++;
-	}
 	return (head_of_command);
 }

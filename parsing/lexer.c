@@ -204,6 +204,13 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 
 	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 && ft_check_after_dollar(lexer) == 1)
 		str = ft_after_dollar(lexer, env_list);
+	else if (lexer->c == '~')
+	{
+		str = getenv("HOME");
+		if (str == NULL)
+			str = ft_strdup(&lexer->c);
+		ft_advance(lexer);
+	}
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)
 	{
 		ft_advance(lexer);
@@ -226,6 +233,7 @@ char	*ft_witout_quotes_util(char *str, char *s)
 	free(str);
 	return (NULL);
 }
+
 char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
