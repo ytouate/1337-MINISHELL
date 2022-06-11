@@ -6,9 +6,17 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/11 13:13:44 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/11 21:08:59 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+NAME = minishell
+CC = gcc
+EXEC = ./execution/exec.a
+PARSE = ./parsing/pars.a
+LIBFT = ./libft/libft.a
+READLINE = -lreadline -L  /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
+CFLAGS = -Wall -Wextra -Werror $(LIBFT) $(EXEC) $(PARSE) main.c -o $(NAME) $(READLINE)
 
 all :
 	@cd execution && make && cd ..

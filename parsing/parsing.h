@@ -74,17 +74,18 @@ int			ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list);
 char		*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list);
 void		ft_add_red(t_token_head *head, t_token *t);
 char		**ft_replace(char **av, int i, char *value);
-int			ft_syntax(char *value, t_token *t);
-int			ft_rederictions(t_command *re, t_token *token);
-int			ft_check_pipe(t_lexer *lexer, t_token *token, int k);
-int			ft_check_token(t_token *token, t_command *re, int *i);
-int			ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list);
+int			ft_syntax(char *value, t_token *t, t_head_c *head);
+int			ft_rederictions(t_command *re, t_token *token, t_head_c *head);
+int			ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head);
+int			ft_check_token(t_token *token, t_command *re, int *i, t_head_c *head);
+int			ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *head);
 t_token		*ft_red(t_lexer *lexer, t_list *env_list);
 t_token		*ft_her_app(t_lexer *lexer, t_list *env_list);
 char		*ft_str_for_join(t_lexer *lexer, t_list *env_list);
 char		*ft_after_dollar(t_lexer *lexer, t_list *env_list);
 int			ft_check_after_dollar(t_lexer *lexer);
 char		*ft_get_str(t_lexer *lexer, t_list *env_list);
+void		ft_free_all(t_head_c *head);
 char		*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c);
 
 #endif

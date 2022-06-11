@@ -12,6 +12,41 @@
 
 #include "parsing.h"
 
+void	ft_free_all(t_head_c *head)
+{
+	int			i;
+	t_token		*temp;
+	t_command	*t;
+
+	while (head->first_c)
+	{
+		i = 0;
+		while (head->first_c->flags[i])
+		{
+			free(head->first_c->flags[i]);
+			i++;
+		}
+		free(head->first_c->flags);
+		while (head->first_c->herdoc->first_token)
+		{
+			temp = head->first_c->herdoc->first_token;
+			head->first_c->herdoc->first_token = head->first_c->herdoc->first_token->next;
+			free(temp);
+		}
+		free(head->first_c->herdoc);
+		while (head->first_c->redi->first_token)
+		{
+			temp = head->first_c->redi->first_token;
+			head->first_c->redi->first_token = head->first_c->redi->first_token->next;
+			free(temp);
+		}
+		free(head->first_c->redi);
+		t = head->first_c;
+		head->first_c = head->first_c->next_command;
+		free(t);
+	}
+	free(head);
+}
 void	ft_init_head(t_head_c *head)
 {
 	head->first_c = NULL;
@@ -65,17 +100,19 @@ char	**ft_replace(char **av, int i, char *value)
 		temp[e] = av[e];
 		e++;
 	}	
-	temp[e] = value;
+	temp[e] = ft_strdup(value);
 	temp[e + 1] = NULL;
 	free(av);
 	return (temp);
 }
 
-int	ft_syntax(char *value, t_token *t)
+int	ft_syntax(char *value, t_token *t, t_head_c *head)
 {
 	if (value == NULL)
 	{
 		free(t);
+		free(t->value);
+		ft_free_all(head);
 		printf("minishell:syntax error\n");
 		set_exit_code(SYNTAX_ERROR_EXIT);
 		return (1);
@@ -83,9 +120,9 @@ int	ft_syntax(char *value, t_token *t)
 	return (0);
 }
 
-int		ft_rederictions(t_command *re, t_token *token)
+int		ft_rederictions(t_command *re, t_token *token, t_head_c *head)
 {
-	if (ft_syntax(token->value, token) == 1)
+	if (ft_syntax(token->value, token, head) == 1)
 		return (1);
 	else if (token->token == T_HERDOC)
 		ft_add_red(re->herdoc, token);
@@ -94,37 +131,40 @@ int		ft_rederictions(t_command *re, t_token *token)
 	return (0);
 }
 
-int		ft_check_pipe(t_lexer *lexer, t_token *token, int k)
+int		ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head)
 {
 	free(token);
 	ft_skip_spaces(lexer);
 	if (lexer->content[lexer->i] == '\0' || k == 0)
 	{
+		ft_free_all(head);
 		printf("minishell:syntax error\n");
 		return (1);
 	}
 	return (0);
 }
 
-int	ft_check_token(t_token *token, t_command *re, int *i)
+int	ft_check_token(t_token *token, t_command *re, int *i, t_head_c *head)
 {
+	
 	if (token->token == 0)
 	{
-		if (ft_syntax(token->value, token) == 1)
-			return (1);
+		if (ft_syntax(token->value, token, head) == 1)
+			return (1);	
 		re->flags = ft_replace(re->flags, *i, token->value);
 		*i += 1;
+		free(token->value);
 		free(token);
 	}
 	else if (token->token >= 1 && token->token <= 4)
 	{
-		if (ft_rederictions(re, token) == 1)
+		if (ft_rederictions(re, token, head) == 1)
 			return (1);
 	}
 	return (0);
 }
 
-int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list)
+int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *head)
 {
 	int			k;
 	int			i;
@@ -137,17 +177,18 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list)
 	{
 		if (token->token < 5)
 		{
-			if (ft_check_token(token, re, &i) == 1)
+			if (ft_check_token(token, re, &i, head) == 1)
 				return (1);
 		}
 		else if (token->token == 5)
 		{
-			if (ft_check_pipe(lexer, token, k) == 1)
+			if (ft_check_pipe(lexer, token, k, head) == 1)
 				return (1);
 			break ;
 		}
 		k++;
-		token = ft_get_next_token(lexer, env_list);
+		token = ft_get_next_token(lexer, env_list);	
+		
 	}
 	return (0);
 }
@@ -163,8 +204,14 @@ int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
 	re->redi->first_token = NULL;
 	re->flags = malloc(sizeof(char *));
 	re->flags[0] = NULL;
-	if (ft_fill_node(re, lexer, env_list) == 1)
+	if (ft_fill_node(re, lexer, env_list, head) == 1)
+	{
+		free(re->redi);
+		free(re->herdoc);
+		free(re->flags);
+		free(re);
 		return (1);
+	}
 	ft_add_node(head, re);
 	return (0);
 }
@@ -182,7 +229,11 @@ t_head_c	*ft_get_for_exec(char *content, t_list *env_list)
 	{
 		s = ft_add_commande(head_of_command, lexer, env_list);
 		if (s == 1)
+		{
+			free(lexer);
 			return (NULL);
+		}
 	}
+	free(lexer);
 	return (head_of_command);
 }

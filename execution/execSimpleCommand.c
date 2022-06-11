@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 10:44:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 21:08:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	child_sig_handler(int sig)
 char	*get_path(t_list *env_list, char *cmd)
 {
 	char	*path;
+	char	*temp;
 	char	**command_path;
 	int		i;
 
@@ -33,12 +34,27 @@ char	*get_path(t_list *env_list, char *cmd)
 		return (NULL);
 	i = 0;
 	command_path = ft_split(path, ':');
+	free(path);
 	while (command_path[i])
 	{
+		temp = command_path[i];
 		command_path[i] = ft_strjoin(command_path[i], "/");
+		free(temp);
+		temp = command_path[i];
 		command_path[i] = ft_strjoin(command_path[i], cmd);
+		free(temp);
 		if (access(command_path[i], F_OK) == 0)
-			return (command_path[i]);
+		{
+			temp = ft_strdup(command_path[i]);
+			i = 0;
+			while (command_path[i])
+			{
+				free(command_path[i]);
+				i++;
+			}
+			free(command_path);
+			return (temp);
+		}
 		i++;
 	}
 	return (NULL);
@@ -54,7 +70,7 @@ void	ft_error(char *arg, char *msg, int exit_code)
 void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 {
 	char	*command_path;
-
+	int status;
 	if (command->flags[0] == NULL)
 		return ;
 	command_path = get_path(vars->env_list, command->flags[0]);
@@ -73,14 +89,16 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				dup2(contex.fd_out, STDOUT_FILENO);
 				execve(command_path, command->flags, vars->env);
 				perror(command->flags[0]);
-				exit(0);
+				exit(COMMAND_NOT_FOUND);
 			}
-			wait(NULL);
+			wait(&status);
+			set_exit_code(WEXITSTATUS(status));
 		}
 		else
 			ft_error(command->flags[0], " :command not found",
 				COMMAND_NOT_FOUND);
 	}
+	free(command_path);
 }
 
 void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
