@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 10:03:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 11:10:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 {
 	int		i;
 	char	*result;
-	char	**temp;
-
+	(void)env_list;
 	if (flag == 'n')
 		i = 2;
 	else
@@ -63,24 +62,12 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 	result = "";
 	while (s[i])
 	{
-		if (check_echo_flag(s[i]))
-			;
-		else if (ft_strcmp(s[i], "~") == 0)
-		{
-			if (ft_getenv(env_list, "HOME") != NULL)
-			{
-				temp = ft_split(ft_getenv(env_list, "HOME")->content, '=');
-				if (temp[1] != NULL)
-					result = ft_strjoin(result, temp[1]);
-				free_2d_array(temp);
-			}
-		}
-		else
+		if (!check_echo_flag(s[i]))
 			result = ft_strjoin(result, s[i]);
-		result = ft_strjoin(result, " ");
+		if (s[i + 1])
+			result = ft_strjoin(result, " ");
 		i++;
 	}
-	result = ft_strtrim(result, " ");
 	return (result);
 }
 
