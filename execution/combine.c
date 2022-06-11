@@ -6,14 +6,23 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:45:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 10:42:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	g_exit_code;
+int	g_exit_code = 0;
+int g_signal_flag = 0;
 
+void	set_signal_flag(int num)
+{
+	g_signal_flag = num;
+}
+int		get_signal_flag(void)
+{
+	return (g_signal_flag);
+}
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)

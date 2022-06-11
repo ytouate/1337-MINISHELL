@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 21:16:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 10:43:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ typedef struct s_norm
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-
+int			get_signal_flag(void);
+void		set_signal_flag(int num);
 void		ft_error(char *arg, char *msg, int exit_code);
 void		wait_for_child(int *ids, int i, int temp_fd);
 void		exec_commands_before_heredoc(t_vars *vars);
@@ -117,11 +118,12 @@ void		exec_other_command_before_heredoc(t_vars *vars, t_norm data);
 void		add_properly_named_word(t_command *command, t_vars *vars, int i);
 void		show_export_error(int *flag, int i, t_command *command);
 int			count_commands_before_heredoc(t_command *command);
+void		add_existed_variable(t_command *command, t_vars *vars, int i);
 void		add_non_variable(t_command *command,
 				t_vars *vars, char **temp, int i);
-void		add_existed_variable(t_command *command, t_vars *vars, int i);
 void		add_unexisted_variable(t_command *command, t_vars *vars,
 				char **temp, int i);
+
 void		init_contex(t_contex *contex);
 bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 int			ft_strcmp(char *s, char *str);

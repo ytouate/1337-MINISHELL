@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 19:32:02 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 09:46:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 	{
 		temp = *env_list;
 		*env_list = (*env_list)->next;
+		free(temp->content);
 		free(temp);
 		free_2d_array(cmd);
 		set_exit_code(EXIT_SUCCESS);

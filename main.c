@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 19:30:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 10:46:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ void	sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		printf("%d \n", get_signal_flag());
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 		//rl_replace_line("", 0);
-		rl_redisplay();
+		if (get_signal_flag() != 1)
+		{
+			rl_redisplay();
+		}
 	}
 }
 
