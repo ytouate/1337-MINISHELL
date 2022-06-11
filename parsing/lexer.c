@@ -145,10 +145,31 @@ char	*ft_get_value(t_lexer *lexer, t_list *env_list)
 	return(str);
 }
 
+char	*ft_get_content_of_variable(t_lexer *lexer, t_list *env_list)
+{
+	char	*s;
+	char	*str;
+
+	s = ft_strdup("");
+	while (lexer->content[lexer->i] && lexer->c != ' ' && lexer->c != '$' && lexer->c != '\'' && lexer->c != '"' && lexer->c != '?' && 
+			lexer->c != '!' && (ft_isalnum(lexer->c) != 0 || ft_isalpha(lexer->c) != 0 || lexer->c == '_'))
+	{
+		str = s;
+		s = ft_strjoin(s, &lexer->c);
+		free(str);
+		ft_advance(lexer);
+	}
+	if (ft_get_env_val(env_list, s))
+		str = ft_get_env_val(env_list, s);
+	else
+		str = ft_strdup("");
+	return (str);
+}
+
 char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
-	char	*s;
+	
 
 	ft_advance(lexer);
 	if (lexer->c == '?')
@@ -162,21 +183,7 @@ char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 		return (ft_strdup(""));
 	}
 	else
-	{
-		s = ft_strdup("");
-		while (lexer->content[lexer->i] && lexer->c != ' ' && lexer->c != '$' && lexer->c != '\'' && lexer->c != '"' && lexer->c != '?' && 
-				lexer->c != '!' && (ft_isalnum(lexer->c) != 0 || ft_isalpha(lexer->c) != 0 || lexer->c == '_'))
-		{
-			str = s;
-			s = ft_strjoin(s, &lexer->c);
-			free(str);
-			ft_advance(lexer);
-		}
-		if (ft_get_env_val(env_list, s))
-			str = ft_get_env_val(env_list, s);
-		else
-			str = ft_strdup("");
-	}
+		str = ft_get_content_of_variable(lexer, env_list);
 	return (str);
 }
 
@@ -213,6 +220,12 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 	return (str);
 }
 
+char	*ft_witout_quotes_util(char *str, char *s)
+{
+	free(s);
+	free(str);
+	return (NULL);
+}
 char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
@@ -225,11 +238,7 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 	{
 		s = ft_strdup("");
 		if (lexer->c == '&')
-		{
-			free(s);
-			free(str);
-			return (NULL);
-		}
+			return (ft_witout_quotes_util(str, s));
 		temp = s;
 		s = ft_get_str(lexer, env_list);
 		if (s == NULL)
