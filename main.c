@@ -52,19 +52,21 @@ int	main(int ac, char **av, char **env)
 		free(temp);
 		if (*cmd)
 		{
-			// vars->head = ft_get_for_exec(cmd, vars->env_list);
+			vars->head = ft_get_for_exec(cmd, vars->env_list);
+			
 			if (vars->head != NULL)
 			{
-				// vars->command = vars->head->first_c;
-				// vars->num_of_commands = get_len(vars->command);
+				vars->command = vars->head->first_c;
+				vars->num_of_commands = get_len(vars->command);
 				if (vars->command != NULL)
 				{
-					// replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
-					// ft_pipe(vars);
+					replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
+					ft_pipe(vars);
+					system("leaks minishell");
 				}
 			}
 		}
 		free(cmd);
-		system("leaks minishell");
+		ft_free_all(vars->head);
 	}
 }

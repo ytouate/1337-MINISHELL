@@ -83,4 +83,5 @@ void	ft_pipe(t_vars *vars)
 		if (!heredoc_outside_pipe(vars, vars->command))
 			exec_node(vars, vars->command, data.contex);
 	}
+	free(data.ids);
 }

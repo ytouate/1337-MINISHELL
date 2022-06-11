@@ -25,6 +25,7 @@ void	child_sig_handler(int sig)
 char	*get_path(t_list *env_list, char *cmd)
 {
 	char	*path;
+	char	*temp;
 	char	**command_path;
 	int		i;
 
@@ -33,12 +34,27 @@ char	*get_path(t_list *env_list, char *cmd)
 		return (NULL);
 	i = 0;
 	command_path = ft_split(path, ':');
+	free(path);
 	while (command_path[i])
 	{
+		temp = command_path[i];
 		command_path[i] = ft_strjoin(command_path[i], "/");
+		free(temp);
+		temp = command_path[i];
 		command_path[i] = ft_strjoin(command_path[i], cmd);
+		free(temp);
 		if (access(command_path[i], F_OK) == 0)
-			return (command_path[i]);
+		{
+			temp = ft_strdup(command_path[i]);
+			i = 0;
+			while (command_path[i])
+			{
+				free(command_path[i]);
+				i++;
+			}
+			free(command_path);
+			return (temp);
+		}
 		i++;
 	}
 	return (NULL);
@@ -81,6 +97,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 			ft_error(command->flags[0], " :command not found",
 				COMMAND_NOT_FOUND);
 	}
+	free(command_path);
 }
 
 void	run_excutable(t_command *command, t_vars *vars, t_contex contex)

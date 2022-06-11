@@ -139,6 +139,7 @@ char	*ft_get_value(t_lexer *lexer, t_list *env_list)
 				return (NULL);
 			temp = str;
 			str = ft_strjoin(str, s);
+			free(s);
 			free(temp);
 		}
 	}
@@ -244,10 +245,8 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 	while (lexer->content[lexer->i] && lexer->c != ' ' &&
 			 lexer->c != '\'' && lexer->c != '"' && lexer->c != '>' && lexer->c != '<' && lexer->c != '|')
 	{
-		s = ft_strdup("");
 		if (lexer->c == '&')
 			return (ft_witout_quotes_util(str, s));
-		temp = s;
 		s = ft_get_str(lexer, env_list);
 		if (s == NULL)
 		{
@@ -257,6 +256,7 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 		temp = str;
 		str = ft_strjoin(str, s);
 		free(temp);
+		free(s);
 	}
 	return(str);
 }

@@ -52,31 +52,62 @@ char	*join_var(char **temp)
 {
 	int		i;
 	char	*result;
+	char	*t;
 
 	i = 0;
-	result = "";
+	result = ft_strdup("");
 	while (temp[++i])
 	{
+		t = result;
 		result = ft_strjoin(result, temp[i]);
+		free(t);
 		if (temp[i + 1])
+		{
+			t = result;
 			result = ft_strjoin(result, "=");
+			free(t);
+		}
 	}
+	i = 0;
+	while (temp[i])
+	{
+		free(temp[i]);
+		i++;
+	}
+	free(temp);
 	return (result);
 }
 
 char	*ft_get_env_val(t_list *env_list, char *var_name)
 {
 	char	*temp;
+	char	**l;
+	int		i;
+	char	*f;
 
-	temp = NULL;
+	temp = ft_strdup("");
 	while (env_list)
-	{
-		temp = ft_split(env_list->content, '=')[0];
+	{	
+		l = ft_split(env_list->content, '=');
+		f = temp;
+		temp = ft_strdup(l[0]);
+		free(f);
+		i = 0;
+		while (l[i])
+		{
+			free(l[i]);
+			i++;
+		}
+		free(l);
 		if (!temp || !*temp)
 			return (NULL);
 		if (ft_strcmp(temp, var_name) == 0)
+		{
+			free(temp);
 			return (join_var(ft_split(env_list->content, '=')));
-		env_list = env_list ->next;
+		}
+		env_list = env_list->next;
 	}
+	
 	return (NULL);
 }
