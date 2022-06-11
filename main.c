@@ -19,7 +19,7 @@ void	sig_handler(int sig)
 		printf("%d \n", get_signal_flag());
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
-		//rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		if (get_signal_flag() != 1)
 		{
 			rl_redisplay();
@@ -32,6 +32,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	char *cmd;
+	char *temp;
 
 	t_vars	*vars;
 
@@ -46,20 +47,24 @@ int	main(int ac, char **av, char **env)
 		cmd = get_promt();
 		if (cmd == NULL)
 			exit(130);
+		temp = cmd;
 		cmd = ft_strtrim(cmd, " ");
+		free(temp);
 		if (*cmd)
 		{
-			vars->head = ft_get_for_exec(cmd, vars->env_list);
+			// vars->head = ft_get_for_exec(cmd, vars->env_list);
 			if (vars->head != NULL)
 			{
-				vars->command = vars->head->first_c;
-				vars->num_of_commands = get_len(vars->command);
+				// vars->command = vars->head->first_c;
+				// vars->num_of_commands = get_len(vars->command);
 				if (vars->command != NULL)
 				{
-					replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
-					ft_pipe(vars);
+					// replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
+					// ft_pipe(vars);
 				}
 			}
 		}
+		free(cmd);
+		system("leaks minishell");
 	}
 }
