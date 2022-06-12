@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 21:17:50 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 23:12:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	int		out_file;
 
 	out_file = 1337;
+	// unlink("/tmp/temp");
 	temp_stdin = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	while (true)
 	{
@@ -30,8 +31,11 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	}
 	contex = open_files(*command->redi);
 	if (contex.fd_out == STDOUT_FILENO)
+	{
+		// unlink("/tmp/temp_out_file");
 		contex.fd_out = open("/tmp/temp_out_file",
 				O_RDWR | O_TRUNC | O_CREAT, 0777);
+	}
 	else
 		out_file = -1;
 	close(temp_stdin);
@@ -58,6 +62,7 @@ bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
 	char		*line;
 	t_contex	contex;
 
+	unlink("/tmp/temp");
 	contex.fd_in = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (command->herdoc->first_token == NULL)
 		return (false);
@@ -67,6 +72,7 @@ bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
 		if (line == NULL
 			||!ft_strcmp(line, command->herdoc->first_token->value))
 			break ;
+		free(line);
 		ft_putendl_fd(line, contex.fd_in);
 	}
 	close(contex.fd_in);

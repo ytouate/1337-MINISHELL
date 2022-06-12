@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 21:08:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/11 21:35:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,12 @@ char	*get_path(t_list *env_list, char *cmd)
 		{
 			temp = ft_strdup(command_path[i]);
 			i = 0;
-			while (command_path[i])
-			{
-				free(command_path[i]);
-				i++;
-			}
-			free(command_path);
+			free_2d_array(command_path);
 			return (temp);
 		}
 		i++;
 	}
+	free_2d_array(command_path);
 	return (NULL);
 }
 
@@ -84,7 +80,6 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 		{
 			if (fork() == 0)
 			{
-				set_signal_flag(1);
 				dup2(contex.fd_in, STDIN_FILENO);
 				dup2(contex.fd_out, STDOUT_FILENO);
 				execve(command_path, command->flags, vars->env);

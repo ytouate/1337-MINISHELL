@@ -9,3 +9,4 @@ getting a segfault when there is a syntax error
 cat bla >> exit status 1
 adding an existed variable does not remove the previous one;
 reset exit statu after new line;
+redirection with simple heredoc;
