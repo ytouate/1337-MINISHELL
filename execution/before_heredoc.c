@@ -73,4 +73,5 @@ void	exec_commands_before_heredoc(t_vars *vars)
 		close(data.fd[1]);
 	}
 	wait_for_child(data.ids, i, data.temp_fd);
+	free(data.ids);
 }

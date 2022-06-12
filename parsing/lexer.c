@@ -288,13 +288,16 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 {
 	char	*str;
 	char	*temp;
+	char	*s;
 
 	str = ft_strdup("");
 	ft_advance(lexer);
 	while(lexer->content[lexer->i] && lexer->c != c)
 	{
 		temp = str;
-		str = ft_strjoin(str, ft_help_collect_str(lexer, env_list, c));
+		s = ft_help_collect_str(lexer, env_list, c);
+		str = ft_strjoin(str, s);
+		free(s);
 		free(temp);
 	}
 	if (lexer->c != c)

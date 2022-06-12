@@ -57,6 +57,13 @@ char	*get_path(t_list *env_list, char *cmd)
 		}
 		i++;
 	}
+	i = 0;
+	while (command_path[i])
+	{
+		free(command_path[i]);
+		i++;
+	}
+	free(command_path);
 	return (NULL);
 }
 

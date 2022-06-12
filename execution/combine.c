@@ -67,7 +67,7 @@ void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 		{
 			if (command->herdoc->first_token == NULL)
 			{
-				ft_execute(command, vars, contex);
+				ft_execute(command, vars, contex);	
 				wait(NULL);
 			}
 		}
