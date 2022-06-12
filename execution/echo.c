@@ -31,6 +31,7 @@ void	ft_echo(t_command *command, char *s, char flag)
 		write(fd, s, ft_strlen(s));
 		write(fd, "\n", 1);
 	}
+	free(s);
 	set_exit_code(EXIT_SUCCESS);
 }
 
@@ -54,18 +55,28 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 {
 	int		i;
 	char	*result;
+	char	*temp;
+
 	(void)env_list;
 	if (flag == 'n')
 		i = 2;
 	else
 		i = 1;
-	result = "";
+	result = ft_strdup("");
 	while (s[i])
 	{
 		if (!check_echo_flag(s[i]))
+		{	
+			temp = result;
 			result = ft_strjoin(result, s[i]);
+			free(temp);
+		}
 		if (s[i + 1] && s[i][0] != '\0')
+		{
+			temp = result;
 			result = ft_strjoin(result, " ");
+			free(temp);
+		}
 		i++;
 	}
 	return (result);
