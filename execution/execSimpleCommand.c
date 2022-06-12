@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 21:35:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 12:13:49 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ char	*get_path(t_list *env_list, char *cmd)
 		i++;
 	}
 	free_2d_array(command_path);
+	i = 0;
+	while (command_path[i])
+	{
+		free(command_path[i]);
+		i++;
+	}
+	free(command_path);
 	return (NULL);
 }
 

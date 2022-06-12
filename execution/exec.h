@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 10:43:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 12:18:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 int			get_signal_flag(void);
 void		set_signal_flag(int num);
+void	free_list(t_list *list);
 void		ft_error(char *arg, char *msg, int exit_code);
 void		wait_for_child(int *ids, int i, int temp_fd);
 void		exec_commands_before_heredoc(t_vars *vars);

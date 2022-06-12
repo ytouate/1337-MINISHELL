@@ -160,17 +160,24 @@ char	*ft_get_content_of_variable(t_lexer *lexer, t_list *env_list)
 		free(str);
 		ft_advance(lexer);
 	}
-	if (ft_get_env_val(env_list, s))
-		str = ft_get_env_val(env_list, s);
+	str = ft_get_env_val(env_list, s);
+	if (str)
+	{
+		free(s);
+		return (str);
+	}
 	else
+	{
+		free(s);
+		free(str);
 		str = ft_strdup("");
+	}
 	return (str);
 }
 
 char	*ft_after_dollar(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
-	
 
 	ft_advance(lexer);
 	if (lexer->c == '?')
@@ -288,13 +295,16 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 {
 	char	*str;
 	char	*temp;
+	char	*s;
 
 	str = ft_strdup("");
 	ft_advance(lexer);
 	while(lexer->content[lexer->i] && lexer->c != c)
 	{
 		temp = str;
-		str = ft_strjoin(str, ft_help_collect_str(lexer, env_list, c));
+		s = ft_help_collect_str(lexer, env_list, c);
+		str = ft_strjoin(str, s);
+		free(s);
 		free(temp);
 	}
 	if (lexer->c != c)

@@ -18,6 +18,7 @@ void	ft_free_all(t_head_c *head)
 	t_token		*temp;
 	t_command	*t;
 
+	
 	while (head->first_c)
 	{
 		i = 0;
@@ -31,6 +32,7 @@ void	ft_free_all(t_head_c *head)
 		{
 			temp = head->first_c->herdoc->first_token;
 			head->first_c->herdoc->first_token = head->first_c->herdoc->first_token->next;
+			free(temp->value);
 			free(temp);
 		}
 		free(head->first_c->herdoc);
@@ -38,6 +40,7 @@ void	ft_free_all(t_head_c *head)
 		{
 			temp = head->first_c->redi->first_token;
 			head->first_c->redi->first_token = head->first_c->redi->first_token->next;
+			free(temp->value);
 			free(temp);
 		}
 		free(head->first_c->redi);
@@ -178,7 +181,10 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *hea
 		if (token->token < 5)
 		{
 			if (ft_check_token(token, re, &i, head) == 1)
+			{	
+				
 				return (1);
+			}
 		}
 		else if (token->token == 5)
 		{
@@ -187,8 +193,7 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *hea
 			break ;
 		}
 		k++;
-		token = ft_get_next_token(lexer, env_list);	
-		
+		token = ft_get_next_token(lexer, env_list);
 	}
 	return (0);
 }
@@ -196,6 +201,7 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *hea
 int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
 {
 	t_command	*re;
+	int			i;
 
 	re = malloc(sizeof(t_command));
 	re->redi = malloc(sizeof(t_token_head));
@@ -208,6 +214,9 @@ int	ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list)
 	{
 		free(re->redi);
 		free(re->herdoc);
+		i = -1;
+		while (re->flags[++i])
+			free(re->flags[i]);
 		free(re->flags);
 		free(re);
 		return (1);
