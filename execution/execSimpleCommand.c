@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 12:13:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 14:30:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ char	*get_path(t_list *env_list, char *cmd)
 		i++;
 	}
 	free_2d_array(command_path);
-	i = 0;
-	while (command_path[i])
-	{
-		free(command_path[i]);
-		i++;
-	}
-	free(command_path);
 	return (NULL);
 }
 
@@ -78,7 +71,9 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 		return ;
 	command_path = get_path(vars->env_list, command->flags[0]);
 	if (command->flags[0][0] == '/' || command->flags[0][0] == '.')
+	{
 		check_cmd(command, vars, contex);
+	}
 	else if (command_path == NULL)
 		ft_error(command->flags[0], " :command not found", COMMAND_NOT_FOUND);
 	else

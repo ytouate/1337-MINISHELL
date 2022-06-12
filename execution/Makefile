@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/11 21:09:12 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/12 21:44:15 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(NAME): $(O_FILES)
 	@ar -rc  exec.a $(O_FILES) 
 
 clean:
-	@rm -f $(O_FILES) exec.a
+	@rm -f $(O_FILES)
 
 fclean: clean
 	@rm -f exec $(NAME)

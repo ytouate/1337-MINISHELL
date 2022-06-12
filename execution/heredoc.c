@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 12:41:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 21:52:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
 	int		temp_stdin;
 	char	*line;
 	int		out_file;
-
+	open_heredoc(&command);
 	out_file = 1337;
 	temp_stdin = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	while (true)
@@ -65,6 +65,8 @@ bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
 	char		*line;
 	t_contex	contex;
 	t_contex temp_contex;
+
+	open_heredoc(&command);
 	unlink("/tmp/temp");
 	contex.fd_in = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
 	if (command->herdoc->first_token == NULL)

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 12:48:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 21:47:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,9 @@ int	main(int ac, char **av, char **env)
 				vars->num_of_commands = get_len(vars->command);
 				if (vars->command != NULL)
 					ft_pipe(vars);
-				{
-					replace_symbol_by_val(vars->head->first_c->flags, vars->env_list);
-					ft_pipe(vars);
-				}
-				ft_free_all(vars->head);
+				// ft_free_all(vars->head);
 			}
 		}
-		system("leaks minishell");
-		free(cmd);
+		// free(cmd);
 	}
 }

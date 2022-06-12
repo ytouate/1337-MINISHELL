@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 21:31:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 21:48:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ void	ft_pipe(t_vars *vars)
 	else
 	{
 		if (!heredoc_outside_pipe(vars, vars->command))
+		{
 			exec_node(vars, vars->command, data.contex);
+		}
 	}
 	free(data.ids);
 }
