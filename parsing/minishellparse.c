@@ -193,7 +193,7 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *hea
 			break ;
 		}
 		k++;
-		token = ft_get_next_token(lexer, env_list);	
+		token = ft_get_next_token(lexer, env_list);
 	}
 	return (0);
 }

@@ -108,6 +108,6 @@ char	*ft_get_env_val(t_list *env_list, char *var_name)
 		}
 		env_list = env_list->next;
 	}
-	
+	free(temp);
 	return (NULL);
 }
