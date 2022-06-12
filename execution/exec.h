@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 21:38:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:42:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void		exec_other_command_before_heredoc(t_vars *vars, t_norm data);
 void		add_properly_named_word(t_command *command, t_vars *vars, int i);
 void		show_export_error(int *flag, int i, t_command *command);
 int			count_commands_before_heredoc(t_command *command);
-void		add_existed_variable(t_command *command, t_vars *vars, int i);
+void		add_existed_variable(t_command *command, t_vars *vars, int i, char **temp);
 void		add_non_variable(t_command *command,
 				t_vars *vars, char **temp, int i);
 void		add_unexisted_variable(t_command *command, t_vars *vars,

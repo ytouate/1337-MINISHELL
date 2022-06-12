@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 21:47:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:32:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int	main(int ac, char **av, char **env)
 				vars->num_of_commands = get_len(vars->command);
 				if (vars->command != NULL)
 					ft_pipe(vars);
-				// ft_free_all(vars->head);
+				ft_free_all(vars->head);
 			}
 		}
-		// free(cmd);
+		// free(c÷md);
 	}
 }

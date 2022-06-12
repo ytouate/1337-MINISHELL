@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:50:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:55:17 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:41:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	add_variable(t_command *command, t_vars *vars, char **temp, int i)
 				add_unexisted_variable(command, vars, temp, i);
 		}
 		else
-			add_existed_variable(command, vars, i);
+			add_existed_variable(command, vars, i, temp);
 		return (true);
 	}
 	return (false);

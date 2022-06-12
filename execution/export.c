@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:50:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 22:41:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ void	add_unexisted_variable(t_command *command, t_vars *vars,
 	sort_list(&vars->export_list);
 }
 
-void	add_existed_variable(t_command *command, t_vars *vars, int i)
+void	add_existed_variable(t_command *command, t_vars *vars, int i, char **temp)
 {
+	ft_unset(&vars->env_list, temp[0]);
+	ft_unset(&vars->export_list, temp[0]);
 	ft_lstadd_front(&(vars)->env_list, ft_lstnew(ft_strdup(command->flags[i])));
 	ft_lstadd_front(&(vars)->export_list,
 		ft_lstnew(ft_strdup(command->flags[i])));
