@@ -11,3 +11,4 @@ adding an existed variable does not remove the previous one;
 reset exit statu after new line;
 redirection with simple heredoc;
 pwd
+adding an existed variable does not remove the previous one;
