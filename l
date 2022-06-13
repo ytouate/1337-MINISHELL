@@ -1,0 +1,9 @@
+Makefile
+MiniShell.h
+TODO
+execution
+l
+libft
+main.c
+minishell
+parsing

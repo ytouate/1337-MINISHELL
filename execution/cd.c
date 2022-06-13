@@ -17,13 +17,23 @@ void	cd_oldwd(t_list *env_list)
 	char	current_wd[PATH_MAX];
 	char	buffer[PATH_MAX];
 	char	*temp_path;
+	char	**temp;
 	t_list	*old_wd;
+	int		i;
 
 	getcwd(current_wd, sizeof(current_wd));
 	old_wd = ft_getenv(env_list, "OLDPWD");
 	if (old_wd)
 	{
-		temp_path = ft_split(old_wd->content, '=')[1];
+		temp = ft_split(old_wd->content, '=');
+		temp_path = ft_strdup(temp[1]);
+		i = 0;
+		while (temp[i])
+		{
+			free(temp[i]);
+			i++;
+		}
+		free(temp);
 		if (chdir(temp_path) == -1)
 		{
 			set_exit_code(1);
@@ -32,6 +42,7 @@ void	cd_oldwd(t_list *env_list)
 		ft_setenv(&env_list, "OLDPWD", current_wd);
 		getcwd(buffer, sizeof(buffer));
 		ft_setenv(&env_list, "PWD", buffer);
+		free(temp_path);
 		set_exit_code(0);
 	}
 	else
