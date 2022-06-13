@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 21:02:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/12 23:20:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ void	ft_env(t_vars vars, t_command *command)
 {
 	int	fd;
 
+	printf("am her \n");
 	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
 		return ;
 	while (vars.env_list)
 	{
-		ft_putendl_fd(vars.env_list->content, fd);
+		if (vars.env_list->content)
+			ft_putendl_fd(vars.env_list->content, fd);
 		vars.env_list = vars.env_list->next;
 	}
 }
