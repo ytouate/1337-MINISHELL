@@ -91,6 +91,7 @@ bool	run_export(t_command *command, t_vars *vars)
 		{
 			if (is_properly_named(command->flags[i]))
 				add_properly_named_word(command, vars, i);
+				
 			else
 				show_export_error(&flag, i, command);
 		}

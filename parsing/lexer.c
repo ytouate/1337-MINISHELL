@@ -100,7 +100,7 @@ t_token	*ft_get_next_token(t_lexer *lexer, t_list *env_list)
 			return (ft_her_app(lexer, env_list));
 		else if (lexer->c == '<' || lexer->c == '>')
 			return(ft_red(lexer, env_list));
-		else	
+		else
 			return (ft_init_token(T_WORD, ft_get_value(lexer, env_list)));
 	}
 	return (NULL);
@@ -136,7 +136,10 @@ char	*ft_get_value(t_lexer *lexer, t_list *env_list)
 		{
 			s = ft_str_for_join(lexer, env_list);
 			if (s == NULL)
+			{
+				free(str);
 				return (NULL);
+			}
 			temp = str;
 			str = ft_strjoin(str, s);
 			free(s);
@@ -214,7 +217,7 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list)
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '~')
 	{
-		str = getenv("HOME");
+		str = ft_strdup(getenv("HOME"));
 		if (str == NULL)
 			str = ft_strdup(&lexer->c);
 		ft_advance(lexer);
@@ -256,10 +259,7 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 			return (ft_witout_quotes_util(str, s));
 		s = ft_get_str(lexer, env_list);
 		if (s == NULL)
-		{
-			free(temp);
 			return (NULL);
-		}
 		temp = str;
 		str = ft_strjoin(str, s);
 		free(temp);
@@ -308,6 +308,9 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 		free(temp);
 	}
 	if (lexer->c != c)
+	{
+		free(str);
 		return (NULL);
+	}
 	return (str);
 }

@@ -55,10 +55,18 @@ void	show_export_error(int *flag, int i, t_command *command)
 void	add_properly_named_word(t_command *command, t_vars *vars, int i)
 {
 	char	**temp;
+	int		r;
 
 	temp = ft_split(command->flags[i], '=');
 	if (!add_variable(command, vars, temp, i))
 		add_non_variable(command, vars, temp, i);
+	r = 0;
+	while (temp[r])
+	{
+		free(temp[r]);
+		r++;
+	}
+	free(temp);
 }
 
 int	is_variable(char *s)

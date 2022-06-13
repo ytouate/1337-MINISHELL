@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 14:30:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:40:03 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 	{
 		if (command->flags[0][0])
 		{
+			set_signal_flag(1);
 			if (fork() == 0)
 			{
 				dup2(contex.fd_in, STDIN_FILENO);
@@ -89,6 +90,8 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				exit(COMMAND_NOT_FOUND);
 			}
 			wait(&status);
+			if (WIFEXITED(status))
+				set_exit_code(0);
 			set_exit_code(WEXITSTATUS(status));
 		}
 		else

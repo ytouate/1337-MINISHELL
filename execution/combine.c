@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 21:46:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:37:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_signal_flag(int num)
 {
 	g_signal_flag = num;
 }
+
 int		get_signal_flag(void)
 {
 	return (g_signal_flag);

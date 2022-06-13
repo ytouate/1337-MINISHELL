@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include
+CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
 NAME = exec
 FILES =	\
 	./combine.c				\
@@ -47,6 +47,6 @@ clean:
 	@rm -f $(O_FILES)
 
 fclean: clean
-	@rm -f exec $(NAME)
+	@rm -f exec.a
 
 re: fclean all

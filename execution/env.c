@@ -46,15 +46,29 @@ int	is_properly_named(char *s)
 t_list	*ft_getenv(t_list *env_list, char *var_name)
 {
 	char	*temp;
+	char	**l;
+	int		i;
 
 	while (env_list)
 	{
-		temp = ft_split(env_list->content, '=')[0];
+		l = ft_split(env_list->content, '=');
+		temp = ft_strdup(l[0]);
+		i = 0;
+		while (l[i])
+		{
+			free(l[i]);
+			i++;
+		}
+		free(l);
 		if (!temp || !*temp)
 			return (NULL);
 		if (ft_strcmp(temp, var_name) == 0)
+		{
+			free(temp);
 			return (env_list);
+		}
 		env_list = env_list ->next;
+		free(temp);
 	}
 	return (NULL);
 }
@@ -63,12 +77,15 @@ void	ft_setenv(t_list **env_list, char *var_name, char *var_val)
 {
 	char	*var;
 	t_list	*temp;
+	char	*t;
 
 	temp = ft_getenv(*env_list, var_name);
 	if (temp == NULL)
 	{
 		var = ft_strjoin(var_name, "=");
+		t = var;
 		var = ft_strjoin(var, var_val);
+		free(t);
 		ft_lstadd_back(env_list, ft_lstnew(var));
 	}
 	else
