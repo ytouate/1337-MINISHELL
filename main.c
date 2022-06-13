@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 11:40:20 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:55:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	char *cmd;
-	char *temp;
 
 	t_vars	*vars;
 
@@ -43,10 +42,7 @@ int	main(int ac, char **av, char **env)
 	{
 		cmd = get_promt();
 		if (cmd == NULL)
-			exit(130);
-		temp = cmd;
-		cmd = ft_strtrim(cmd, " ");
-		free(temp);
+			exit(130); 
 		if (*cmd)
 		{
 			vars->head = ft_get_for_exec(cmd, vars->env_list);
@@ -59,7 +55,6 @@ int	main(int ac, char **av, char **env)
 				ft_free_all(vars->head);
 			}
 		}
-		// system("leaks minishell");
 		free(cmd);
 	}
 }

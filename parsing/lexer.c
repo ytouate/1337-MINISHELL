@@ -259,7 +259,10 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 			return (ft_witout_quotes_util(str, s));
 		s = ft_get_str(lexer, env_list);
 		if (s == NULL)
+		{
+			free(str);
 			return (NULL);
+		}
 		temp = str;
 		str = ft_strjoin(str, s);
 		free(temp);

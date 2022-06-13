@@ -6,22 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 11:40:03 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:54:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	child_sig_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		rl_on_new_line();
-		//rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
 char	*get_path(t_list *env_list, char *cmd)
 {
 	char	*path;

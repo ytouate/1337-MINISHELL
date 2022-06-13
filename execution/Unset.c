@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 11:21:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:44:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 		*env_list = (*env_list)->next;
 		free_2d_array(cmd);
 		set_exit_code(EXIT_SUCCESS);
-		system("leaks minishell");
 		return (true);
 	}
 	return (false);
