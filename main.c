@@ -44,8 +44,6 @@ int	main(int ac, char **av, char **env)
 		if (cmd == NULL)
 			exit(130);
 		temp = cmd;
-		cmd = ft_strtrim(cmd, " ");
-		free(temp);
 		if (*cmd)
 		{
 			vars->head = ft_get_for_exec(cmd, vars->env_list);
@@ -58,7 +56,7 @@ int	main(int ac, char **av, char **env)
 				ft_free_all(vars->head);
 			}
 		}
-		system("leaks minishell");
 		free(cmd);
+		system("leaks minishell");
 	}
 }
