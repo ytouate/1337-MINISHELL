@@ -20,8 +20,6 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 	{
 		temp = *env_list;
 		*env_list = (*env_list)->next;
-		free(temp->content);
-		free(temp);
 		free_2d_array(cmd);
 		set_exit_code(EXIT_SUCCESS);
 		return (true);
