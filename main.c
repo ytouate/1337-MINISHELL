@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 11:55:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 19:23:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,30 @@
 
 void	sig_handler(int sig)
 {
-	// printf("%d \n", get_signal_flag());
 	if (sig == SIGINT)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
-		rl_redisplay();
+		rl_replace_line("", 0);
+		if (get_signal_flag() != 1)
+			rl_redisplay();
+		else
+			set_exit_code(130);
+		set_signal_flag(0);
+	}
+	if (sig == SIGQUIT)
+	{
+		if (get_signal_flag() == 1)
+		{
+			ft_putstr_fd("Quit: \n", STDOUT_FILENO);
+			set_exit_code(131);
+			set_signal_flag(0);
+		}
+		else
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 }
 
@@ -36,14 +53,20 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	signal(SIGQUIT, SIG_IGN);
+	struct sigaction sa;
+	sa.sa_handler = sig_handler;
+	sa.sa_flags = SA_SIGINFO;
 	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	while (true)
 	{
 		cmd = get_promt();
 		if (cmd == NULL)
-			exit(130); 
-		if (*cmd)
+		{
+			free(cmd);
+			exit(EXIT_SUCCESS); 
+		}
+		else if (*cmd)
 		{
 			vars->head = ft_get_for_exec(cmd, vars->env_list);
 			if (vars->head != NULL)

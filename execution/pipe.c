@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 21:48:11 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 13:38:05 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 					exec_last_node(vars, data);
 				else
 					exec_other_node(vars, data);
-				exit(0);
+				exit(127);
 			}
 			data.ids[j++] = data.id;
 			data.contex.herdoc_fildes = 1337;
