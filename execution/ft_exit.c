@@ -62,7 +62,6 @@ void	ft_exit(int exit_code, char *arg, char flag)
 	{
 		printf("exit\n");
 		set_exit_code(exit_code);
-		system("leaks minishell");
 		exit(exit_code);
 	}
 }
