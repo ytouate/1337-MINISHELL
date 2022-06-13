@@ -42,19 +42,21 @@ void	ft_unset(t_list **env_list, char *to_delete)
 		vars.second = vars.first->next;
 		while (vars.second)
 		{
+			free_2d_array(vars.cmd);
 			vars.cmd = ft_split(vars.second->content, '=');
 			if (ft_strcmp(vars.cmd[0], to_delete) == 0)
 			{
 				vars.temp = vars.second;
+				free_2d_array(vars.cmd);
 				vars.first->next = vars.second->next;
 				free(vars.temp->content);
 				free(vars.temp);
 				return ;
 			}
-			free_2d_array(vars.cmd);
 			vars.first = vars.second;
 			vars.second = vars.second->next;
 		}
+		free_2d_array(vars.cmd);
 		set_exit_code(EXIT_SUCCESS);
 	}
 }

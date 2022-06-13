@@ -153,7 +153,7 @@ int	ft_check_token(t_token *token, t_command *re, int *i, t_head_c *head)
 	if (token->token == 0)
 	{
 		if (ft_syntax(token->value, token, head) == 1)
-			return (1);	
+			return (1);
 		re->flags = ft_replace(re->flags, *i, token->value);
 		*i += 1;
 		free(token->value);
@@ -181,10 +181,7 @@ int		ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *hea
 		if (token->token < 5)
 		{
 			if (ft_check_token(token, re, &i, head) == 1)
-			{	
-				
 				return (1);
-			}
 		}
 		else if (token->token == 5)
 		{

@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **env)
 				ft_free_all(vars->head);
 			}
 		}
-		// free(c÷md);
+		system("leaks minishell");
+		free(cmd);
 	}
 }
