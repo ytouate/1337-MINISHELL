@@ -24,8 +24,13 @@ int	fill_temp_stdin(t_command *command)
 		line = readline(">");
 		if (line == NULL
 			|| !ft_strcmp(line, command->herdoc->first_token->value))
-			break ;
+			{
+				if (line)
+					free(line);
+				break ;
+			}
 		ft_putendl_fd(line, temp_stdin);
+		free(line);
 	}
 	return (temp_stdin);
 }
@@ -87,6 +92,8 @@ void	read_for_heredoc(char *line, t_command *command, int fd_in)
 		if (line == NULL
 			||!ft_strcmp(line, command->herdoc->first_token->value))
 		{
+			if (line)
+				free(line);
 			break ;
 		}
 		ft_putendl_fd(line, fd_in);

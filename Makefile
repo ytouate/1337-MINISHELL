@@ -15,7 +15,7 @@ CC = gcc
 EXEC = ./execution/exec.a
 PARSE = ./parsing/pars.a
 LIBFT = ./libft/libft.a
-READLINE = -lreadline -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include
+READLINE = -lreadline -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
 CFLAGS = -Wall -Wextra -Werror $(LIBFT) $(EXEC) $(PARSE) main.c -o $(NAME) $(READLINE)
 
 all :

@@ -82,5 +82,6 @@ int	main(int ac, char **av, char **env)
 			}
 		}
 		free(cmd);
+		system("leaks minishell");
 	}
 }
