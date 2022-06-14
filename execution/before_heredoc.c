@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:37:27 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:49:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:52:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	exec_commands_before_heredoc(t_vars *vars)
 	{
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
-		set_exit_code_inside_pipe(vars, vars->command);
 		pipe(data.fd);
 		data.id = fork();
 		run_commands_before_heredoc(vars, data, i);

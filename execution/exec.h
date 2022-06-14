@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:25:45 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:50:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ typedef struct s_norm
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-
+void	read_for_heredoc(char *line, t_command *command, int fd_in);
 void		open_heredoc(t_command **command);
 void		set_signal_flag(int num);
 void		free_list(t_list *list);

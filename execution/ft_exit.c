@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:36:18 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:50:25 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,27 @@ void	set_exit_code_inside_pipe(t_vars *vars, t_command *command)
 {
 	int		out_file;
 	char	*path;
+	int		i;
 
+	i = 0;
 	while (command)
 	{
 		if (command->flags[0])
 		{
-			if (command->flags[0][0] == '/')
+			if (ft_strcmp(command->flags[0], "export") == 0)
+			{
+				while (command->flags[++i])
+					if (!is_properly_named(command->flags[i]))
+						set_exit_code(1);
+			}
+			else if (ft_strcmp(command->flags[0], "cd") == 0)
+			{
+				if (command->flags[1] == NULL
+					|| ft_strcmp("~", command->flags[1]) == 0)
+					if (ft_getenv(vars->env_list, "HOME") == NULL)
+						set_exit_code(1);
+			}
+			else if (command->flags[0][0] == '/')
 			{
 				if (access(command->flags[0], F_OK | X_OK) != 0)
 					set_exit_code(PERMISSION_DENIED);
