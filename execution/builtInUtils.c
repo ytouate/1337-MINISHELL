@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:41:23 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 21:02:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:29:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,7 @@ char	*join_var(char **temp)
 			free(t);
 		}
 	}
-	i = 0;
-	while (temp[i])
-	{
-		free(temp[i]);
-		i++;
-	}
-	free(temp);
+	free_2d_array(temp);
 	return (result);
 }
 
@@ -93,12 +87,7 @@ char	*ft_get_env_val(t_list *env_list, char *var_name)
 		temp = ft_strdup(l[0]);
 		free(f);
 		i = 0;
-		while (l[i])
-		{
-			free(l[i]);
-			i++;
-		}
-		free(l);
+		free_2d_array(l);
 		if (!temp || !*temp)
 			return (NULL);
 		if (ft_strcmp(temp, var_name) == 0)

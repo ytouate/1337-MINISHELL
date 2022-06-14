@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 23:11:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:11:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	add_unexisted_variable(t_command *command, t_vars *vars,
 	sort_list(&vars->export_list);
 }
 
-void	add_existed_variable(t_command *command, t_vars *vars, int i, char **temp)
+void	add_existed_variable(t_command *command, t_vars *vars,
+		int i, char **temp)
 {
 	ft_unset(&vars->env_list, temp[0]);
 	ft_unset(&vars->export_list, temp[0]);
@@ -91,7 +92,6 @@ bool	run_export(t_command *command, t_vars *vars)
 		{
 			if (is_properly_named(command->flags[i]))
 				add_properly_named_word(command, vars, i);
-				
 			else
 				show_export_error(&flag, i, command);
 		}

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 22:42:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:21:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,14 @@ typedef struct s_norm
 	t_contex	contex;
 	int			fd[2];
 }t_norm;
-void	open_heredoc(t_command **command);
+
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-int			get_signal_flag(void);
+
+void		open_heredoc(t_command **command);
 void		set_signal_flag(int num);
-void	free_list(t_list *list);
+void		free_list(t_list *list);
 void		ft_error(char *arg, char *msg, int exit_code);
 void		wait_for_child(int *ids, int i, int temp_fd);
 void		exec_commands_before_heredoc(t_vars *vars);
@@ -118,15 +119,17 @@ void		exec_last_command_before_heredoc(t_vars *vars, t_norm data);
 void		exec_other_command_before_heredoc(t_vars *vars, t_norm data);
 void		add_properly_named_word(t_command *command, t_vars *vars, int i);
 void		show_export_error(int *flag, int i, t_command *command);
-int			count_commands_before_heredoc(t_command *command);
-void		add_existed_variable(t_command *command, t_vars *vars, int i, char **temp);
+void		add_existed_variable(t_command *command, t_vars *vars,
+				int i, char **temp);
 void		add_non_variable(t_command *command,
 				t_vars *vars, char **temp, int i);
 void		add_unexisted_variable(t_command *command, t_vars *vars,
 				char **temp, int i);
-
+void		exec_command(t_command *command, t_vars *vars,
+				t_contex contex, char *command_path);
+void		set_exit_code_inside_pipe(t_vars *vars, t_command *command);
 void		init_contex(t_contex *contex);
-bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
+
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
 int			get_exit_code(void);
@@ -136,12 +139,16 @@ int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
 int			check_built_in_commands(t_vars *vars, t_command *command);
 int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
+int			count_commands_before_heredoc(t_command *command);
+int			get_signal_flag(void);
 
 char		*get_promt(void);
 char		*join_for_echo(t_list *env_list, char **s, char flag);
 char		*get_path(t_list *env_list, char *cmd);
 char		*ft_get_env_val(t_list *env_list, char *var_name);
 
+bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
+bool		check_redirection(t_vars *vars, t_command *command);
 bool		heredoc_outside_pipe(t_vars *vars, t_command *command);
 bool		run_exit(t_vars vars, t_command *command);
 bool		run_unset(t_vars vars, t_command *command);

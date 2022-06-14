@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 11:44:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:24:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 	return (false);
 }
 
+void	delete_body(t_norm *vars)
+{
+	vars->temp = vars->second;
+	free_2d_array(vars->cmd);
+	vars->first->next = vars->second->next;
+	free(vars->temp->content);
+	free(vars->temp);
+}
+
 void	ft_unset(t_list **env_list, char *to_delete)
 {
 	t_norm	vars;
@@ -44,11 +53,7 @@ void	ft_unset(t_list **env_list, char *to_delete)
 			vars.cmd = ft_split(vars.second->content, '=');
 			if (ft_strcmp(vars.cmd[0], to_delete) == 0)
 			{
-				vars.temp = vars.second;
-				free_2d_array(vars.cmd);
-				vars.first->next = vars.second->next;
-				free(vars.temp->content);
-				free(vars.temp);
+				delete_body(&vars);
 				return ;
 			}
 			vars.first = vars.second;

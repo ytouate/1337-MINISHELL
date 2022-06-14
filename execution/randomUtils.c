@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 22:46:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:13:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_strcmp(char *s, char *str)
 char	*get_promt(void)
 {
 	char	*cmd;
+
 	cmd = readline("\033[0;34mMinishell$> :\033[0;37m");
 	if (cmd && *cmd)
 		add_history(cmd);

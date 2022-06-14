@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 12:23:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:09:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ int	check_echo_flag(char *s)
 	return (true);
 }
 
+char	*check_for_space(char **s, char *result, int i)
+{
+	char	*temp;
+
+	if (s[i + 1] && s[i][0] != '\0')
+	{
+		temp = result;
+		result = ft_strjoin(result, " ");
+		free(temp);
+	}
+	return (result);
+}
+
 char	*join_for_echo(t_list *env_list, char **s, char flag)
 {
 	int		i;
@@ -70,12 +83,7 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 		temp = result;
 		result = ft_strjoin(result, s[i]);
 		free(temp);
-		if (s[i + 1] && s[i][0] != '\0')
-		{
-			temp = result;
-			result = ft_strjoin(result, " ");
-			free(temp);
-		}
+		result = check_for_space(s, result, i);
 		i++;
 	}
 	return (result);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:47:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 21:52:09 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:36:36 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ void	exec_other_command_before_heredoc(t_vars *vars, t_norm data)
 
 void	open_heredoc(t_command **command)
 {
-	char *line;
-	if ((*command)->herdoc->first_token == NULL || (*command)->herdoc->first_token->next == NULL)
-			return ;
+	char	*line;
+
+	if ((*command)->herdoc->first_token == NULL
+		|| (*command)->herdoc->first_token->next == NULL)
+		return ;
 	while (*command)
 	{
 		if ((*command)->herdoc->first_token->next == NULL)
@@ -50,8 +52,9 @@ void	open_heredoc(t_command **command)
 		while (true)
 		{
 			line = readline(">");
-			if (line == NULL || ft_strcmp(line, (*command)->herdoc->first_token->value) == 0)
-				break;
+			if (line == NULL
+				|| ft_strcmp(line, (*command)->herdoc->first_token->value) == 0)
+				break ;
 			free(line);
 		}
 		(*command)->herdoc->first_token = (*command)->herdoc->first_token->next;

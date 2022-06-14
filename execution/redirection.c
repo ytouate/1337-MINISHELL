@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 21:17:36 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:05:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ void	ft_redirect_output_append_mode(t_command *command, t_vars *vars)
 	contex.herdoc_fildes = -1;
 	contex = open_files(*command->redi);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	if (command->flags[0] != NULL)
 		if (!check_built_in_commands(vars, command))
 			ft_execute(command, vars, contex);
+	set_exit_code(EXIT_SUCCESS);
 }
 
 void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
@@ -32,12 +36,16 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 	contex.herdoc_fildes = -1;
 	contex = open_files(*command->redi);
 	if (contex.fd_in == -1 || contex.fd_out == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	if (command->flags[0] != NULL)
 	{
 		if (!check_built_in_commands(vars, command))
 			ft_execute(command, vars, contex);
 	}
+	set_exit_code(EXIT_SUCCESS);
 }
 
 void	redirect_input(t_vars *vars, t_command *command)
@@ -47,10 +55,14 @@ void	redirect_input(t_vars *vars, t_command *command)
 	contex.herdoc_fildes = -1;
 	contex = open_files(*command->redi);
 	if (contex.fd_out == -1 || contex.fd_in == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	else if (command->flags[0] != NULL)
 		if (!check_built_in_commands(vars, command))
 			ft_execute(command, vars, contex);
+	set_exit_code(EXIT_SUCCESS);
 }
 
 void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
@@ -77,4 +89,5 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 			printf("%s: command, not found", command->flags[0]);
 		}
 	}
+	set_exit_code(EXIT_SUCCESS);
 }

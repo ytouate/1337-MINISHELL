@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/12 23:20:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:10:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_env(t_vars vars, t_command *command)
 {
 	int	fd;
 
-	printf("am her \n");
 	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
 		return ;
@@ -54,12 +53,7 @@ t_list	*ft_getenv(t_list *env_list, char *var_name)
 		l = ft_split(env_list->content, '=');
 		temp = ft_strdup(l[0]);
 		i = 0;
-		while (l[i])
-		{
-			free(l[i]);
-			i++;
-		}
-		free(l);
+		free_2d_array(l);
 		if (!temp || !*temp)
 			return (NULL);
 		if (ft_strcmp(temp, var_name) == 0)
@@ -93,5 +87,4 @@ void	ft_setenv(t_list **env_list, char *var_name, char *var_val)
 		ft_unset(env_list, var_name);
 		ft_setenv(env_list, var_name, var_val);
 	}
-
 }

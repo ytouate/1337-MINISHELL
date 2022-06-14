@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 13:38:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:44:19 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	j = 0;
 	data.size -= count_commands_before_heredoc(vars->command);
 	data.contex.herdoc_fildes = 1337;
-	while (vars->command && vars->command->herdoc->first_token == NULL )
+	while (vars->command && vars->command->herdoc->first_token == NULL)
 		vars->command = vars->command->next_command;
 	while (vars->command)
 	{
@@ -43,7 +43,6 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			data.id = fork();
 			if (data.id == 0)
 			{
-				replace_symbol_by_val(vars->command->flags, vars->env_list);
 				if (data.i == 0)
 					exec_first_node(vars, data);
 				else if (data.i == data.size - 1)
@@ -81,9 +80,7 @@ void	ft_pipe(t_vars *vars)
 	else
 	{
 		if (!heredoc_outside_pipe(vars, vars->command))
-		{
 			exec_node(vars, vars->command, data.contex);
-		}
 	}
 	free(data.ids);
 }

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 19:23:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 20:53:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	sig_handler(int sig)
 	{
 		if (get_signal_flag() == 1)
 		{
-			ft_putstr_fd("Quit: \n", STDOUT_FILENO);
+			ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
 			set_exit_code(131);
 			set_signal_flag(0);
 		}
@@ -37,6 +37,7 @@ void	sig_handler(int sig)
 		{
 			rl_on_new_line();
 			rl_redisplay();
+			set_signal_flag(0);
 		}
 	}
 }
@@ -53,9 +54,6 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	struct sigaction sa;
-	sa.sa_handler = sig_handler;
-	sa.sa_flags = SA_SIGINFO;
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
 	while (true)

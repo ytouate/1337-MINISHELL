@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/11 09:58:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:18:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	cd_oldwd(t_list *env_list)
+typedef struct s_cd_vars
 {
 	char	current_wd[PATH_MAX];
 	char	buffer[PATH_MAX];
@@ -20,36 +20,34 @@ void	cd_oldwd(t_list *env_list)
 	char	**temp;
 	t_list	*old_wd;
 	int		i;
+}t_cd_vars;
 
-	getcwd(current_wd, sizeof(current_wd));
-	old_wd = ft_getenv(env_list, "OLDPWD");
-	if (old_wd)
-	{
-		temp = ft_split(old_wd->content, '=');
-		temp_path = ft_strdup(temp[1]);
-		i = 0;
-		while (temp[i])
-		{
-			free(temp[i]);
-			i++;
-		}
-		free(temp);
-		if (chdir(temp_path) == -1)
-		{
-			set_exit_code(1);
-			perror(temp_path);
-		}
-		ft_setenv(&env_list, "OLDPWD", current_wd);
-		getcwd(buffer, sizeof(buffer));
-		ft_setenv(&env_list, "PWD", buffer);
-		free(temp_path);
-		set_exit_code(0);
-	}
-	else
+void	cd_oldwd(t_list *env_list)
+{
+	t_cd_vars	vars;
+
+	getcwd(vars.current_wd, sizeof(vars.current_wd));
+	vars.old_wd = ft_getenv(env_list, "OLDPWD");
+	if (!vars.old_wd)
 	{
 		printf("OLDPWD not set\n");
 		set_exit_code(1);
+		return ;
 	}
+	vars.temp = ft_split(vars.old_wd->content, '=');
+	vars.temp_path = ft_strdup(vars.temp[1]);
+	vars.i = 0;
+	free_2d_array(vars.temp);
+	if (chdir(vars.temp_path) == -1)
+	{
+		set_exit_code(1);
+		perror(vars.temp_path);
+	}
+	ft_setenv(&env_list, "OLDPWD", vars.current_wd);
+	getcwd(vars.buffer, sizeof(vars.buffer));
+	ft_setenv(&env_list, "PWD", vars.buffer);
+	free(vars.temp_path);
+	set_exit_code(0);
 }
 
 void	cd_home(t_list *env_list)

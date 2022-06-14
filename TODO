@@ -2,13 +2,10 @@
 
 finish the exit_status code;
 start handling signals;
-multiple heredocs;
+
 ========================================
 // cases to handle //
-getting a segfault when there is a syntax error
-cat bla >> exit status 1
-adding an existed variable does not remove the previous one;
-reset exit statu after new line;
-redirection with simple heredoc;
-pwd
-adding an existed variable does not remove the previous one;
+
+signals inside the pipe;
+deleting the head in unset;
+exit status inside the pipe

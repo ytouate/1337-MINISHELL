@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 14:17:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:44:11 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ void	exec_other_node(t_vars *vars, t_norm data)
 
 void	wait_for_child(int *ids, int i, int temp_fd)
 {
+	int		status;
+
 	(void)temp_fd;
-	int status;
 	while (--i >= 0)
-	{
 		waitpid(ids[i], &status, 0);
-	}
 }

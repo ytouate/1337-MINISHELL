@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:37:27 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/10 20:48:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 12:49:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ void	check_before_heredoc_commands(t_vars *vars, t_norm data, int i)
 		exec_other_command_before_heredoc(vars, data);
 }
 
+void	run_commands_before_heredoc(t_vars *vars, t_norm data, int i)
+{
+	if (data.id == 0)
+	{
+		check_before_heredoc_commands(vars, data, i);
+		exit(0);
+	}
+}
+
 void	exec_commands_before_heredoc(t_vars *vars)
 {
 	int		i;
@@ -59,13 +68,10 @@ void	exec_commands_before_heredoc(t_vars *vars)
 	{
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
+		set_exit_code_inside_pipe(vars, vars->command);
 		pipe(data.fd);
 		data.id = fork();
-		if (data.id == 0)
-		{
-			check_before_heredoc_commands(vars, data, i);
-			exit(0);
-		}
+		run_commands_before_heredoc(vars, data, i);
 		data.ids[i++] = data.id;
 		vars->command = vars->command->next_command;
 		data.temp_fd = dup(data.fd[0]);
