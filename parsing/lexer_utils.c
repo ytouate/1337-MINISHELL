@@ -23,3 +23,63 @@ t_token	*ft_init_token(int type, char *value)
 	return (token);
 }
 
+void	ft_advance(t_lexer	*lexer)
+{
+	if (lexer->i < ft_strlen(lexer->content))
+	{
+		lexer->i += 1;
+		lexer->c = lexer->content[lexer->i];
+	}
+}
+
+void	ft_skip_spaces(t_lexer	*lexer)
+{
+	while (lexer->content[lexer->i] == ' ' && lexer->content[lexer->i] != '\0')
+		ft_advance(lexer);
+}
+
+t_token	*ft_red(t_lexer *lexer, t_list *env_list)
+{
+	if (lexer->c == '<')
+	{
+		ft_skip_spaces(lexer);
+		ft_advance(lexer);
+		if (lexer->content[lexer->i] == '\0' || lexer->c == '<' || \
+			lexer->c == '>')
+			return (ft_init_token(T_IN, NULL));
+		return (ft_init_token(T_IN, ft_get_value(lexer, env_list)));
+	}
+	else
+	{
+		ft_advance(lexer);
+		ft_skip_spaces(lexer);
+		if (lexer->content[lexer->i] == '\0' || \
+			lexer->c == '<' || lexer->c == '>')
+			return (ft_init_token(T_OUT, NULL));
+		return (ft_init_token(T_OUT, ft_get_value(lexer, env_list)));
+	}
+}
+
+t_token	*ft_her_app(t_lexer *lexer, t_list *env_list)
+{
+	if (ft_strncmp(&lexer->content[lexer->i], "<<", 2) == 0)
+	{
+		ft_advance(lexer);
+		ft_advance(lexer);
+		ft_skip_spaces(lexer);
+		if (lexer->content[lexer->i] == '\0' || \
+			lexer->c == '<' || lexer->c == '>')
+			return (ft_init_token(T_HERDOC, NULL));
+		return (ft_init_token(T_HERDOC, ft_get_value(lexer, env_list)));
+	}
+	else
+	{
+		ft_advance(lexer);
+		ft_advance(lexer);
+		ft_skip_spaces(lexer);
+		if (lexer->content[lexer->i] == '\0' || \
+			lexer->c == '<' || lexer->c == '>')
+			return (ft_init_token(T_APPEND, NULL));
+		return (ft_init_token(T_APPEND, ft_get_value(lexer, env_list)));
+	}
+}
