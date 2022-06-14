@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:21:56 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:25:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,23 @@ typedef struct s_files
 	int	trunc;
 	int	append;
 }t_files;
+
+typedef struct s_path_vars{
+	char	*path;
+	char	*temp;
+	char	**command_path;
+	int		i;
+}t_path_vars;
+
+typedef struct s_cd_vars
+{
+	char	current_wd[PATH_MAX];
+	char	buffer[PATH_MAX];
+	char	*temp_path;
+	char	**temp;
+	t_list	*old_wd;
+	int		i;
+}t_cd_vars;
 
 # define PERMISSION_DENIED 126
 # define COMMAND_NOT_FOUND 127

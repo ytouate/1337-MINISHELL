@@ -6,18 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:19:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:25:41 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-typedef struct s_path_vars{
-	char	*path;
-	char	*temp;
-	char	**command_path;
-	int		i;
-}t_path_vars;
 
 char	*get_path(t_list *env_list, char *cmd)
 {

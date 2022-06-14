@@ -6,11 +6,32 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:44:19 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:37:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+void	exec_after_heredoc(t_vars *vars, t_norm *data, int *j)
+{
+	pipe(data->fd);
+	data->id = fork();
+	if (data->id == 0)
+	{
+		if (data->i == 0)
+			exec_first_node(vars, *data);
+		else if (data->i == data->size - 1)
+			exec_last_node(vars, *data);
+		else
+			exec_other_node(vars, *data);
+		exit(1);
+	}
+	data->ids[*j++] = data->id;
+	data->contex.herdoc_fildes = 1337;
+	data->temp_fd = dup(data->fd[0]);
+	close(data->fd[0]);
+	close(data->fd[1]);
+}
 
 void	loop_through_nodes(t_vars *vars, t_norm data)
 {
@@ -38,25 +59,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			}
 		}
 		else
-		{
-			pipe(data.fd);
-			data.id = fork();
-			if (data.id == 0)
-			{
-				if (data.i == 0)
-					exec_first_node(vars, data);
-				else if (data.i == data.size - 1)
-					exec_last_node(vars, data);
-				else
-					exec_other_node(vars, data);
-				exit(127);
-			}
-			data.ids[j++] = data.id;
-			data.contex.herdoc_fildes = 1337;
-			data.temp_fd = dup(data.fd[0]);
-			close(data.fd[0]);
-			close(data.fd[1]);
-		}
+			exec_after_heredoc(vars, &data, &j);
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}

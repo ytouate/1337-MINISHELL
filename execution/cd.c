@@ -6,21 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:18:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 13:23:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-typedef struct s_cd_vars
-{
-	char	current_wd[PATH_MAX];
-	char	buffer[PATH_MAX];
-	char	*temp_path;
-	char	**temp;
-	t_list	*old_wd;
-	int		i;
-}t_cd_vars;
 
 void	cd_oldwd(t_list *env_list)
 {

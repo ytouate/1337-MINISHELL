@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_all_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilefhail <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:37:38 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/14 10:37:40 by ilefhail         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:39:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parsing.h"
+
+# include "parsing.h"
 
 void	ft_init_head(t_head_c *head)
 {
@@ -34,7 +35,6 @@ void	free_list_of_tokens(t_token_head *head)
 void	ft_free_all(t_head_c *head)
 {
 	int			i;
-	t_token		*temp;
 	t_command	*t;
 
 	while (head->first_c)
