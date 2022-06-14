@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:47:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:36:36 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 15:05:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,32 @@ void	open_heredoc(t_command **command)
 		}
 		(*command)->herdoc->first_token = (*command)->herdoc->first_token->next;
 	}
+}
+
+bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
+{
+	char		*line;
+	t_contex	contex;
+	t_contex	temp_contex;
+
+	line = NULL;
+	open_heredoc(&command);
+	unlink("/tmp/temp");
+	contex.fd_in = open("/tmp/temp", O_RDWR | O_TRUNC | O_CREAT, 0777);
+	if (command->herdoc->first_token == NULL)
+		return (false);
+	read_for_heredoc(line, command, contex.fd_in);
+	temp_contex = open_files(*vars->command->redi);
+	if (temp_contex.fd_in == -1 || temp_contex.fd_out == -1)
+		return (true);
+	contex.fd_out = dup(temp_contex.fd_out);
+	if (temp_contex.fd_in != STDIN_FILENO)
+		contex.fd_in = dup(temp_contex.fd_in);
+	else
+		contex.fd_in = dup(contex.fd_in);
+	if (!check_built_in_commands(vars, command))
+		ft_execute(command, vars, contex);
+	wait(NULL);
+	unlink("/tmp/temp");
+	return (true);
 }

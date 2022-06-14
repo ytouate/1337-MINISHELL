@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:37:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:46:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,25 @@ void	exec_after_heredoc(t_vars *vars, t_norm *data, int *j)
 			exec_last_node(vars, *data);
 		else
 			exec_other_node(vars, *data);
-		exit(1);
+		exit(127);
 	}
 	data->ids[*j++] = data->id;
 	data->contex.herdoc_fildes = 1337;
 	data->temp_fd = dup(data->fd[0]);
 	close(data->fd[0]);
 	close(data->fd[1]);
+}
+
+void	run_heredoc(int *heredoc_fd, t_vars *vars, t_norm data)
+{
+	if (vars->command->next_command)
+		*heredoc_fd = ft_heredoc(vars,
+				vars->command, data.contex);
+	else
+	{
+		heredoc_outside_pipe(vars, vars->command);
+		wait(NULL);
+	}
 }
 
 void	loop_through_nodes(t_vars *vars, t_norm data)
@@ -47,19 +59,12 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
 		if (vars->command->herdoc->first_token != NULL)
-		{
-			if (vars->command->next_command)
-				data.contex.herdoc_fildes = ft_heredoc(vars,
-						vars->command, data.contex);
-			else
-			{
-				heredoc_outside_pipe(vars, vars->command);
-				wait(NULL);
-				break ;
-			}
-		}
+			run_heredoc(&data.contex.herdoc_fildes, vars, data);
 		else
+		{
 			exec_after_heredoc(vars, &data, &j);
+			wait(NULL);
+		}
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}
@@ -83,7 +88,9 @@ void	ft_pipe(t_vars *vars)
 	else
 	{
 		if (!heredoc_outside_pipe(vars, vars->command))
+		{
 			exec_node(vars, vars->command, data.contex);
+		}
 	}
 	free(data.ids);
 }

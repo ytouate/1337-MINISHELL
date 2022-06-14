@@ -13,7 +13,7 @@
 #ifndef EXEC_H
 # define EXEC_H
 
-# include "../parsing/parsing.h"
+# include "../MiniShell.h"
 # include <stdio.h>
 # include "../libft/libft.h"
 # include <sys/types.h>

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:23:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/14 14:51:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	cd_home(t_list *env_list)
 			set_exit_code(0);
 		}
 	}
+	free(home_path);
 }
 
 void	ft_cd(char *path, t_list *env_list)
@@ -69,11 +70,14 @@ void	ft_cd(char *path, t_list *env_list)
 	char	current_wd[PATH_MAX];
 
 	if (path == NULL)
-		path = ft_strdup("~");
+		goto home;
 	if (ft_strcmp("-", path) == 0)
 		cd_oldwd(env_list);
 	else if (ft_strcmp("~", path) == 0)
+	{
+		home:
 		cd_home(env_list);
+	}
 	else
 	{
 		getcwd(current_wd, sizeof(current_wd));
