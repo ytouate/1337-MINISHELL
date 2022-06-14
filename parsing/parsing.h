@@ -44,6 +44,8 @@ typedef struct head
 	int		taille;
 	t_command	*first_c;
 }t_head_c;
+
+# include "../MiniShell.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -51,7 +53,6 @@ typedef struct head
 # include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../MiniShell.h"
 
 typedef struct lexer
 {
@@ -87,5 +88,6 @@ int			ft_check_after_dollar(t_lexer *lexer);
 char		*ft_get_str(t_lexer *lexer, t_list *env_list);
 void		ft_free_all(t_head_c *head);
 char		*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c);
+char		*ft_join_and_clean(char *str, char *s);
 
 #endif

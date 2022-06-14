@@ -13,7 +13,8 @@
 NAME = pars.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = minishellparse.c parse_utils.c lexer.c lexer_utils.c
+SRCS = minishellparse.c  lexer.c lexer_utils.c after_dollar.c\
+		str_without_quotes.c collect_string.c free_all_list.c
 
 OBJS = $(SRCS:.c=.o)
 
