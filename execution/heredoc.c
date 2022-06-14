@@ -81,8 +81,8 @@ bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
 				free(line);
 			break ;
 		}
-		free(line);
 		ft_putendl_fd(line, contex.fd_in);
+		free(line);
 	}
 	close(contex.fd_in);
 	contex.fd_in = open("/tmp/temp", O_RDONLY);

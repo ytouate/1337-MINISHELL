@@ -34,7 +34,6 @@ void	free_list_of_tokens(t_token_head *head)
 void	ft_free_all(t_head_c *head)
 {
 	int			i;
-	t_token		*temp;
 	t_command	*t;
 
 	while (head->first_c)
