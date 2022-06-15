@@ -6,10 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:54:26 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/05/19 12:05:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:14:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+
+#include "../MiniShell.h"
 
 void	ft_add_red(t_token_head *head, t_token *t)
 {

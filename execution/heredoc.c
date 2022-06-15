@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:57:15 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 int	fill_temp_stdin(t_command *command)
 {

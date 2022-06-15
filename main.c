@@ -6,17 +6,19 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:42:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:08:01 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiniShell.h"
-g_vars global_vars;
+t_vars_g	g_global_vars;
+
 void	sig_handler(int sig)
 {
-	fprintf(stdin, "am here\n");
-	if ((sig == SIGINT || sig == SIGQUIT) && global_vars.pid != -1)
-		kill(global_vars.pid, sig);
+	if ((sig == SIGINT || sig == SIGQUIT) && g_global_vars.pid != -1)
+	{
+		kill(g_global_vars.pid, sig);
+	}
 	else
 	{
 		if (sig == SIGINT)
@@ -43,16 +45,15 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	
 	vars = malloc(sizeof(t_vars));
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	global_vars.pid = -1;
-	global_vars.signal_flag = 0;
-	global_vars.exit_code = 0;
+	g_global_vars.pid = -1;
+	g_global_vars.signal_flag = 0;
+	g_global_vars.exit_code = 0;
 	while (true)
 	{
 		cmd = get_promt();
@@ -74,6 +75,5 @@ int	main(int ac, char **av, char **env)
 			}
 		}
 		free(cmd);
-		
 	}
 }

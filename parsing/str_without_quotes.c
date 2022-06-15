@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str_without_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilefhail <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 08:52:34 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/14 08:52:35 by ilefhail         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:14:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+
+#include "../MiniShell.h"
 
 char	*get_str_utils(t_lexer *lexer)
 {

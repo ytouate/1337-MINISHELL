@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/13 19:30:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:09:16 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,26 +41,27 @@
 # define CNTRL_BACKSLASH 131
 # define SYNTAX_ERROR_EXIT 258
 
-typedef enum{
+typedef enum type
+{
 	T_WORD,
 	T_IN,
 	T_OUT,
 	T_HERDOC,
 	T_APPEND,
 	T_PIPE
-}t_type;
+}	t_type;
 
 typedef struct vars
 {
 	pid_t	pid;
 	int		exit_code;
 	int		signal_flag;
-}g_vars;
+}t_vars_g;
 
 typedef struct TOKEN{
-	t_type token;
-	char *value;
-	struct TOKEN *next;
+	t_type			token;
+	char			*value;
+	struct TOKEN	*next;
 }t_token;
 
 typedef struct t_token_head{
@@ -76,7 +77,7 @@ typedef struct minishellpars{
 
 typedef struct head
 {
-	int		taille;
+	int			taille;
 	t_command	*first_c;
 }t_head_c;
 
@@ -94,7 +95,6 @@ typedef struct s_files
 	int	append;
 }t_files;
 
-
 typedef struct s_path_vars{
 	char	*path;
 	char	*temp;
@@ -111,7 +111,6 @@ typedef struct s_cd_vars
 	t_list	*old_wd;
 	int		i;
 }t_cd_vars;
-
 
 typedef struct s_vars
 {
@@ -145,9 +144,8 @@ typedef struct s_norm
 	int			fd[2];
 }t_norm;
 
+extern t_vars_g	g_global_vars;
 
-
-extern      g_vars global_vars;
 t_token		*ft_init_token(int type, char *value);
 void		ft_advance(t_lexer	*lexer);
 void		ft_skip_spaces(t_lexer	*lexer);
@@ -164,9 +162,12 @@ void		ft_add_red(t_token_head *head, t_token *t);
 char		**ft_replace(char **av, int i, char *value);
 int			ft_syntax(char *value, t_token *t, t_head_c *head);
 int			ft_rederictions(t_command *re, t_token *token, t_head_c *head);
-int			ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head);
-int			ft_check_token(t_token *token, t_command *re, int *i, t_head_c *head);
-int			ft_fill_node(t_command *re, t_lexer *lexer, t_list *env_list, t_head_c *head);
+int			ft_check_pipe(t_lexer *lexer, t_token *token,
+				int k, t_head_c *head);
+int			ft_check_token(t_token *token, t_command *re,
+				int *i, t_head_c *head);
+int			ft_fill_node(t_command *re, t_lexer *lexer,
+				t_list *env_list, t_head_c *head);
 t_token		*ft_red(t_lexer *lexer, t_list *env_list);
 t_token		*ft_her_app(t_lexer *lexer, t_list *env_list);
 char		*ft_str_for_join(t_lexer *lexer, t_list *env_list);
@@ -176,11 +177,11 @@ char		*ft_get_str(t_lexer *lexer, t_list *env_list);
 void		ft_free_all(t_head_c *head);
 char		*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c);
 char		*ft_join_and_clean(char *str, char *s);
-bool        run_unset(t_vars *vars, t_command *command);
+bool		run_unset(t_vars *vars, t_command *command);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-void        read_for_heredoc(char *line, t_command *command, int fd_in);
+void		read_for_heredoc(char *line, t_command *command, int fd_in);
 void		open_heredoc(t_command **command);
 void		set_signal_flag(int num);
 void		free_list(t_list *list);

@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:56:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 char	*get_path(t_list *env_list, char *cmd)
 {
@@ -53,8 +53,8 @@ void	exec_command(t_command *command, t_vars *vars,
 {
 	int	status;
 
-	global_vars.pid = fork();
-	if (global_vars.pid == 0)
+	g_global_vars.pid = fork();
+	if (g_global_vars.pid == 0)
 	{
 		dup2(contex.fd_in, STDIN_FILENO);
 		dup2(contex.fd_out, STDOUT_FILENO);
@@ -64,7 +64,7 @@ void	exec_command(t_command *command, t_vars *vars,
 	}
 	wait(&status);
 	if (WIFEXITED(status))
-		global_vars.pid = -1;
+		g_global_vars.pid = -1;
 	set_exit_code(WEXITSTATUS(status));
 }
 

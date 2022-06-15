@@ -6,10 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:37:38 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/14 13:39:38 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:15:06 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+
+#include "../MiniShell.h"
 
 void	ft_init_head(t_head_c *head)
 {

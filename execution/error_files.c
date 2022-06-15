@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:59:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:01:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:11:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#
+#include "../MiniShell.h"
+
 void	check_command_error(t_vars *vars, t_command *command)
 {
 	if (access(command->flags[0], F_OK | X_OK) != 0)

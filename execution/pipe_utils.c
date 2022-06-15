@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:57:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:08:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 void	exec_first_node(t_vars *vars, t_norm data)
 {

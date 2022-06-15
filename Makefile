@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ytouate/.brew/Cellar/readlin
 
 all : $(NAME)
 
-$(NAME) : $(o_main)
+$(NAME) :
 	@cd execution && make && cd ..
 	@cd parsing && make && cd ..
 	@cd libft && make && make bonus && cd ..

@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:47:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 16:11:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 void	exec_first_command_before_heredoc(t_vars *vars, t_norm data)
 {

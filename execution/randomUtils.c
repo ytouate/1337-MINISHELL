@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:13:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 int	ft_strcmp(char *s, char *str)
 {

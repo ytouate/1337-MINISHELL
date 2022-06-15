@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   collect_string.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ilefhail <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 08:50:31 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/14 08:50:33 by ilefhail         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:15:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+
+#include "../MiniShell.h"
 
 char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
 {

@@ -6,28 +6,27 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:59:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:13:50 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../MiniShell.h"
 
-extern g_vars global_vars;
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)
-		global_vars.exit_code = num;
+		g_global_vars.exit_code = num;
 	else
 	{
 		while (num > 255)
 			num -= 256;
-		global_vars.exit_code = num;
+		g_global_vars.exit_code = num;
 	}
 }
 
 int	get_exit_code(void)
 {
-	return (global_vars.exit_code);
+	return (g_global_vars.exit_code);
 }
 
 bool	check_redirection(t_vars *vars, t_command *command)

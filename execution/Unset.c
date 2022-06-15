@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 19:41:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:14:30 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 t_list	*delete_head(t_list **env_list, char **cmd, char *to_delete)
 {
@@ -41,7 +41,8 @@ void	delete_body(t_norm *vars)
 void	ft_unset(t_list **env_list, char *to_delete)
 {
 	t_norm	vars;
-	t_list *head;
+	t_list	*head;
+
 	vars.first = *env_list;
 	vars.cmd = ft_split((*env_list)->content, '=');
 	if (vars.cmd[0] == NULL)

@@ -6,10 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:09:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:11:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+
+#include "../MiniShell.h"
 
 void	ft_echo(t_command *command, char *s, char flag)
 {

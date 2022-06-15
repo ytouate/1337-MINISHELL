@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:52:46 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/05/29 16:08:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 int	ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head)
 {

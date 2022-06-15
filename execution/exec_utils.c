@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:55:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 13:55:24 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 int	get_len(t_command *command)
 {
@@ -86,5 +86,5 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				COMMAND_NOT_FOUND);
 	}
 	free(command_path);
-	global_vars.pid = -1;
+	g_global_vars.pid = -1;
 }

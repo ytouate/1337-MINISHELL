@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:01:06 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:13:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
+#include "../MiniShell.h"
 
 bool	is_number(char *s)
 {
@@ -66,8 +66,12 @@ void	ft_exit(int exit_code, char *arg, char flag)
 	}
 }
 
-void	heck_export_error(t_vars *vars, t_command *command)
+void	check_export_error(t_vars *vars, t_command *command)
 {
+	int	i;
+
+	(void)vars;
+	i = 0;
 	while (command->flags[++i])
 		if (!is_properly_named(command->flags[i]))
 			set_exit_code(1);
