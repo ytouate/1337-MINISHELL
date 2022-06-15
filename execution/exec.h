@@ -6,12 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 09:42:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 12:51:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
+
 
 # include "../MiniShell.h"
 # include <stdio.h>
@@ -43,12 +44,15 @@ typedef struct s_files
 	int	append;
 }t_files;
 
+
 typedef struct s_path_vars{
 	char	*path;
 	char	*temp;
 	char	**command_path;
 	int		i;
 }t_path_vars;
+
+
 
 typedef struct s_cd_vars
 {
@@ -98,6 +102,14 @@ typedef struct s_norm
 	int			fd[2];
 }t_norm;
 
+typedef struct vars
+{
+	pid_t	pid;
+	int		exit_code;
+	int		signal_flag;
+}g_vars;
+
+extern g_vars global_vars;
 
 bool	run_unset(t_vars *vars, t_command *command);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
