@@ -7,5 +7,8 @@ start handling signals;
 // cases to handle //
 
 signals inside the pipe;
-deleting the head in unset;
-exit status inside the pipe
+exit status inside the pipe;
+ls | rdsafj  | ls | afjak -> 127 >> TODO;
+ls | kdjf -> 127;
+<< k ls | cat | kdsjkljf -> 127;
+ls | ./Makefile -> 0 should be -> 126;
