@@ -42,7 +42,7 @@ O_FILES = $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(O_FILES)
-	$(CC) $(CFLAGS) -c $(FILES)
+	@$(CC) $(CFLAGS) -c $(FILES)
 	@ar -rc  exec.a $(O_FILES) 
 
 clean:
