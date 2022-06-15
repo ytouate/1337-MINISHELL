@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 09:31:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 12:03:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,48 @@
 
 void	sigquit_handler(void)
 {
-	if (get_signal_flag() == 1)
+	static int flag;
+	
+	if (get_signal_flag() == 1 && flag == 0)
 	{
-		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
-		set_exit_code(131);
-		set_signal_flag(0);
+		write(1, "Quit :\n", 8);
+		
 	}
 	else
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		set_signal_flag(0);
-	}
+		;
+		// flag = 0;
 }
 
 void	sigint_handler(void)
 {
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	if (get_signal_flag() != 1)
-		rl_redisplay();
-	else
-		set_exit_code(130);
-	set_signal_flag(0);
+	// ft_putstr_fd("\n", STDOUT_FILENO);
+	// rl_on_new_line();
+	// rl_replace_line("", 0);
+	// if (get_signal_flag() != 1)
+		// rl_redisplay();
+	// else
+		// set_exit_code(130);
+	// set_signal_flag(0);
 }
 
+static int flag = 0;
 void	sig_handler(int sig)
 {
-	if (sig == SIGINT)
-		sigint_handler();
 	if (sig == SIGQUIT)
-		sigquit_handler();
+	{
+		// int static flag;
+		if(get_signal_flag() && flag == 0)
+		{
+			write(2, "Quit :\n", 8);
+			flag = 1;
+		}
+		else if (get_signal_flag() == 0 && flag != 1)
+		{
+			return ;
+			rl_on_new_line();
+			rl_redisplay();
+		}
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -63,6 +73,8 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, sig_handler);
 	while (true)
 	{
+		
+		
 		cmd = get_promt();
 		if (cmd == NULL)
 		{
@@ -80,7 +92,9 @@ int	main(int ac, char **av, char **env)
 					ft_pipe(vars);
 				ft_free_all(vars->head);
 			}
+			// set_signal_flag(0);
 		}
 		free(cmd);
+		
 	}
 }

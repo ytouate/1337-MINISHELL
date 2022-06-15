@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 16:05:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 10:01:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	g_exit_code = 0;
 int	g_signal_flag = 0;
+int g_pid = -1;
 
 void	set_signal_flag(int num)
 {
