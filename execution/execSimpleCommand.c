@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:25:41 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:53:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
 
 char	*get_path(t_list *env_list, char *cmd)
 {
@@ -53,8 +54,8 @@ void	exec_command(t_command *command, t_vars *vars,
 {
 	int	status;
 
-	set_signal_flag(1);
-	if (fork() == 0)
+	global_vars.pid = fork();
+	if (global_vars.pid == 0)
 	{
 		dup2(contex.fd_in, STDIN_FILENO);
 		dup2(contex.fd_out, STDOUT_FILENO);
@@ -64,7 +65,7 @@ void	exec_command(t_command *command, t_vars *vars,
 	}
 	wait(&status);
 	if (WIFEXITED(status))
-		set_signal_flag(0);
+		global_vars.pid = -1;
 	set_exit_code(WEXITSTATUS(status));
 }
 

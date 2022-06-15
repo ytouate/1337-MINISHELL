@@ -6,15 +6,13 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/15 09:38:41 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/15 12:07:24 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-MINISHELL = minishell.a
 CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
-FILE = main.c
 
 all : $(NAME)
 

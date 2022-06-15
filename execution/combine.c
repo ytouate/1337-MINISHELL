@@ -6,40 +6,27 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 16:05:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 12:44:44 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-int	g_exit_code = 0;
-int	g_signal_flag = 0;
-
-void	set_signal_flag(int num)
-{
-	g_signal_flag = num;
-}
-
-int	get_signal_flag(void)
-{
-	return (g_signal_flag);
-}
-
+extern g_vars global_vars;
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)
-		g_exit_code = num;
+		global_vars.exit_code = num;
 	else
 	{
 		while (num > 255)
 			num -= 256;
-		g_exit_code = num;
+		global_vars.exit_code = num;
 	}
 }
 
 int	get_exit_code(void)
 {
-	return (g_exit_code);
+	return (global_vars.exit_code);
 }
 
 bool	check_redirection(t_vars *vars, t_command *command)

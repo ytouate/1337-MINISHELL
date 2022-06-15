@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 09:17:52 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 10:37:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,16 @@ void	set_exit_code_inside_pipe(t_vars *vars, t_command *command)
 			else if (command->flags[0][0] == '/')
 			{
 				if (access(command->flags[0], F_OK | X_OK) != 0)
+				{
+					
 					set_exit_code(PERMISSION_DENIED);
+				}
 				else
 					set_exit_code(0);
 			}
 			else if (command->flags[0][0] == '.')
 			{
-				if (access(command->flags[0], F_OK) != 0)
+				if (access(command->flags[0], F_OK | X_OK) != 0)
 					set_exit_code(PERMISSION_DENIED);
 				else
 					set_exit_code(0);
