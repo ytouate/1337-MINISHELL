@@ -35,6 +35,7 @@ FILES =	\
 	./ft_exit.c				\
 	./ft_pwd.c				\
 	./combine.c				\
+	./error_files.c			\
 
 O_FILES = $(FILES:.c=.o)
 

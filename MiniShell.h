@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:09:16 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/13 19:30:47 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,9 @@ typedef struct s_norm
 }t_norm;
 
 extern t_vars_g	g_global_vars;
-
+void	check_export_error(t_vars *vars, t_command *command);
+void	check_cd_errors(t_vars *vars, t_command *command);
+void	set_exit_code_inside_pipe(t_vars *vars, t_command *command);
 t_token		*ft_init_token(int type, char *value);
 void		ft_advance(t_lexer	*lexer);
 void		ft_skip_spaces(t_lexer	*lexer);

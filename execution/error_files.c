@@ -14,6 +14,7 @@
 
 void	check_command_error(t_vars *vars, t_command *command)
 {
+	(void)vars;
 	if (access(command->flags[0], F_OK | X_OK) != 0)
 		set_exit_code(PERMISSION_DENIED);
 	else
@@ -22,13 +23,14 @@ void	check_command_error(t_vars *vars, t_command *command)
 
 void	check_command_error_2(t_vars *vars, t_command *command)
 {
+	(void)vars;
 	if (access(command->flags[0], F_OK | X_OK) != 0)
 		set_exit_code(PERMISSION_DENIED);
 	else
 		set_exit_code(0);
 }
 
-char	*check_path(t_vars *vars, t_command *command)
+void	check_path(t_vars *vars, t_command *command)
 {
 	char	*path;
 
@@ -44,6 +46,7 @@ void	check_files(t_vars *vars, t_command *command)
 {
 	int	out_file;
 
+	(void)vars;
 	while (command->redi->first_token != NULL)
 	{
 		if (command->redi->first_token->token == T_IN)

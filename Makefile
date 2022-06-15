@@ -12,7 +12,7 @@
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include -fsanitize=address -g
 
 
 all : $(NAME)
