@@ -12,22 +12,22 @@
 
 #include "./../MiniShell.h"
 
-extern g_vars global_vars;
+extern t_vars g_global_vars;
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)
-		global_vars.exit_code = num;
+		g_global_vars.exit_code = num;
 	else
 	{
 		while (num > 255)
 			num -= 256;
-		global_vars.exit_code = num;
+		g_global_vars.exit_code = num;
 	}
 }
 
 int	get_exit_code(void)
 {
-	return (global_vars.exit_code);
+	return (g_global_vars.exit_code);
 }
 
 bool	check_redirection(t_vars *vars, t_command *command)

@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #include "MiniShell.h"
-g_vars global_vars;
+t_vars g_global_vars;
 void	sig_handler(int sig)
 {
-	if ((sig == SIGINT || sig == SIGQUIT) && global_vars.pid != -1)
+	if ((sig == SIGINT || sig == SIGQUIT) && g_global_vars.pid != -1)
 	{
-		if (!kill(global_vars.pid, sig))
+		if (!kill(g_global_vars.pid, sig))
 		{
 			;
 		}
@@ -54,9 +54,9 @@ int	main(int ac, char **av, char **env)
 	vars->export_list = get_env_list(vars->env);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	global_vars.pid = -1;
-	global_vars.signal_flag = 0;
-	global_vars.exit_code = 0;
+	g_global_vars.pid = -1;
+	g_global_vars.signal_flag = 0;
+	g_global_vars.exit_code = 0;
 	while (true)
 	{
 		cmd = get_promt();

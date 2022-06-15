@@ -63,8 +63,8 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		else
 		{
 			pipe(data.fd);
-			global_vars.pid = fork();
-			if (global_vars.pid == 0)
+			g_global_vars.pid = fork();
+			if (g_global_vars.pid == 0)
 			{
 				if (data.i == 0)
 					exec_first_node(vars, data);
@@ -74,7 +74,7 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 					exec_other_node(vars, data);
 				exit(127);
 			}
-			data.ids[j++] = global_vars.pid;
+			data.ids[j++] = g_global_vars.pid;
 			data.contex.herdoc_fildes = 1337;
 			data.temp_fd = dup(data.fd[0]);
 			close(data.fd[0]);

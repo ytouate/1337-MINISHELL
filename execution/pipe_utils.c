@@ -65,7 +65,7 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 	int		status;
 
 	(void)temp_fd;
-	// global_vars.pid = -1;
+	// g_global_vars.pid = -1;
 	while (--i >= 0)
 		waitpid(ids[i], &status, 0);
 }

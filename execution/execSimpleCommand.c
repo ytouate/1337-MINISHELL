@@ -54,8 +54,8 @@ void	exec_command(t_command *command, t_vars *vars,
 {
 	int	status;
 
-	global_vars.pid = fork();
-	if (global_vars.pid == 0)
+	g_global_vars.pid = fork();
+	if (g_global_vars.pid == 0)
 	{
 		dup2(contex.fd_in, STDIN_FILENO);
 		dup2(contex.fd_out, STDOUT_FILENO);
@@ -65,7 +65,7 @@ void	exec_command(t_command *command, t_vars *vars,
 	}
 	wait(&status);
 	if (WIFEXITED(status))
-		global_vars.pid = -1;
+		g_global_vars.pid = -1;
 	set_exit_code(WEXITSTATUS(status));
 }
 

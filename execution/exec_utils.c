@@ -86,5 +86,5 @@ void	ft_execute(t_command *command, t_vars *vars, t_contex contex)
 				COMMAND_NOT_FOUND);
 	}
 	free(command_path);
-	global_vars.pid = -1;
+	g_global_vars.pid = -1;
 }

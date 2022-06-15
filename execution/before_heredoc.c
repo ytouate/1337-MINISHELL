@@ -48,7 +48,7 @@ void	check_before_heredoc_commands(t_vars *vars, t_norm data, int i)
 
 void	run_commands_before_heredoc(t_vars *vars, t_norm data, int i)
 {
-	if (global_vars.pid == 0)
+	if (g_global_vars.pid == 0)
 	{
 		check_before_heredoc_commands(vars, data, i);
 		exit(0);
@@ -69,9 +69,9 @@ void	exec_commands_before_heredoc(t_vars *vars)
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
 		pipe(data.fd);
-		global_vars.pid = fork();
+		g_global_vars.pid = fork();
 		run_commands_before_heredoc(vars, data, i);
-		data.ids[i++] = global_vars.pid;
+		data.ids[i++] = g_global_vars.pid;
 		vars->command = vars->command->next_command;
 		data.temp_fd = dup(data.fd[0]);
 		close(data.fd[0]);

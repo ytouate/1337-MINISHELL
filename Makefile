@@ -17,7 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ilefhail/homebrew/Cellar/rea
 
 all : $(NAME)
 
-$(NAME) : $(o_main)
+$(NAME) :
 	@cd execution && make && cd ..
 	@cd parsing && make && cd ..
 	@cd libft && make && make bonus && cd ..
