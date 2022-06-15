@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:55:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 13:19:40 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:41:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_built_in_commands(t_vars *vars, t_command *command)
 			return (true);
 		else if (run_cd(*vars, command))
 			return (true);
-		else if (run_unset(*vars, command))
+		else if (run_unset(vars, command))
 			return (true);
 		else if (run_export(command, vars))
 			return (true);

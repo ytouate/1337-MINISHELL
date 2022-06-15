@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 12:24:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:48:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
+t_list	*delete_head(t_list **env_list, char **cmd, char *to_delete)
 {
 	t_list	*temp;
 
@@ -20,11 +20,13 @@ bool	delete_head(t_list **env_list, char **cmd, char *to_delete)
 	{
 		temp = *env_list;
 		*env_list = (*env_list)->next;
+		free(temp->content);
+		free(temp);
 		free_2d_array(cmd);
 		set_exit_code(EXIT_SUCCESS);
-		return (true);
+		return (*env_list);
 	}
-	return (false);
+	return (NULL);
 }
 
 void	delete_body(t_norm *vars)
@@ -39,12 +41,13 @@ void	delete_body(t_norm *vars)
 void	ft_unset(t_list **env_list, char *to_delete)
 {
 	t_norm	vars;
-
+	t_list *head;
 	vars.first = *env_list;
 	vars.cmd = ft_split((*env_list)->content, '=');
 	if (vars.cmd[0] == NULL)
 		return ;
-	if (!delete_head(env_list, vars.cmd, to_delete))
+	head = delete_head(env_list, vars.cmd, to_delete);
+	if (head == NULL)
 	{
 		vars.second = vars.first->next;
 		while (vars.second)
@@ -60,11 +63,13 @@ void	ft_unset(t_list **env_list, char *to_delete)
 			vars.second = vars.second->next;
 		}
 		free_2d_array(vars.cmd);
-		set_exit_code(EXIT_SUCCESS);
 	}
+	else
+		*env_list = head;
+	set_exit_code(EXIT_SUCCESS);
 }
 
-bool	run_unset(t_vars vars, t_command *command)
+bool	run_unset(t_vars *vars, t_command *command)
 {
 	int	i;
 
@@ -73,8 +78,8 @@ bool	run_unset(t_vars vars, t_command *command)
 		i = 0;
 		while (command->flags[++i])
 		{
-			ft_unset(&vars.env_list, command->flags[i]);
-			ft_unset(&vars.export_list, command->flags[i]);
+			ft_unset(&vars->env_list, command->flags[i]);
+			ft_unset(&vars->export_list, command->flags[i]);
 		}
 		return (true);
 	}

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 17:21:00 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:33:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 
 	j = 0;
 	data.size -= count_commands_before_heredoc(vars->command);
-	data.size = get_len(vars->command);
 	data.contex.herdoc_fildes = 1337;
 	while (vars->command && vars->command->herdoc->first_token == NULL)
 		vars->command = vars->command->next_command;
@@ -87,6 +86,17 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	wait_for_child(data.ids, j, data.temp_fd);
 }
 
+bool	check_heredoc(t_command *command)
+{
+	while (command)
+	{
+		if (command->herdoc->first_token != NULL)
+			return (true);
+		command = command->next_command;
+	}
+	return (command);
+}
+
 void	ft_pipe(t_vars *vars)
 {
 	t_norm	data;
@@ -100,7 +110,7 @@ void	ft_pipe(t_vars *vars)
 	{
 		loop_through_nodes(vars, data);
 		exec_commands_before_heredoc(vars);
-		set_exit_code_inside_pipe(vars, vars->command);
+		set_exit_code_inside_pipe(vars, vars->head->first_c);
 	}
 	else
 	{

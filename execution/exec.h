@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 16:50:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:42:00 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ typedef struct s_norm
 	int			fd[2];
 }t_norm;
 
+
+bool	run_unset(t_vars *vars, t_command *command);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
@@ -168,7 +170,6 @@ bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 bool		check_redirection(t_vars *vars, t_command *command);
 bool		heredoc_outside_pipe(t_vars *vars, t_command *command);
 bool		run_exit(t_vars vars, t_command *command);
-bool		run_unset(t_vars vars, t_command *command);
 bool		run_cd(t_vars vars, t_command *command);
 bool		run_env(t_vars vars, t_command *command);
 bool		run_export(t_command *command, t_vars *vars);

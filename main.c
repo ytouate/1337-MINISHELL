@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 14:58:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:31:10 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ int	main(int ac, char **av, char **env)
 			}
 		}
 		free(cmd);
-		system("leaks minishell");
 	}
 }
