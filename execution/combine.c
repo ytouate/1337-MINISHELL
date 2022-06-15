@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "./../MiniShell.h"
+
 extern g_vars global_vars;
 void	set_exit_code(int num)
 {

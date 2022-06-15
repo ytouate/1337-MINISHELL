@@ -9,8 +9,7 @@
 /*   Updated: 2022/06/14 13:39:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-# include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 void	ft_init_head(t_head_c *head)
 {

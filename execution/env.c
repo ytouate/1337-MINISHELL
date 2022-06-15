@@ -9,8 +9,7 @@
 /*   Updated: 2022/06/14 12:10:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 void	ft_env(t_vars vars, t_command *command)
 {

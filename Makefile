@@ -14,13 +14,14 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
 
+
 all : $(NAME)
 
-$(NAME) : 
+$(NAME) : $(o_main)
 	@cd execution && make && cd ..
 	@cd parsing && make && cd ..
 	@cd libft && make && make bonus && cd ..
-	@$(CC)  $(CFLAGS) ./libft/libft.a ./execution/exec.a  ./parsing/pars.a main.c -o $(NAME)
+	@$(CC)  $(CFLAGS)  ./libft/libft.a ./execution/exec.a  ./parsing/pars.a main.c -o $(NAME) 
 
 clean :
 	@cd execution && make fclean && cd ..

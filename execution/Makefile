@@ -14,7 +14,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
 NAME = exec.a
 FILES =	\
-	./combine.c				\
 	./randomUtils.c			\
 	./redirection_utils.c	\
 	./cd.c					\
@@ -35,6 +34,7 @@ FILES =	\
 	./export.c				\
 	./ft_exit.c				\
 	./ft_pwd.c				\
+	./combine.c				\
 
 O_FILES = $(FILES:.c=.o)
 

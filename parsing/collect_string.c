@@ -9,7 +9,7 @@
 /*   Updated: 2022/06/14 08:50:33 by ilefhail         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
 {

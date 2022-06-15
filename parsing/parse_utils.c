@@ -9,7 +9,7 @@
 /*   Updated: 2022/05/19 12:05:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 void	ft_add_red(t_token_head *head, t_token *t)
 {
