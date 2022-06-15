@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 void	free_2d_array(char **a)
 {

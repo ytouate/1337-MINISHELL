@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 t_list	*get_env_list(char **env)
 {

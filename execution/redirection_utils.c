@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 int	open_input_files(t_token_head redi)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 t_token	*ft_init_token(int type, char *value)
 {

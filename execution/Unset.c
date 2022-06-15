@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 t_list	*delete_head(t_list **env_list, char **cmd, char *to_delete)
 {

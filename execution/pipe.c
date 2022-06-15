@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 void	exec_after_heredoc(t_vars *vars, t_norm *data, int *j)
 {

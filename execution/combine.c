@@ -6,12 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 12:09:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 21:55:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:59:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "./../MiniShell.h"
 
+extern g_vars global_vars;
 void	set_exit_code(int num)
 {
 	if (num == SYNTAX_ERROR_EXIT)

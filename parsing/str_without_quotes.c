@@ -9,7 +9,7 @@
 /*   Updated: 2022/06/14 08:52:35 by ilefhail         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 char	*get_str_utils(t_lexer *lexer)
 {
@@ -24,15 +24,18 @@ char	*get_str_utils(t_lexer *lexer)
 char	*ft_get_str(t_lexer *lexer, t_list *env_list)
 {
 	char	*str;
+	char	*s;
 
 	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 \
 		&& ft_check_after_dollar(lexer) == 1)
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '~')
 	{
-		str = ft_strdup(getenv("HOME"));
-		if (str == NULL)
+		s = getenv("HOME");
+		if (s == NULL)
 			str = ft_strdup(&lexer->c);
+		else
+			str = ft_strdup(s);
 		ft_advance(lexer);
 	}
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1)

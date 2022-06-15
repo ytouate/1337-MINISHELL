@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 t_lexer	*ft_init_lexer(char *content)
 {

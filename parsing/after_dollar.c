@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 int	ft_check_while(t_lexer *lexer)
 {

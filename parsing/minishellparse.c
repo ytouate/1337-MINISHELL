@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "/Users/ilefhail/Desktop/MiniShell/MiniShell.h"
 
 int	ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head)
 {
@@ -20,6 +20,7 @@ int	ft_check_pipe(t_lexer *lexer, t_token *token, int k, t_head_c *head)
 	{
 		ft_free_all(head);
 		printf("minishell:syntax error\n");
+		set_exit_code(SYNTAX_ERROR_EXIT);
 		return (1);
 	}
 	return (0);
