@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 12:55:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:03:51 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	sig_handler(int sig)
 	{
 		if (!kill(global_vars.pid, sig))
 		{
-			if (sig == SIGQUIT)
-				ft_putstr_fd("Quit: 3\n", 1);
-			else if (sig == SIGINT)
-				ft_putchar_fd('\n', 1);
+			;
 		}
 	}
 	else
@@ -79,7 +76,6 @@ int	main(int ac, char **av, char **env)
 					ft_pipe(vars);
 				ft_free_all(vars->head);
 			}
-			// set_signal_flag(0);
 		}
 		free(cmd);
 		

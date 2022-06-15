@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 11:24:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:54:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		else
 		{
 			pipe(data.fd);
-			data.id = fork();
-			
-			if (data.id == 0)
+			global_vars.pid = fork();
+			if (global_vars.pid == 0)
 			{
-				// set_signal_flag(1);
 				if (data.i == 0)
 					exec_first_node(vars, data);
 				else if (data.i == data.size - 1)
@@ -75,9 +73,8 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 				else
 					exec_other_node(vars, data);
 				exit(127);
-				// set_signal_flag(0);
 			}
-			data.ids[j++] = data.id;
+			data.ids[j++] = global_vars.pid;
 			data.contex.herdoc_fildes = 1337;
 			data.temp_fd = dup(data.fd[0]);
 			close(data.fd[0]);

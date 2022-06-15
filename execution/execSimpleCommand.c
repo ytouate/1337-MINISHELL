@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 12:42:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:53:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	exec_command(t_command *command, t_vars *vars,
 		exit(COMMAND_NOT_FOUND);
 	}
 	wait(&status);
+	if (WIFEXITED(status))
+		global_vars.pid = -1;
 	set_exit_code(WEXITSTATUS(status));
 }
 
