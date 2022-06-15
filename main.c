@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:32:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:51:57 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@ void	sig_handler(int sig)
 {
 	if ((sig == SIGINT || sig == SIGQUIT) && g_global_vars.pid != -1)
 	{
-		kill(g_global_vars.pid, sig);
+		if (!kill(g_global_vars.pid, sig))
+		{
+			if (SIGQUIT == sig)
+				set_exit_code(131);
+			else
+			{
+				set_exit_code(130);
+			}
+		}
 	}
 	else
 	{
@@ -27,7 +35,7 @@ void	sig_handler(int sig)
 			ft_putchar_fd('\n', 1);
 			set_exit_code(1);
 			rl_on_new_line();
-			// rl_replace_line("", 0);
+			rl_replace_line("", 0);
 			rl_redisplay();
 		}
 		else if (sig == SIGQUIT)
@@ -43,6 +51,9 @@ void	minishell_routine(t_vars *vars)
 {
 	char	*cmd;
 
+
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	cmd = get_promt();
 	if (cmd == NULL)
 	{
@@ -63,6 +74,7 @@ void	minishell_routine(t_vars *vars)
 	}
 	free(cmd);
 }
+
 int	main(int ac, char **av, char **env)
 {
 	t_vars	*vars;
@@ -73,8 +85,7 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	
 	g_global_vars.pid = -1;
 	g_global_vars.signal_flag = 0;
 	g_global_vars.exit_code = 0;

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:14:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:44:12 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,22 @@ void	ft_unset(t_list **env_list, char *to_delete)
 	if (vars.cmd[0] == NULL)
 		return ;
 	head = delete_head(env_list, vars.cmd, to_delete);
-	if (head == NULL)
+	if (head != NULL)
+		return ;
+	vars.second = vars.first->next;
+	while (vars.second)
 	{
-		vars.second = vars.first->next;
-		while (vars.second)
-		{
-			free_2d_array(vars.cmd);
-			vars.cmd = ft_split(vars.second->content, '=');
-			if (ft_strcmp(vars.cmd[0], to_delete) == 0)
-			{
-				delete_body(&vars);
-				return ;
-			}
-			vars.first = vars.second;
-			vars.second = vars.second->next;
-		}
 		free_2d_array(vars.cmd);
+		vars.cmd = ft_split(vars.second->content, '=');
+		if (ft_strcmp(vars.cmd[0], to_delete) == 0)
+		{
+			delete_body(&vars);
+			return ;
+		}
+		vars.first = vars.second;
+		vars.second = vars.second->next;
 	}
-	else
-		*env_list = head;
+	free_2d_array(vars.cmd);
 	set_exit_code(EXIT_SUCCESS);
 }
 
