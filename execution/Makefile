@@ -12,7 +12,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
-NAME = exec
+NAME = exec.a
 FILES =	\
 	./combine.c				\
 	./randomUtils.c			\
@@ -41,6 +41,7 @@ O_FILES = $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(O_FILES)
+	$(CC) $(CFLAGS) -c $(FILES)
 	@ar -rc  exec.a $(O_FILES) 
 
 clean:

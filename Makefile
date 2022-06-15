@@ -12,18 +12,17 @@
 
 NAME = minishell
 CC = gcc
-EXEC = ./execution/exec.a
-PARSE = ./parsing/pars.a
-LIBFT = ./libft/libft.a
-USER =ilefhail
-READLINE = -lreadline -L /Users/$(USER)/homebrew/Cellar/readline/8.1.2/lib -I /Users/$(USER)/homebrew/Cellar/readline/8.1.2/include -fsanitize=address -g
-CFLAGS = -Wall -Wextra -Werror $(LIBFT) $(EXEC) $(PARSE) main.c -o $(NAME) $(READLINE)
+MINISHELL = minishell.a
+CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
+FILE = main.c
 
-all :
+all : $(NAME)
+
+$(NAME) : 
 	@cd execution && make && cd ..
 	@cd parsing && make && cd ..
 	@cd libft && make && make bonus && cd ..
-	@gcc -Wall -Wextra -Werror ./libft/libft.a ./execution/exec.a ./parsing/pars.a main.c -o minishell -lreadline $(READLINE)
+	@$(CC)  $(CFLAGS) ./libft/libft.a ./execution/exec.a  ./parsing/pars.a main.c -o $(NAME)
 
 clean :
 	@cd execution && make fclean && cd ..
@@ -32,3 +31,5 @@ clean :
 
 fclean : clean
 	@rm -rf minishell
+
+re : fcelan all
