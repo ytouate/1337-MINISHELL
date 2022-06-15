@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/14 15:57:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:57:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	fill_temp_stdin(t_command *command)
 		line = readline(">");
 		if (line == NULL
 			|| !ft_strcmp(line, command->herdoc->first_token->value))
-			{
-				if (line)
-					free(line);
-				break ;
-			}
+		{
+			if (line)
+				free(line);
+			break ;
+		}
 		ft_putendl_fd(line, temp_stdin);
 		free(line);
 	}

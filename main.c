@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 14:03:51 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:42:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 g_vars global_vars;
 void	sig_handler(int sig)
 {
+	fprintf(stdin, "am here\n");
 	if ((sig == SIGINT || sig == SIGQUIT) && global_vars.pid != -1)
-	{
-		if (!kill(global_vars.pid, sig))
-		{
-			;
-		}
-	}
+		kill(global_vars.pid, sig);
 	else
 	{
 		if (sig == SIGINT)

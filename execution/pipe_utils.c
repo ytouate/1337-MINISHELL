@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 13:47:04 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:57:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 	int		status;
 
 	(void)temp_fd;
-	// global_vars.pid = -1;
 	while (--i >= 0)
 		waitpid(ids[i], &status, 0);
 }

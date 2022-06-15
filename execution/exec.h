@@ -6,13 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/05 04:54:13 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 12:51:59 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:55:56 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
 
 # include "../MiniShell.h"
 # include <stdio.h>
@@ -43,7 +42,6 @@ typedef struct s_files
 	int	trunc;
 	int	append;
 }t_files;
-
 
 typedef struct s_path_vars{
 	char	*path;

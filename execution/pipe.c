@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 13:54:56 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:57:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			data.temp_fd = dup(data.fd[0]);
 			close(data.fd[0]);
 			close(data.fd[1]);
-			
 		}
 		data.i += 1;
 		vars->command = vars->command->next_command;

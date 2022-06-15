@@ -6,12 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 13:53:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 21:56:05 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
 
 char	*get_path(t_list *env_list, char *cmd)
 {
