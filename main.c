@@ -6,11 +6,12 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:08:01 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 22:32:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MiniShell.h"
+
 t_vars_g	g_global_vars;
 
 void	sig_handler(int sig)
@@ -26,7 +27,7 @@ void	sig_handler(int sig)
 			ft_putchar_fd('\n', 1);
 			set_exit_code(1);
 			rl_on_new_line();
-			rl_replace_line("", 0);
+			// rl_replace_line("", 0);
 			rl_redisplay();
 		}
 		else if (sig == SIGQUIT)
@@ -38,9 +39,32 @@ void	sig_handler(int sig)
 	}
 }
 
-int	main(int ac, char **av, char **env)
+void	minishell_routine(t_vars *vars)
 {
 	char	*cmd;
+
+	cmd = get_promt();
+	if (cmd == NULL)
+	{
+		free(cmd);
+		exit(EXIT_SUCCESS);
+	}
+	else if (*cmd)
+	{
+		vars->head = ft_get_for_exec(cmd, vars->env_list);
+		if (vars->head != NULL)
+		{
+			vars->command = vars->head->first_c;
+			vars->num_of_commands = get_len(vars->command);
+			if (vars->command != NULL)
+				ft_pipe(vars);
+			ft_free_all(vars->head);
+		}
+	}
+	free(cmd);
+}
+int	main(int ac, char **av, char **env)
+{
 	t_vars	*vars;
 
 	(void)ac;
@@ -55,25 +79,5 @@ int	main(int ac, char **av, char **env)
 	g_global_vars.signal_flag = 0;
 	g_global_vars.exit_code = 0;
 	while (true)
-	{
-		cmd = get_promt();
-		if (cmd == NULL)
-		{
-			free(cmd);
-			exit(EXIT_SUCCESS);
-		}
-		else if (*cmd)
-		{
-			vars->head = ft_get_for_exec(cmd, vars->env_list);
-			if (vars->head != NULL)
-			{
-				vars->command = vars->head->first_c;
-				vars->num_of_commands = get_len(vars->command);
-				if (vars->command != NULL)
-					ft_pipe(vars);
-				ft_free_all(vars->head);
-			}
-		}
-		free(cmd);
-	}
+		minishell_routine(vars);
 }
