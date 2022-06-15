@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:51:57 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 23:05:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	sig_handler(int sig)
 			if (SIGQUIT == sig)
 				set_exit_code(131);
 			else
-			{
 				set_exit_code(130);
-			}
 		}
 	}
 	else
@@ -50,7 +48,6 @@ void	sig_handler(int sig)
 void	minishell_routine(t_vars *vars)
 {
 	char	*cmd;
-
 
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
@@ -85,7 +82,6 @@ int	main(int ac, char **av, char **env)
 	vars->env = env;
 	vars->env_list = get_env_list(vars->env);
 	vars->export_list = get_env_list(vars->env);
-	
 	g_global_vars.pid = -1;
 	g_global_vars.signal_flag = 0;
 	g_global_vars.exit_code = 0;

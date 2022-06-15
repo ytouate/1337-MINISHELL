@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:13:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/15 23:02:31 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	ft_exit(int exit_code, char *arg, char flag)
 		set_exit_code(exit_code);
 		exit(exit_code);
 	}
+	else
+		set_exit_code(exit_code);
 }
 
 void	check_export_error(t_vars *vars, t_command *command)
