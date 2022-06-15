@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/15 12:07:24 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/15 19:36:15 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 EXEC = ./execution/exec.a
 PARSE = ./parsing/pars.a
 LIBFT = ./libft/libft.a
-USER =ytouate
+USER = ytouate
 READLINE = -lreadline -L /Users/$(USER)/.brew/Cellar/readline/8.1.2/lib -I /Users/$(USER)/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g
 CFLAGS = -Wall -Wextra -Werror $(LIBFT) $(EXEC) $(PARSE) main.c -o $(NAME) $(READLINE)
 
