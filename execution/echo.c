@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:11:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:13:26 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	check_echo_flag(char *s)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (false);
+	if (ft_strcmp(s, "-") == 0)
+		return (false);
 	if (s[i++] != '-')
 		return (false);
 	while (s[i])
@@ -64,13 +68,12 @@ char	*check_for_space(char **s, char *result, int i)
 	return (result);
 }
 
-char	*join_for_echo(t_list *env_list, char **s, char flag)
+char	*join_for_echo(char **s, char flag)
 {
 	int		i;
 	char	*result;
 	char	*temp;
 
-	(void)env_list;
 	if (flag == 'n')
 		i = 2;
 	else
@@ -91,17 +94,17 @@ char	*join_for_echo(t_list *env_list, char **s, char flag)
 
 bool	exec_echo(t_vars vars, t_command *command)
 {
-	if (ft_strcmp(command->flags[0], "echo") == 0 || \
-		ft_strcmp(command->flags[0], "ECHO") == 0)
+	(void)vars;
+	if (ft_strcmp(command->flags[0], "echo") == 0)
 	{
 		if (command->flags[1] == NULL)
 			ft_echo(command, NULL, '0');
 		else if ((check_echo_flag(command->flags[1])))
-			ft_echo(command, join_for_echo(vars.env_list, \
-				command->flags, 'n'), 'n');
+		{
+			ft_echo(command, join_for_echo(command->flags, 'n'), 'n');
+		}
 		else
-			ft_echo(command, join_for_echo(vars.env_list, \
-				command->flags, '\0'), '\0');
+			ft_echo(command, join_for_echo(command->flags, '\0'), '\0');
 		return (true);
 	}
 	return (false);

@@ -6,13 +6,13 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 13:17:58 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/15 22:57:29 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/16 15:43:10 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include
+CFLAGS = -Wall -Wextra -Werror -lreadline -L /Users/ytouate/.brew/Cellar/readline/8.1.2/lib -I /Users/ytouate/.brew/Cellar/readline/8.1.2/include -fsanitize=address -g
 
 
 all : $(NAME)

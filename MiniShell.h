@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 11:53:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:06:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
+char		*join_for_echo(char **s, char flag);
 void		check_commands_order(t_vars *vars, t_norm *data);
 void		ft_free_all(t_head_c *head);
 void		walk_to_heredoc(t_command **command);
@@ -238,7 +239,6 @@ int			ft_fill_node(t_command *re, t_lexer *lexer,
 				t_list *env_list, t_head_c *head);
 
 char		*get_promt(void);
-char		*join_for_echo(t_list *env_list, char **s, char flag);
 char		*get_path(t_list *env_list, char *cmd);
 char		*ft_get_env_val(t_list *env_list, char *var_name);
 char		*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c);
