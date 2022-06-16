@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 11:10:06 by ilefhail          #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:16:59 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ t_token	*ft_red(t_lexer *lexer, t_list *env_list)
 {
 	if (lexer->c == '<')
 	{
-		ft_skip_spaces(lexer);
 		ft_advance(lexer);
+		ft_skip_spaces(lexer);
 		if (lexer->content[lexer->i] == '\0' || lexer->c == '<' || \
 			lexer->c == '>')
 			return (ft_init_token(T_IN, NULL));
@@ -68,7 +68,8 @@ t_token	*ft_her_app(t_lexer *lexer, t_list *env_list)
 		ft_advance(lexer);
 		ft_skip_spaces(lexer);
 		if (lexer->content[lexer->i] == '\0' || \
-			lexer->c == '<' || lexer->c == '>')
+			lexer->c == '<' || lexer->c == '>'
+			|| lexer->c == '|')
 			return (ft_init_token(T_HERDOC, NULL));
 		return (ft_init_token(T_HERDOC, ft_get_value(lexer, env_list)));
 	}
@@ -78,7 +79,8 @@ t_token	*ft_her_app(t_lexer *lexer, t_list *env_list)
 		ft_advance(lexer);
 		ft_skip_spaces(lexer);
 		if (lexer->content[lexer->i] == '\0' || \
-			lexer->c == '<' || lexer->c == '>')
+			lexer->c == '<' || lexer->c == '>'
+			|| lexer->c == '|')
 			return (ft_init_token(T_APPEND, NULL));
 		return (ft_init_token(T_APPEND, ft_get_value(lexer, env_list)));
 	}

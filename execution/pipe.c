@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:24:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 	int	j;
 
 	j = 0;
+	data.size = get_len(vars->command);
 	data.size -= count_commands_before_heredoc(vars->command);
 	data.contex.herdoc_fildes = 1337;
-	while (vars->command && vars->command->herdoc->first_token == NULL)
-		vars->command = vars->command->next_command;
+	walk_to_heredoc(&vars->command);
 	while (vars->command)
 	{
 		data.contex.fd_in = STDIN_FILENO;
@@ -62,23 +62,10 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 			run_heredoc(&data.contex.herdoc_fildes, vars, data);
 		else
 		{
-			pipe(data.fd);
-			g_global_vars.pid = fork();
-			if (g_global_vars.pid == 0)
-			{
-				if (data.i == 0)
-					exec_first_node(vars, data);
-				else if (data.i == data.size - 1)
-					exec_last_node(vars, data);
-				else
-					exec_other_node(vars, data);
-				exit(127);
-			}
+			check_commands_order(vars, &data);
 			data.ids[j++] = g_global_vars.pid;
 			data.contex.herdoc_fildes = 1337;
-			data.temp_fd = dup(data.fd[0]);
-			close(data.fd[0]);
-			close(data.fd[1]);
+			close_pipe(data.fd);
 		}
 		data.i += 1;
 		vars->command = vars->command->next_command;

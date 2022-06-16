@@ -12,3 +12,7 @@ ls | rdsafj  | ls | afjak -> 127 >> TODO;
 ls | kdjf -> 127;
 << k ls | cat | kdsjkljf -> 127;
 ls | ./Makefile -> 0 should be -> 126;
+
+
+ ==========
+ 

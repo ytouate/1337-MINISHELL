@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:59:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:11:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:04:54 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	set_exit_code_inside_pipe(t_vars *vars, t_command *command)
 	{
 		if (command->flags[0])
 		{
-			if (ft_strcmp(command->flags[0], "export") == 0)
+			if (ft_strcmp(command->flags[0], "exit") == 0)
+				ft_exit(0, command->flags[1], 'p');
+			else if (ft_strcmp(command->flags[0], "export") == 0)
 				check_export_error(vars, command);
 			else if (ft_strcmp(command->flags[0], "cd") == 0)
 				check_cd_errors(vars, command);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:08:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:37:27 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	exec_last_node(t_vars *vars, t_norm data)
 			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 	}
 	else
+	{
 		dup2(data.temp_fd, STDIN_FILENO);
+	}
 	exec_node(vars, vars->command, data.contex);
 }
 
@@ -67,4 +69,21 @@ void	wait_for_child(int *ids, int i, int temp_fd)
 	(void)temp_fd;
 	while (--i >= 0)
 		waitpid(ids[i], &status, 0);
+}
+
+void	check_commands_order(t_vars *vars, t_norm *data)
+{
+	pipe(data->fd);
+	g_global_vars.pid = fork();
+	if (g_global_vars.pid == 0)
+	{
+		if (data->i == 0)
+			exec_first_node(vars, *data);
+		else if (data->i == data->size - 1)
+			exec_last_node(vars, *data);
+		else
+			exec_other_node(vars, *data);
+		exit(127);
+	}
+	data->temp_fd = dup(data->fd[0]);
 }

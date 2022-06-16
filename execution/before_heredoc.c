@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:37:27 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:30:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	check_before_heredoc_commands(t_vars *vars, t_norm data, int i)
 
 void	run_commands_before_heredoc(t_vars *vars, t_norm data, int i)
 {
+	g_global_vars.pid = fork();
 	if (g_global_vars.pid == 0)
 	{
 		check_before_heredoc_commands(vars, data, i);
@@ -69,13 +70,11 @@ void	exec_commands_before_heredoc(t_vars *vars)
 		data.contex.fd_in = STDIN_FILENO;
 		data.contex.fd_out = STDOUT_FILENO;
 		pipe(data.fd);
-		g_global_vars.pid = fork();
 		run_commands_before_heredoc(vars, data, i);
 		data.ids[i++] = g_global_vars.pid;
 		vars->command = vars->command->next_command;
 		data.temp_fd = dup(data.fd[0]);
-		close(data.fd[0]);
-		close(data.fd[1]);
+		close_pipe(data.fd);
 	}
 	wait_for_child(data.ids, i, data.temp_fd);
 	free(data.ids);

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 23:05:33 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:37:45 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 t_vars_g	g_global_vars;
 
+void	sig_child_handler(int sig)
+{
+	if (!kill(g_global_vars.pid, sig))
+	{
+		if (SIGQUIT == sig)
+			set_exit_code(131);
+		else
+			set_exit_code(130);
+	}
+}
+
 void	sig_handler(int sig)
 {
 	if ((sig == SIGINT || sig == SIGQUIT) && g_global_vars.pid != -1)
-	{
-		if (!kill(g_global_vars.pid, sig))
-		{
-			if (SIGQUIT == sig)
-				set_exit_code(131);
-			else
-				set_exit_code(130);
-		}
-	}
+		sig_child_handler(sig);
 	else
 	{
 		if (sig == SIGINT)

@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:41:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:53:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,14 +154,14 @@ t_head_c	*ft_get_for_exec(char *content, t_list *env_list);
 t_token		*ft_red(t_lexer *lexer, t_list *env_list);
 t_token		*ft_her_app(t_lexer *lexer, t_list *env_list);
 
-int			ft_check_after_dollar(t_lexer *lexer);
-
-void		ft_free_all(t_head_c *head);
-
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
+void		check_commands_order(t_vars *vars, t_norm *data);
+void		ft_free_all(t_head_c *head);
+void		walk_to_heredoc(t_command **command);
+void		close_pipe(int *fd);
 void		ft_add_red(t_token_head *head, t_token *t);
 void		ft_init_head(t_head_c *head);
 void		ft_add_node(t_head_c *head, t_command *commande);
@@ -181,7 +181,6 @@ void		check_cmd(t_command *command, t_vars *vars, t_contex contex);
 void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 void		ft_execute(t_command *command, t_vars *vars, t_contex contex);
 void		ft_pipe(t_vars *vars);
-void		replace_symbol_by_val(char **s, t_list *env_list);
 void		ft_env(t_vars vars, t_command *command);
 void		free_2d_array(char **a);
 void		ft_echo(t_command *command, char *s, char flag);
@@ -222,6 +221,7 @@ int			get_len(t_command *command);
 int			get_exit_code(void);
 int			get_parts(char	*s, char c);
 int			is_variable(char *s);
+int			ft_check_after_dollar(t_lexer *lexer);
 int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
 int			check_built_in_commands(t_vars *vars, t_command *command);

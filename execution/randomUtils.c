@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:25:22 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:34:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,14 @@ char	*get_promt(void)
 	return (cmd);
 }
 
-void	replace_symbol_by_val(char **s, t_list *env_list)
-{
-	int	i;
-
-	i = 0;
-	(void)env_list;
-	while (s[i])
-	{
-		if (ft_strcmp(s[i], "~") == 0)
-		{
-			free(s[i]);
-			if (getenv("HOME") != NULL)
-				s[i] = ft_strdup(getenv("HOME"));
-		}
-		i++;
-	}
-}
-
 void	init_contex(t_contex *contex)
 {
 	contex->fd_in = STDIN_FILENO;
 	contex->fd_out = STDOUT_FILENO;
+}
+
+void	walk_to_heredoc(t_command **command)
+{
+	while (*command && (*command)->herdoc->first_token == NULL)
+		*command = (*command)->next_command;
 }
