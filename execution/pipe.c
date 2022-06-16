@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 12:24:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:49:35 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ void	ft_pipe(t_vars *vars)
 			exec_node(vars, vars->command, data.contex);
 	}
 	free(data.ids);
+	g_global_vars.pid = -1;
 }

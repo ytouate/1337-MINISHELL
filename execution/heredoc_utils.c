@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:47:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 12:42:30 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/16 12:49:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	open_heredoc(t_command **command)
 {
 	char	*line;
 
-	clear_history();
 	if ((*command)->herdoc->first_token == NULL
 		|| (*command)->herdoc->first_token->next == NULL)
 		return ;
