@@ -6,12 +6,12 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/12 21:44:15 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/16 20:08:12 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Qunused-arguments -L /Users/ilefhail/homebrew/Cellar/readline/8.1.2/lib -I /Users/ilefhail/homebrew/Cellar/readline/8.1.2/include
+CFLAGS = -Wall -Wextra -Werror
 NAME = exec.a
 FILES =	\
 	./randomUtils.c			\
@@ -42,7 +42,6 @@ O_FILES = $(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(O_FILES)
-	@$(CC) $(CFLAGS) -c $(FILES)
 	@ar -rc  exec.a $(O_FILES) 
 
 clean:
