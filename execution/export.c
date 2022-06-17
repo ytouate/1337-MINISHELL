@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:16:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,25 @@ void	ft_export(t_command *command, t_list *env, char *arg)
 	}
 }
 
-void	show_export_list(t_command *command, t_vars vars)
+void	show_export_list(t_command *command, t_vars vars, t_contex contex)
 {
-	t_contex	contex;
+	t_contex	ctx;
 
-	contex = open_files(*command->redi);
-	if (contex.fd_in == -1 || contex.fd_out == -1)
+	ctx = open_files(*command->redi);
+	if (ctx.fd_in == -1 || ctx.fd_out == -1)
 		return ;
 	while (vars.export_list && vars.export_list->content != NULL)
 	{
-		ft_putstr_fd("declare -x  ", contex.fd_out);
-		ft_putendl_fd(vars.export_list->content, contex.fd_out);
+		if (ctx.fd_out == STDOUT_FILENO)
+		{
+			ft_putstr_fd("declare -x  ", contex.fd_out);
+			ft_putendl_fd(vars.export_list->content, contex.fd_out);
+		}
+		else
+		{
+			ft_putstr_fd("declare -x  ", ctx.fd_out);
+			ft_putendl_fd(vars.export_list->content, ctx.fd_out);
+		}
 		vars.export_list = vars.export_list->next;
 	}
 }
@@ -73,7 +81,7 @@ void	add_existed_variable(t_command *command, t_vars *vars,
 	sort_list(&vars->export_list);
 }
 
-bool	run_export(t_command *command, t_vars *vars)
+bool	run_export(t_command *command, t_vars *vars, t_contex contex)
 {
 	int			i;
 	int			flag;
@@ -84,7 +92,7 @@ bool	run_export(t_command *command, t_vars *vars)
 		&& ft_strcmp(command->flags[0], "EXPORT"))
 		return (false);
 	if (command->flags[1] == NULL)
-		show_export_list(command, *vars);
+		show_export_list(command, *vars, contex);
 	else
 	{
 		while (command->flags[++i])

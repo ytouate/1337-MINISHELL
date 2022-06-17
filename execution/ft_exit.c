@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 23:02:31 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 18:31:34 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,36 @@ bool	run_exit(t_vars vars, t_command *command)
 	return (false);
 }
 
-void	ft_exit(int exit_code, char *arg, char flag)
+int	cut_exit_code(char *arg)
 {
 	int	n;
 
+	n = ft_atoi(arg);
+	while (n > 256)
+		n -= 256;
+	return (n);
+}
+
+void	ft_exit(int exit_code, char *arg, char flag)
+{
 	if (arg != NULL)
 	{
 		if (!is_number(arg))
 		{
-			printf("exit %s: numeric argument required\n", arg);
+			if (flag != 'e')
+				printf("exit %s: numeric argument required\n", arg);
 			exit_code = 255;
 		}
 		else
-		{
-			n = ft_atoi(arg);
-			while (n > 256)
-				n -= 256;
-			exit_code = n;
-		}
+			exit_code = cut_exit_code(arg);
 	}
-	if (flag != 'p')
+	if (flag == '\0')
 	{
 		printf("exit\n");
-		set_exit_code(exit_code);
+		g_global_vars.exit_code = exit_code;
 		exit(exit_code);
 	}
-	else
+	else if (flag == 'e')
 		set_exit_code(exit_code);
 }
 

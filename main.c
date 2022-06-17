@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 17:39:42 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 21:46:55 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,20 @@
 
 t_vars_g	g_global_vars;
 
-void	sig_child_handler(int sig)
-{
-	if (!kill(g_global_vars.pid, sig))
-	{
-		g_global_vars.signal_flag = 1;
-		if (SIGQUIT == sig)
-			set_exit_code(131);
-		else
-			set_exit_code(130);
-	}
-}
-
 void	sig_handler(int sig)
 {
 	g_global_vars.sig_type = sig;
 	if ((sig == SIGINT || sig == SIGQUIT) && g_global_vars.pid != -1)
 	{
-		sig_child_handler(sig);
-		set_exit_code(130);
+		if (!kill(g_global_vars.pid, sig))
+			g_global_vars.signal_flag = 1;
 	}
 	else
 	{
 		g_global_vars.signal_flag = 0;
 		if (sig == SIGINT)
 		{
-			ft_putchar_fd('\n', 1);
+			ft_putchar_fd('\n', STDOUT_FILENO);
 			set_exit_code(1);
 			rl_on_new_line();
 			rl_replace_line("", 0);
@@ -47,7 +35,7 @@ void	sig_handler(int sig)
 		}
 		else if (sig == SIGQUIT)
 		{
-			ft_putchar_fd('\r', 1);
+			ft_putchar_fd('\r', STDOUT_FILENO);
 			rl_on_new_line();
 			rl_redisplay();
 		}

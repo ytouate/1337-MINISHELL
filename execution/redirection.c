@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 22:48:22 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_redirect_output_append_mode(t_command *command, t_vars *vars)
 		return ;
 	}
 	if (command->flags[0] != NULL)
-		if (!check_built_in_commands(vars, command))
+		if (!check_built_in_commands(vars, command, contex))
 			ft_execute(command, vars, contex);
 	set_exit_code(EXIT_SUCCESS);
 }
@@ -42,7 +42,7 @@ void	ft_redirect_output_trunc_mode(t_vars *vars, t_command *command)
 	}
 	if (command->flags[0] != NULL)
 	{
-		if (!check_built_in_commands(vars, command))
+		if (!check_built_in_commands(vars, command, contex))
 			ft_execute(command, vars, contex);
 	}
 	set_exit_code(EXIT_SUCCESS);
@@ -60,7 +60,7 @@ void	redirect_input(t_vars *vars, t_command *command)
 		return ;
 	}
 	else if (command->flags[0] != NULL)
-		if (!check_built_in_commands(vars, command))
+		if (!check_built_in_commands(vars, command, contex))
 			ft_execute(command, vars, contex);
 	set_exit_code(EXIT_SUCCESS);
 }

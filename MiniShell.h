@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 17:30:21 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:20:46 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
+int	check_built_in_commands(t_vars *vars, t_command *command, t_contex contex);
+void	exec_node(t_vars *vars, t_command *command, t_contex contex);
 char		*join_for_echo(char **s, char flag);
 void		check_commands_order(t_vars *vars, t_norm *data);
 void		ft_free_all(t_head_c *head);
@@ -183,11 +185,10 @@ void		check_cmd(t_command *command, t_vars *vars, t_contex contex);
 void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 void		ft_execute(t_command *command, t_vars *vars, t_contex contex);
 void		ft_pipe(t_vars *vars);
-void		ft_env(t_vars vars, t_command *command);
+void		ft_env(t_vars vars, t_command *command, t_contex contex);
 void		free_2d_array(char **a);
-void		ft_echo(t_command *command, char *s, char flag);
 void		sig_handler(int sig);
-void		ft_pwd(t_vars vars, t_command *command);
+void		ft_pwd(t_vars vars, t_command *command, t_contex contex);
 void		sort_list(t_list **env_list);
 void		ft_unset(t_list **env_list, char *to_delete);
 void		ft_setenv(t_list **env_list, char *var_name, char *var_val);
@@ -227,7 +228,7 @@ int			is_variable(char *s);
 int			ft_check_after_dollar(t_lexer *lexer);
 int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
-int			check_built_in_commands(t_vars *vars, t_command *command);
+// int			check_built_in_commands(t_vars *vars, t_command *command);
 int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
 int			count_commands_before_heredoc(t_command *command);
 int			get_signal_flag(void);
@@ -239,7 +240,7 @@ int			ft_check_token(t_token *token, t_command *re,
 				int *i, t_head_c *head);
 int			ft_fill_node(t_command *re, t_lexer *lexer,
 				t_list *env_list, t_head_c *head);
-
+bool		run_pwd(t_vars vars, t_command *command, t_contex contex);
 char		*get_promt(void);
 char		*get_path(t_list *env_list, char *cmd);
 char		*ft_get_env_val(t_list *env_list, char *var_name);
@@ -252,16 +253,15 @@ char		*ft_get_value(t_lexer *lexer, t_list *env_list);
 char		*ft_get_str(t_lexer *lexer, t_list *env_list);
 char		*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list);
 char		**ft_replace(char **av, int i, char *value);
-
+bool		exec_echo(t_vars vars, t_command *command, t_contex contex);
 bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 bool		check_redirection(t_vars *vars, t_command *command);
 bool		heredoc_outside_pipe(t_vars *vars, t_command *command);
 bool		run_exit(t_vars vars, t_command *command);
 bool		run_cd(t_vars vars, t_command *command);
-bool		run_env(t_vars vars, t_command *command);
-bool		run_export(t_command *command, t_vars *vars);
-bool		run_pwd(t_vars vars, t_command *command);
-bool		exec_echo(t_vars vars, t_command *command);
+bool		run_env(t_vars vars, t_command *command, t_contex contex);
 bool		run_unset(t_vars *vars, t_command *command);
-
+void		ft_echo(t_command *command, char *s, char flag, t_contex contex);
+bool	run_export(t_command *command, t_vars *vars, t_contex contex);
+void	show_export_list(t_command *command, t_vars vars, t_contex contex);
 #endif

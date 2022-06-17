@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 12:37:27 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 22:41:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 	if (data.contex.herdoc_fildes != 1337)
 	{
 		close(data.contex.herdoc_fildes);
-		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY);
+		data.contex.herdoc_fildes = open("/tmp/temp_out_file", O_RDONLY, 0644);
 		if (data.contex.herdoc_fildes == 0)
 		{
 			unlink("/tmp/trash");
@@ -34,7 +34,9 @@ void	exec_last_node(t_vars *vars, t_norm data)
 			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
 		}
 		else
+		{
 			dup2(data.contex.herdoc_fildes, STDIN_FILENO);
+		}
 	}
 	else
 	{

@@ -6,32 +6,37 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:11:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:19:34 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiniShell.h"
 
-void	ft_env(t_vars vars, t_command *command)
+void	ft_env(t_vars vars, t_command *command, t_contex contex)
 {
-	int	fd;
+	t_contex	fd;
 
-	fd = open_files(*command->redi).fd_out;
-	if (fd == -1)
+	fd = open_files(*command->redi);
+	if (fd.fd_in == -1 || fd.fd_in == -1)
 		return ;
 	while (vars.env_list)
 	{
 		if (vars.env_list->content)
-			ft_putendl_fd(vars.env_list->content, fd);
+		{
+			if (fd.fd_out == STDOUT_FILENO)
+				ft_putendl_fd(vars.env_list->content, contex.fd_out);
+			else
+				ft_putendl_fd(vars.env_list->content, fd.fd_out);
+		}
 		vars.env_list = vars.env_list->next;
 	}
 }
 
-bool	run_env(t_vars vars, t_command *command)
+bool	run_env(t_vars vars, t_command *command, t_contex contex)
 {
 	if (!ft_strcmp(command->flags[0], "env"))
 	{
-		ft_env(vars, command);
+		ft_env(vars, command, contex);
 		return (true);
 	}
 	return (false);

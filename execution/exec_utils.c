@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:55:52 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 11:11:35 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:21:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 	int		i;
 
 	i = 0;
-	if (check_built_in_commands(vars, command) == false)
+	if (check_built_in_commands(vars, command, contex) == false)
 	{
 		if (!check_redirection(vars, command))
 		{
@@ -43,13 +43,13 @@ void	exec_node(t_vars *vars, t_command *command, t_contex contex)
 	}
 }
 
-int	check_built_in_commands(t_vars *vars, t_command *command)
+int	check_built_in_commands(t_vars *vars, t_command *command, t_contex contex)
 {
 	if (command->flags[0] != NULL)
 	{
-		if (run_pwd(*vars, command))
+		if (run_pwd(*vars, command, contex))
 			return (true);
-		else if (run_env(*vars, command))
+		else if (run_env(*vars, command, contex))
 			return (true);
 		else if (run_exit(*vars, command))
 			return (true);
@@ -57,9 +57,9 @@ int	check_built_in_commands(t_vars *vars, t_command *command)
 			return (true);
 		else if (run_unset(vars, command))
 			return (true);
-		else if (run_export(command, vars))
+		else if (run_export(command, vars, contex))
 			return (true);
-		else if (exec_echo(*vars, command))
+		else if (exec_echo(*vars, command, contex))
 			return (true);
 		return (false);
 	}

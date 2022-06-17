@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 15:33:49 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 22:35:07 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,15 @@ void	exec_after_heredoc(t_vars *vars, t_norm *data, int *j)
 void	run_heredoc(int *heredoc_fd, t_vars *vars, t_norm data)
 {
 	if (vars->command->next_command)
+	{
 		*heredoc_fd = ft_heredoc(vars,
 				vars->command, data.contex);
+		wait(NULL);
+	}
 	else
 	{
 		heredoc_outside_pipe(vars, vars->command);
+		wait(NULL);
 		wait(NULL);
 	}
 }
@@ -63,10 +67,10 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		else
 		{
 			check_commands_order(vars, &data);
-			data.ids[j++] = g_global_vars.pid;
 			data.contex.herdoc_fildes = 1337;
 			close_pipe(data.fd);
 		}
+		data.ids[j++] = g_global_vars.pid;
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}

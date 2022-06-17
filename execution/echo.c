@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 16:13:26 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:06:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiniShell.h"
 
-void	ft_echo(t_command *command, char *s, char flag)
+void	ft_echo(t_command *command, char *s, char flag, t_contex contex)
 {
 	int		fd;
 
@@ -25,11 +25,18 @@ void	ft_echo(t_command *command, char *s, char flag)
 		return ;
 	}
 	if (flag == 'n')
-		write(fd, s, ft_strlen(s));
+	{
+		if (fd != STDOUT_FILENO)
+			ft_putstr_fd(s, fd);
+		else
+			ft_putstr_fd(s, contex.fd_out);
+	}
 	else
 	{
-		write(fd, s, ft_strlen(s));
-		write(fd, "\n", 1);
+		if (fd != STDOUT_FILENO)
+			ft_putendl_fd(s, fd);
+		else
+			ft_putendl_fd(s, contex.fd_out);
 	}
 	free(s);
 	set_exit_code(EXIT_SUCCESS);
@@ -92,19 +99,19 @@ char	*join_for_echo(char **s, char flag)
 	return (result);
 }
 
-bool	exec_echo(t_vars vars, t_command *command)
+bool	exec_echo(t_vars vars, t_command *command, t_contex contex)
 {
 	(void)vars;
 	if (ft_strcmp(command->flags[0], "echo") == 0)
 	{
 		if (command->flags[1] == NULL)
-			ft_echo(command, NULL, '0');
+			ft_echo(command, NULL, '0', contex);
 		else if ((check_echo_flag(command->flags[1])))
 		{
-			ft_echo(command, join_for_echo(command->flags, 'n'), 'n');
+			ft_echo(command, join_for_echo(command->flags, 'n'), 'n', contex);
 		}
 		else
-			ft_echo(command, join_for_echo(command->flags, '\0'), '\0');
+			ft_echo(command, join_for_echo(command->flags, '\0'), '\0', contex);
 		return (true);
 	}
 	return (false);

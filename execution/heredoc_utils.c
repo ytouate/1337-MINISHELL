@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:47:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 12:49:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 22:47:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ bool	heredoc_outside_pipe(t_vars *vars, t_command *command)
 		contex.fd_in = dup(temp_contex.fd_in);
 	else
 		contex.fd_in = dup(contex.fd_in);
-	if (!check_built_in_commands(vars, command))
+	if (!check_built_in_commands(vars, command, contex))
 		ft_execute(command, vars, contex);
 	wait(NULL);
 	unlink("/tmp/temp");
