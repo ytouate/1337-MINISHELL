@@ -1,1 +1,2 @@
-exit with arguments 
+echo ' \' ' \'
+exit with arguments inside another shell

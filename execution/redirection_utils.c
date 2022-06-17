@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 20:58:20 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 15:27:13 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,20 @@ int	open_trunc_mode_files(t_token_head redi)
 
 int	open_append_mode_files(t_token_head redi)
 {
-	int	fd_out;
+	int		fd_out;
+	char	*file;
 
+	file = ft_strdup(redi.first_token->value);
 	if (redi.first_token->token == T_APPEND)
 	{
-		fd_out = open(redi.first_token->value,
+		fd_out = open(file,
 				O_CREAT | O_APPEND | O_RDWR, 0644);
 		if (fd_out == -1)
-			perror(redi.first_token->value);
+			perror(file);
+		free(file);
 		return (fd_out);
 	}
+	free(file);
 	return (INT_MIN);
 }
 

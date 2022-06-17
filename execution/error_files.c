@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 21:59:00 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 11:04:54 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 15:47:24 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,19 @@ void	check_path(t_vars *vars, t_command *command)
 	free(path);
 }
 
-void	check_files(t_vars *vars, t_command *command)
+void	check_files(t_token_head redi)
 {
 	int	out_file;
 
-	(void)vars;
-	while (command->redi->first_token != NULL)
+	while (redi.first_token != NULL)
 	{
-		if (command->redi->first_token->token == T_IN)
+		if (redi.first_token->token == T_IN)
 		{
-			out_file = open(command->redi->first_token->value, O_RDONLY);
+			out_file = open(redi.first_token->value, O_RDONLY);
 			if (out_file == -1)
 				set_exit_code(1);
 		}
-		command->redi->first_token = command->redi->first_token->next;
+		redi.first_token = redi.first_token->next;
 	}
 }
 
@@ -81,7 +80,7 @@ void	set_exit_code_inside_pipe(t_vars *vars, t_command *command)
 			else
 				check_path(vars, command);
 		}
-		check_files(vars, command);
+		check_files(*command->redi);
 		command = command->next_command;
 	}
 }
