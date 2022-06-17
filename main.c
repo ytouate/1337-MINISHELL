@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:17:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 17:31:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:39:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,24 @@ void	minishell_routine(t_vars *vars)
 	free(cmd);
 }
 
+void	set_signals_exit_code(void)
+{
+	if (g_global_vars.signal_flag == 1)
+	{
+		if (g_global_vars.sig_type == SIGQUIT)
+		{
+			ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
+			g_global_vars.exit_code = CNTRL_BACKSLASH;
+		}
+		else
+		{
+			ft_putchar_fd('\n', 1);
+			g_global_vars.exit_code = CNTRL_C;
+		}
+		g_global_vars.signal_flag = 0;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_vars	*vars;
@@ -96,13 +114,7 @@ int	main(int ac, char **av, char **env)
 	g_global_vars.exit_code = 0;
 	while (true)
 	{
-		if (g_global_vars.signal_flag == 1)
-		{
-			if (g_global_vars.sig_type == SIGQUIT)
-				g_global_vars.exit_code = CNTRL_BACKSLASH;
-			else
-				g_global_vars.exit_code = CNTRL_C;
-		}
+		set_signals_exit_code();
 		minishell_routine(vars);
 	}
 }
