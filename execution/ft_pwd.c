@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:35:37 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:05:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_pwd(t_vars vars, t_command *command)
 	}
 	getcwd(working_directory, sizeof(working_directory));
 	ft_setenv(&vars.env_list, "PWD", working_directory);
+	ft_setenv(&vars.export_list, "PWD", working_directory);
 	ft_putendl_fd(working_directory, contex.fd_out);
 	set_exit_code(EXIT_SUCCESS);
 }

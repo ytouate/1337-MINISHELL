@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/16 16:06:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:30:21 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct vars
 	pid_t	pid;
 	int		exit_code;
 	int		signal_flag;
+	int		sig_type;
 }t_vars_g;
 
 typedef struct TOKEN{
@@ -189,7 +190,6 @@ void		sig_handler(int sig);
 void		ft_pwd(t_vars vars, t_command *command);
 void		sort_list(t_list **env_list);
 void		ft_unset(t_list **env_list, char *to_delete);
-void		ft_cd(char *path, t_list *env_list);
 void		ft_setenv(t_list **env_list, char *var_name, char *var_val);
 void		set_exit_code(int num);
 void		ft_redirect_output_append_mode(t_command *command, t_vars *vars);
@@ -215,7 +215,9 @@ void		exec_command(t_command *command, t_vars *vars,
 				t_contex contex, char *command_path);
 void		set_exit_code_inside_pipe(t_vars *vars, t_command *command);
 void		init_contex(t_contex *contex);
-
+void		cd_oldwd(t_list *env_list, t_list *export_list);
+void		cd_home(t_list *env_list, t_list *export_list);
+void		ft_cd(char *path, t_list *env_list, t_list *export_list);
 int			ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);

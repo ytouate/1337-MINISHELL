@@ -6,13 +6,13 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:52:28 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 17:29:18 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiniShell.h"
 
-void	cd_oldwd(t_list *env_list)
+void	cd_oldwd(t_list *env_list, t_list *export_list)
 {
 	t_cd_vars	vars;
 
@@ -20,8 +20,7 @@ void	cd_oldwd(t_list *env_list)
 	vars.old_wd = ft_getenv(env_list, "OLDPWD");
 	if (!vars.old_wd)
 	{
-		printf("OLDPWD not set\n");
-		set_exit_code(1);
+		ft_error("cd", ": OLDPWD not set\n", 1);
 		return ;
 	}
 	vars.temp = ft_split(vars.old_wd->content, '=');
@@ -34,13 +33,15 @@ void	cd_oldwd(t_list *env_list)
 		perror(vars.temp_path);
 	}
 	ft_setenv(&env_list, "OLDPWD", vars.current_wd);
+	ft_setenv(&export_list, "OLDPWD", vars.current_wd);
 	getcwd(vars.buffer, sizeof(vars.buffer));
 	ft_setenv(&env_list, "PWD", vars.buffer);
+	ft_setenv(&export_list, "PWD", vars.buffer);
 	free(vars.temp_path);
 	set_exit_code(0);
 }
 
-void	cd_home(t_list *env_list)
+void	cd_home(t_list *env_list, t_list *export_list)
 {
 	char	*home_path;
 	char	current_wd[PATH_MAX];
@@ -54,29 +55,30 @@ void	cd_home(t_list *env_list)
 		if (chdir(home_path) == -1)
 		{
 			perror(home_path);
-			set_exit_code(0);
+			set_exit_code(1);
 		}
 		else
 		{
 			ft_setenv(&env_list, "OLDPWD", current_wd);
+			ft_setenv(&export_list, "OLDPWD", current_wd);
 			set_exit_code(0);
 		}
 	}
 	free(home_path);
 }
 
-void	ft_cd(char *path, t_list *env_list)
+void	ft_cd(char *path, t_list *env_list, t_list *export_list)
 {
 	char	current_wd[PATH_MAX];
 
 	if (path == NULL)
 		goto home;
 	if (ft_strcmp("-", path) == 0)
-		cd_oldwd(env_list);
+		cd_oldwd(env_list, export_list);
 	else if (ft_strcmp("~", path) == 0)
 	{
 		home:
-		cd_home(env_list);
+		cd_home(env_list, export_list);
 	}
 	else
 	{
@@ -98,7 +100,7 @@ bool	run_cd(t_vars vars, t_command *command)
 {
 	if (!ft_strcmp(command->flags[0], "cd"))
 	{
-		ft_cd(command->flags[1], vars.env_list);
+		ft_cd(command->flags[1], vars.env_list, vars.export_list);
 		return (true);
 	}
 	return (false);
