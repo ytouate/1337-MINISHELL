@@ -158,9 +158,9 @@ t_token		*ft_her_app(t_lexer *lexer, t_list *env_list);
 t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
-
-int	check_built_in_commands(t_vars *vars, t_command *command, t_contex contex);
-void	exec_node(t_vars *vars, t_command *command, t_contex contex);
+int			check_built_in_commands(t_vars *vars,
+				t_command *command, t_contex contex);
+void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 char		*join_for_echo(char **s, char flag);
 void		check_commands_order(t_vars *vars, t_norm *data);
 void		ft_free_all(t_head_c *head);
@@ -262,6 +262,6 @@ bool		run_cd(t_vars vars, t_command *command);
 bool		run_env(t_vars vars, t_command *command, t_contex contex);
 bool		run_unset(t_vars *vars, t_command *command);
 void		ft_echo(t_command *command, char *s, char flag, t_contex contex);
-bool	run_export(t_command *command, t_vars *vars, t_contex contex);
-void	show_export_list(t_command *command, t_vars vars, t_contex contex);
+bool		run_export(t_command *command, t_vars *vars, t_contex contex);
+void		show_export_list(t_command *command, t_vars vars, t_contex contex);
 #endif
