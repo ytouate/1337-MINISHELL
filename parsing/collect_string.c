@@ -12,13 +12,13 @@
 
 #include "../MiniShell.h"
 
-char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
+char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c, int h)
 {
 	char	*s;
 
 	if (c == '"' && lexer->c == '$' && \
 			lexer->i < ft_strlen(lexer->content) - 1 && \
-			ft_check_after_dollar(lexer) == 1)
+			ft_check_after_dollar(lexer) == 1 && h == 1)
 		return (ft_after_dollar(lexer, env_list));
 	else if (lexer->c == '\\' && lexer->i < ft_strlen(lexer->content) - 1
 		&& (lexer->content[lexer->i + 1] == '\\' \
@@ -38,7 +38,7 @@ char	*ft_help_collect_str(t_lexer *lexer, t_list *env_list, char c)
 	}
 }
 
-char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
+char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list, int h)
 {
 	char	*str;
 	char	*temp;
@@ -49,7 +49,7 @@ char	*ft_collect_string(t_lexer *lexer, char c, t_list *env_list)
 	while (lexer->content[lexer->i] && lexer->c != c)
 	{
 		temp = str;
-		s = ft_help_collect_str(lexer, env_list, c);
+		s = ft_help_collect_str(lexer, env_list, c, h);
 		str = ft_strjoin(str, s);
 		free(s);
 		free(temp);

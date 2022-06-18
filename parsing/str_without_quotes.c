@@ -22,13 +22,13 @@ char	*get_str_utils(t_lexer *lexer)
 	return (str);
 }
 
-char	*ft_get_str(t_lexer *lexer, t_list *env_list)
+char	*ft_get_str(t_lexer *lexer, t_list *env_list, int h)
 {
 	char	*str;
 	char	*s;
 
 	if (lexer->c == '$' && lexer->i < ft_strlen(lexer->content) - 1 \
-		&& ft_check_after_dollar(lexer) == 1)
+		&& ft_check_after_dollar(lexer) == 1 && h == 1)
 		str = ft_after_dollar(lexer, env_list);
 	else if (lexer->c == '~')
 	{
@@ -58,7 +58,7 @@ char	*ft_witout_quotes_util(char *str, char *s)
 	return (NULL);
 }
 
-char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
+char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list, int h)
 {
 	char	*str;
 	char	*s;
@@ -70,7 +70,7 @@ char	*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list)
 	{
 		if (lexer->c == '&')
 			return (ft_witout_quotes_util(str, s));
-		s = ft_get_str(lexer, env_list);
+		s = ft_get_str(lexer, env_list, h);
 		if (s == NULL)
 		{
 			free(str);
