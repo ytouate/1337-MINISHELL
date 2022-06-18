@@ -47,7 +47,7 @@ t_token	*ft_red(t_lexer *lexer, t_list *env_list)
 		if (lexer->content[lexer->i] == '\0' || lexer->c == '<' || \
 			lexer->c == '>')
 			return (ft_init_token(T_IN, NULL));
-		return (ft_init_token(T_IN, ft_get_value(lexer, env_list)));
+		return (ft_init_token(T_IN, ft_get_value(lexer, env_list, 1)));
 	}
 	else
 	{
@@ -56,7 +56,7 @@ t_token	*ft_red(t_lexer *lexer, t_list *env_list)
 		if (lexer->content[lexer->i] == '\0' || \
 			lexer->c == '<' || lexer->c == '>')
 			return (ft_init_token(T_OUT, NULL));
-		return (ft_init_token(T_OUT, ft_get_value(lexer, env_list)));
+		return (ft_init_token(T_OUT, ft_get_value(lexer, env_list, 1)));
 	}
 }
 
@@ -71,7 +71,7 @@ t_token	*ft_her_app(t_lexer *lexer, t_list *env_list)
 			lexer->c == '<' || lexer->c == '>'
 			|| lexer->c == '|')
 			return (ft_init_token(T_HERDOC, NULL));
-		return (ft_init_token(T_HERDOC, ft_get_value(lexer, env_list)));
+		return (ft_init_token(T_HERDOC, ft_get_value(lexer, env_list, 0)));
 	}
 	else
 	{
@@ -82,6 +82,6 @@ t_token	*ft_her_app(t_lexer *lexer, t_list *env_list)
 			lexer->c == '<' || lexer->c == '>'
 			|| lexer->c == '|')
 			return (ft_init_token(T_APPEND, NULL));
-		return (ft_init_token(T_APPEND, ft_get_value(lexer, env_list)));
+		return (ft_init_token(T_APPEND, ft_get_value(lexer, env_list, 1)));
 	}
 }
