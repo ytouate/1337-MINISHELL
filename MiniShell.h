@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 11:43:32 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:48:48 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int			check_built_in_commands(t_vars *vars,
 int			ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
+int			cut_exit_code(char *arg);
 int			get_exit_code(void);
 int			get_parts(char	*s, char c);
 int			is_variable(char *s);
@@ -259,6 +260,7 @@ char		*join_for_echo(char **s, char flag);
 char		*check_for_space(char **s, char *result, int i);
 char		*join_for_echo(char **s, char flag);
 
+bool		is_number(char *s);
 bool		exec_echo(t_vars vars, t_command *command, t_contex contex);
 bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 bool		check_redirection(t_vars *vars, t_command *command);

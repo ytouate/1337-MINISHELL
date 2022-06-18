@@ -6,11 +6,11 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 11:42:17 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 11:44:14 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:48:05 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MiniShell.h"
+#include "../MiniShell.h"
 
 void	ft_exit(int exit_code, char *arg, char flag)
 {

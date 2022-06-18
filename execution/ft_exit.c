@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 11:42:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:47:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ int	cut_exit_code(char *arg)
 		n -= 256;
 	return (n);
 }
+
+// int	cut_negative_exit_code(char *arg)
+// {
+// 	int	n;
+// }
 
 void	check_export_error(t_vars *vars, t_command *command)
 {

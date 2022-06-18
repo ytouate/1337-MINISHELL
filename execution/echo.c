@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 11:38:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:06:28 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ bool	exec_echo(t_vars vars, t_command *command, t_contex contex)
 		if (command->flags[1] == NULL)
 			ft_echo(command, NULL, '0', contex);
 		else if ((check_echo_flag(command->flags[1])))
-		{
 			ft_echo(command, join_for_echo(command->flags, 'n'), 'n', contex);
-		}
 		else
 			ft_echo(command, join_for_echo(command->flags, '\0'), '\0', contex);
 		return (true);
