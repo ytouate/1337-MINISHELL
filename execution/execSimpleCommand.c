@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:39:51 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:05:53 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 14:48:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	exec_command(t_command *command, t_vars *vars,
 
 void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
 {
+	int	status;
+
 	if (access(command->flags[0], F_OK | X_OK) == 0)
 	{
 		if (fork() == 0)
@@ -82,7 +84,9 @@ void	run_excutable(t_command *command, t_vars *vars, t_contex contex)
 			}
 			exit(EXIT_SUCCESS);
 		}
-		wait(NULL);
+		wait(&status);
+		if (WIFEXITED(status))
+			set_exit_code(WEXITSTATUS(status));
 	}
 	else
 	{

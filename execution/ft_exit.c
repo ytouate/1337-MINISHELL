@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 22:04:35 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 12:37:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:59:15 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ bool	run_exit(t_vars vars, t_command *command)
 	if (!ft_strcmp(command->flags[0], "exit"))
 	{
 		if (vars.num_of_commands == 1)
+		{
 			ft_exit(command->flags[1], '\0');
+		}
 		else
 			ft_exit(command->flags[1], 'p');
 		return (true);

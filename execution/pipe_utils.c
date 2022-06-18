@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:15:09 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:48:25 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 13:57:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	exec_last_node(t_vars *vars, t_norm data)
 void	exec_other_node(t_vars *vars, t_norm data)
 {
 	close(data.fd[0]);
+	printf("%d\n", data.contex.herdoc_fildes);
 	if (data.contex.herdoc_fildes != 1337)
 	{
 		close(data.temp_fd);
