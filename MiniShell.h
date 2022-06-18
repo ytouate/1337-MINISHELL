@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 12:13:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:36:33 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,6 @@ void		set_exit_code(int num);
 void		ft_redirect_output_append_mode(t_command *command, t_vars *vars);
 void		ft_redirect_output_trunc_mode(t_vars *vars, t_command *command);
 void		redirect_input(t_vars *vars, t_command *command);
-void		ft_exit(int exit_code, char *arg, char flag);
 void		exec_last_node(t_vars *vars, t_norm data);
 void		exec_first_node(t_vars *vars, t_norm data);
 void		exec_other_node(t_vars *vars, t_norm data);
@@ -208,6 +207,7 @@ void		exec_last_command_before_heredoc(t_vars *vars, t_norm data);
 void		exec_other_command_before_heredoc(t_vars *vars, t_norm data);
 void		add_properly_named_word(t_command *command, t_vars *vars, int i);
 void		show_export_error(int *flag, int i, t_command *command);
+void		ft_exit(char *arg, char flag);
 void		add_existed_variable(t_command *command, t_vars *vars,
 				int i, char **temp);
 void		add_non_variable(t_command *command,
@@ -222,7 +222,6 @@ void		show_export_list(t_command *command, t_vars vars, t_contex contex);
 void		cd_oldwd(t_list *env_list, t_list *export_list);
 void		cd_home(t_list *env_list, t_list *export_list);
 void		ft_cd(char *path, t_list *env_list, t_list *export_list);
-void		ft_exit(int exit_code, char *arg, char flag);
 
 int			check_built_in_commands(t_vars *vars,
 				t_command *command, t_contex contex);

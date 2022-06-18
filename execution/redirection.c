@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 22:48:22 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 12:19:43 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,8 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 			}
 		}
 		else
-		{
-			set_exit_code(COMMAND_NOT_FOUND);
-			printf("%s: command, not found", command->flags[0]);
-		}
+			ft_error(command->flags[0],
+				": command, not found\n", COMMAND_NOT_FOUND);
 	}
 	set_exit_code(EXIT_SUCCESS);
 }
