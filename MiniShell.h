@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 13:00:47 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:46:20 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
+int			fill_temp_stdin(t_command *command);
 void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 int			check_built_in_commands(t_vars *vars,
 				t_command *command, t_contex contex);
@@ -166,8 +167,11 @@ void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 char		*join_for_echo(char **s, char flag);
 void		check_commands_order(t_vars *vars, t_norm *data);
 void		ft_free_all(t_head_c *head);
+int			heredoc_return(int outfile, t_contex contex);
+void		check_out_files(int *out_file, int *fd_out);
 void		walk_to_heredoc(t_command **command);
 void		close_pipe(int *fd);
+void		check_in_files(int *fd_in, int *temp_stdin);
 void		ft_add_red(t_token_head *head, t_token *t);
 void		ft_init_head(t_head_c *head);
 void		ft_add_node(t_head_c *head, t_command *commande);
@@ -176,7 +180,7 @@ void		ft_skip_spaces(t_lexer	*lexer);
 void		check_export_error(t_vars *vars, t_command *command);
 void		check_cd_errors(t_vars *vars, t_command *command);
 void		set_exit_code_inside_pipe(t_vars *vars, t_command *command);
-void		read_for_heredoc(char *line, t_command *command, int fd_in);
+void		read_for_heredoc(t_command *command, int fd_in);
 void		open_heredoc(t_command **command);
 void		set_signal_flag(int num);
 void		free_list(t_list *list);

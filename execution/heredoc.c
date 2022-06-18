@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:49:08 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:45:58 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,20 @@ void	check_in_files(int *fd_in, int *temp_stdin)
 		*fd_in = dup(*fd_in);
 }
 
-int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
+int	heredoc_return(int outfile, t_contex contex)
 {
-	int		temp_stdin;
-	int		out_file;
-
-	out_file = 1337;
-	temp_stdin = fill_temp_stdin(command);
-	contex = open_files(*command->redi);
-	check_out_files(&out_file, &contex.fd_out);
-	check_in_files(&contex.fd_in, &temp_stdin);
-	contex.fd_out = dup(contex.fd_out);
-	if (!check_built_in_commands(vars, command, contex))
-	{
-		ft_execute(command, vars, contex);
-		wait(NULL);
-		close(contex.fd_out);
-	}
-	unlink("tmp/temp");
-	if (out_file == -1)
+	if (outfile == -1)
 		return (0);
-	else if (out_file == 0)
+	else if (outfile == 0)
 		return (contex.fd_in);
 	else
 		return (-1);
 }
 
-void	read_for_heredoc(char *line, t_command *command, int fd_in)
+void	read_for_heredoc(t_command *command, int fd_in)
 {
+	char	*line;
+
 	while (true)
 	{
 		line = readline(">");

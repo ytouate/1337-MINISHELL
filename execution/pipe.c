@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 14:04:10 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:35:38 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	run_heredoc(int *heredoc_fd, t_vars *vars, t_norm data)
 	{
 		*heredoc_fd = ft_heredoc(vars,
 				vars->command, data.contex);
-		printf(" %d here\n", *heredoc_fd);
 		wait(NULL);
 	}
 	else

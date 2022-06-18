@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:50:01 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 12:19:43 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:43:42 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,30 @@ void	exec_herdoc_command(t_command *command, t_vars *vars, t_contex contex)
 				": command, not found\n", COMMAND_NOT_FOUND);
 	}
 	set_exit_code(EXIT_SUCCESS);
+}
+
+int	ft_heredoc(t_vars *vars, t_command *command, t_contex contex)
+{
+	int		temp_stdin;
+	int		out_file;
+
+	out_file = 1337;
+	temp_stdin = fill_temp_stdin(command);
+	contex = open_files(*command->redi);
+	if (contex.fd_in == -1 || contex.fd_out == -1)
+	{
+		set_exit_code(1);
+		return (0);
+	}
+	check_out_files(&out_file, &contex.fd_out);
+	check_in_files(&contex.fd_in, &temp_stdin);
+	contex.fd_out = dup(contex.fd_out);
+	if (!check_built_in_commands(vars, command, contex))
+	{
+		ft_execute(command, vars, contex);
+		wait(NULL);
+		close(contex.fd_out);
+	}
+	unlink("tmp/temp");
+	return (heredoc_return(out_file, contex));
 }

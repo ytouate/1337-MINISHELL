@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:55:08 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:16:29 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:33:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	ft_export(t_command *command, t_list *env, char *arg)
 
 	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	if (arg == NULL)
 	{
 		sort_list(&env);
@@ -42,7 +45,10 @@ void	show_export_list(t_command *command, t_vars vars, t_contex contex)
 
 	ctx = open_files(*command->redi);
 	if (ctx.fd_in == -1 || ctx.fd_out == -1)
+	{
+		set_exit_code(1);	
 		return ;
+	}
 	while (vars.export_list && vars.export_list->content != NULL)
 	{
 		if (ctx.fd_out == STDOUT_FILENO)

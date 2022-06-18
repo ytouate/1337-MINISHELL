@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:46 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:19:34 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:32:52 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	ft_env(t_vars vars, t_command *command, t_contex contex)
 
 	fd = open_files(*command->redi);
 	if (fd.fd_in == -1 || fd.fd_in == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	while (vars.env_list)
 	{
 		if (vars.env_list->content)

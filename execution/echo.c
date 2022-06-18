@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/18 12:06:28 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 15:32:29 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	ft_echo(t_command *command, char *s, char flag, t_contex contex)
 
 	fd = open_files(*command->redi).fd_out;
 	if (fd == -1)
+	{
+		set_exit_code(1);
 		return ;
+	}
 	if (s == NULL)
 	{
 		write(fd, "\n", 2);
