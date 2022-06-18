@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:03:19 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:20:46 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:43:32 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,7 @@ t_list		*ft_getenv(t_list *env_list, char *var_name);
 t_list		*get_env_list(char **env);
 t_contex	open_files(t_token_head redi);
 
-int	check_built_in_commands(t_vars *vars, t_command *command, t_contex contex);
-void	exec_node(t_vars *vars, t_command *command, t_contex contex);
-char		*join_for_echo(char **s, char flag);
+void		exec_node(t_vars *vars, t_command *command, t_contex contex);
 void		check_commands_order(t_vars *vars, t_norm *data);
 void		ft_free_all(t_head_c *head);
 void		walk_to_heredoc(t_command **command);
@@ -216,9 +214,14 @@ void		exec_command(t_command *command, t_vars *vars,
 				t_contex contex, char *command_path);
 void		set_exit_code_inside_pipe(t_vars *vars, t_command *command);
 void		init_contex(t_contex *contex);
+void		show_export_list(t_command *command, t_vars vars, t_contex contex);
 void		cd_oldwd(t_list *env_list, t_list *export_list);
 void		cd_home(t_list *env_list, t_list *export_list);
 void		ft_cd(char *path, t_list *env_list, t_list *export_list);
+void		ft_exit(int exit_code, char *arg, char flag);
+
+int			check_built_in_commands(t_vars *vars,
+				t_command *command, t_contex contex);
 int			ft_add_commande(t_head_c *head, t_lexer *lexer, t_list *env_list);
 int			ft_strcmp(char *s, char *str);
 int			get_len(t_command *command);
@@ -228,7 +231,6 @@ int			is_variable(char *s);
 int			ft_check_after_dollar(t_lexer *lexer);
 int			check_echo_flag(char *s);
 int			is_properly_named(char *s);
-// int			check_built_in_commands(t_vars *vars, t_command *command);
 int			ft_heredoc(t_vars *vars, t_command *command, t_contex contex);
 int			count_commands_before_heredoc(t_command *command);
 int			get_signal_flag(void);
@@ -253,6 +255,10 @@ char		*ft_get_value(t_lexer *lexer, t_list *env_list);
 char		*ft_get_str(t_lexer *lexer, t_list *env_list);
 char		*ft_get_str_without_quote(t_lexer *lexer, t_list *env_list);
 char		**ft_replace(char **av, int i, char *value);
+char		*join_for_echo(char **s, char flag);
+char		*check_for_space(char **s, char *result, int i);
+char		*join_for_echo(char **s, char flag);
+
 bool		exec_echo(t_vars vars, t_command *command, t_contex contex);
 bool		add_variable(t_command *command, t_vars *vars, char **temp, int i);
 bool		check_redirection(t_vars *vars, t_command *command);
@@ -262,6 +268,5 @@ bool		run_cd(t_vars vars, t_command *command);
 bool		run_env(t_vars vars, t_command *command, t_contex contex);
 bool		run_unset(t_vars *vars, t_command *command);
 void		ft_echo(t_command *command, char *s, char flag, t_contex contex);
-bool	run_export(t_command *command, t_vars *vars, t_contex contex);
-void	show_export_list(t_command *command, t_vars vars, t_contex contex);
+bool		run_export(t_command *command, t_vars *vars, t_contex contex);
 #endif

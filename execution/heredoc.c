@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 21:17:42 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 22:47:05 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:49:08 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	check_out_files(int *out_file, int *fd_out)
 {
 	if (*fd_out == STDOUT_FILENO)
 	{
+		unlink("/tmp/temp_out_file");
 		*fd_out = open("/tmp/temp_out_file",
 				O_RDWR | O_TRUNC | O_CREAT, 0777);
 	}

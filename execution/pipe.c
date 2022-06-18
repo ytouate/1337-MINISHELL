@@ -6,7 +6,7 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 13:35:25 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 22:35:07 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:26:14 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void	loop_through_nodes(t_vars *vars, t_norm data)
 		else
 		{
 			check_commands_order(vars, &data);
-			data.contex.herdoc_fildes = 1337;
 			close_pipe(data.fd);
+			data.contex.herdoc_fildes = 1337;
+			data.ids[j++] = g_global_vars.pid;
 		}
-		data.ids[j++] = g_global_vars.pid;
 		data.i += 1;
 		vars->command = vars->command->next_command;
 	}

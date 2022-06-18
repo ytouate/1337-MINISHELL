@@ -6,7 +6,7 @@
 #    By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/31 12:46:19 by ytouate           #+#    #+#              #
-#    Updated: 2022/06/16 20:08:12 by ytouate          ###   ########.fr        #
+#    Updated: 2022/06/18 11:43:55 by ytouate          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ FILES =	\
 	./ft_pwd.c				\
 	./combine.c				\
 	./error_files.c			\
+	./echo_utils.c			\
+	./exit_utils.c
 
 O_FILES = $(FILES:.c=.o)
 

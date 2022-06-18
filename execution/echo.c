@@ -6,24 +6,14 @@
 /*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:54:21 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/17 23:06:37 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/06/18 11:38:05 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MiniShell.h"
 
-void	ft_echo(t_command *command, char *s, char flag, t_contex contex)
+void	check_echo(char *s, char flag, int fd, t_contex contex)
 {
-	int		fd;
-
-	fd = open_files(*command->redi).fd_out;
-	if (fd == -1)
-		return ;
-	if (s == NULL)
-	{
-		write(fd, "\n", 2);
-		return ;
-	}
 	if (flag == 'n')
 	{
 		if (fd != STDOUT_FILENO)
@@ -38,6 +28,21 @@ void	ft_echo(t_command *command, char *s, char flag, t_contex contex)
 		else
 			ft_putendl_fd(s, contex.fd_out);
 	}
+}
+
+void	ft_echo(t_command *command, char *s, char flag, t_contex contex)
+{
+	int		fd;
+
+	fd = open_files(*command->redi).fd_out;
+	if (fd == -1)
+		return ;
+	if (s == NULL)
+	{
+		write(fd, "\n", 2);
+		return ;
+	}
+	check_echo(s, flag, fd, contex);
 	free(s);
 	set_exit_code(EXIT_SUCCESS);
 }
@@ -71,30 +76,6 @@ char	*check_for_space(char **s, char *result, int i)
 		temp = result;
 		result = ft_strjoin(result, " ");
 		free(temp);
-	}
-	return (result);
-}
-
-char	*join_for_echo(char **s, char flag)
-{
-	int		i;
-	char	*result;
-	char	*temp;
-
-	if (flag == 'n')
-		i = 2;
-	else
-		i = 1;
-	result = ft_strdup("");
-	while (check_echo_flag(s[i]))
-		i++;
-	while (s[i])
-	{
-		temp = result;
-		result = ft_strjoin(result, s[i]);
-		free(temp);
-		result = check_for_space(s, result, i);
-		i++;
 	}
 	return (result);
 }
