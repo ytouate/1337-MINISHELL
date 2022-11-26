@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ytouate <ytouate@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: ytouate <ytouate@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 12:45:41 by ytouate           #+#    #+#             */
-/*   Updated: 2022/06/15 22:44:12 by ytouate          ###   ########.fr       */
+/*   Updated: 2022/11/26 20:25:37 by ytouate          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	ft_unset(t_list **env_list, char *to_delete)
 	t_norm	vars;
 	t_list	*head;
 
+	if (!*env_list)
+		return ;
 	vars.first = *env_list;
 	vars.cmd = ft_split((*env_list)->content, '=');
 	if (vars.cmd[0] == NULL)
@@ -50,7 +52,13 @@ void	ft_unset(t_list **env_list, char *to_delete)
 	head = delete_head(env_list, vars.cmd, to_delete);
 	if (head != NULL)
 		return ;
-	vars.second = vars.first->next;
+	if (vars.first == NULL)
+		vars.second = vars.first->next;
+	else
+	{
+		ft_putendl_fd("am here", 2);
+		return ;
+	}
 	while (vars.second)
 	{
 		free_2d_array(vars.cmd);
